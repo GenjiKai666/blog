@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="工厂模式学习笔记1、工厂设计模式简介：一种设计模式，在创建类的时候并不直接创建，而是通过工厂类来创建类，例如我们并不直接生产沙发，当需要沙发的时候就去通知工厂说我们需要沙发，然后工厂会为我们生产沙发并运送给我们，当我们需要椅子的时候也是同理。 代码实现：这里以养宠物为例，首先是动物的接口Animal,接下来是具体的动物类Dog，Cat，我们想养某个宠物的时候是去找宠物店(Factory)要，而不是">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://example.com/%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="工厂模式学习笔记1、工厂设计模式简介：一种设计模式，在创建类的时候并不直接创建，而是通过工厂类来创建类，例如我们并不直接生产沙发，当需要沙发的时候就去通知工厂说我们需要沙发，然后工厂会为我们生产沙发并运送给我们，当我们需要椅子的时候也是同理。 代码实现：这里以养宠物为例，首先是动物的接口Animal,接下来是具体的动物类Dog，Cat，我们想养某个宠物的时候是去找宠物店(Factory)要，而不是">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-03-02T01:50:13.176Z">
+<meta property="article:modified_time" content="2023-02-02T03:22:33.186Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="page-" class="h-entry article article-type-page" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0.html" class="article-date">
+  <time class="dt-published" datetime="2023-03-02T01:50:13.176Z" itemprop="datePublished">2023-03-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="工厂模式学习笔记"><a href="#工厂模式学习笔记" class="headerlink" title="工厂模式学习笔记"></a>工厂模式学习笔记</h1><h2 id="1、工厂设计模式"><a href="#1、工厂设计模式" class="headerlink" title="1、工厂设计模式"></a>1、工厂设计模式</h2><p><strong>简介</strong>：一种设计模式，在创建类的时候并不直接创建，而是通过工厂类来创建类，例如我们并不直接生产沙发，当需要沙发的时候就去通知工厂说我们需要沙发，然后工厂会为我们生产沙发并运送给我们，当我们需要椅子的时候也是同理。</p>
+<p><strong>代码实现</strong>：这里以养宠物为例，首先是动物的接口<code>Animal</code>,接下来是具体的动物类<code>Dog</code>，<code>Cat</code>，我们想养某个宠物的时候是去找宠物店(<code>Factory</code>)要，而不是直接变出来一个宠物。</p>
+<p><code>Animal</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">Animal</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">eat</span><span class="params">()</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">birth</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>Cat</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Cat</span> <span class="keyword">implements</span> <span class="title class_">Animal</span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">birth</span><span class="params">()</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;猫出生了&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">eat</span><span class="params">()</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;猫正在吃东西&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>Dog</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Dog</span> <span class="keyword">implements</span> <span class="title class_">Animal</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">birth</span><span class="params">()</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;狗出生了&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">eat</span><span class="params">()</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;狗正在吃东西&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>Factory</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Factory</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> Animal <span class="title function_">getNewInstance</span><span class="params">(String type)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(type.equals(<span class="string">&quot;猫&quot;</span>))&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Cat</span>();</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (type.equals(<span class="string">&quot;狗&quot;</span>)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Dog</span>();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>FactoryPatternTest</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">FactoryPatternTest</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span>&#123;</span><br><span class="line">        <span class="type">Factory</span> <span class="variable">factory</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Factory</span>();</span><br><span class="line">        <span class="type">Animal</span> <span class="variable">cat</span> <span class="operator">=</span> factory.getNewInstance(<span class="string">&quot;猫&quot;</span>);</span><br><span class="line">        <span class="type">Animal</span> <span class="variable">dog</span> <span class="operator">=</span> factory.getNewInstance(<span class="string">&quot;狗&quot;</span>);</span><br><span class="line">        cat.birth();</span><br><span class="line">        cat.eat();</span><br><span class="line">        dog.birth();</span><br><span class="line">        dog.eat();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在主程序中我们先new一个工厂类，然后调用<code>factory.getNewInstance()</code>方法来获取宠物，同时将动物的种类作为参数传入，告诉工厂类我们需要什么宠物，工厂类根据传入的参数new不同的动物出来并赋值给对应的变量，接下来我们就可以对不同的动物进行调用。这样的好处是以后如果出现了新的宠物，我们只需要更改工厂类以及调用的类，不对其他代码进行改变，符合开闭原则。</p>
+<h2 id="2、抽象工厂模式"><a href="#2、抽象工厂模式" class="headerlink" title="2、抽象工厂模式"></a>2、抽象工厂模式</h2><p><strong>简介</strong>:抽象工厂模式是在工厂模式的基础上对工厂进行抽象，因为可能存在很多种工厂，有中国工厂生产中国风的沙发、椅子，有英国的工厂生产英伦风的沙发、椅子，这个时候工厂模式就无法满足这种需求了，所以引入抽象工厂模式，这里用<code>cglib</code>动态代理来自动选择相应的工厂类.</p>
+<p><strong>代码实现</strong>:这里依旧用养宠物为例，有<code>Animal</code>接口，抽象类<code>Dog</code>、<code>Cat</code>分别实现<code>Animal</code>接口。<code>ChinaDog</code>和<code>EnglandDog</code>继承<code>Dog</code>抽象类,<code>ChinaCat</code>和<code>EnglandCat</code>继承<code>Cat</code>抽象类。</p>
+<p><code>FactoryInterface</code>接口,<code>ChinaFactory</code>、<code>EnglandFactory</code>实现这个接口。</p>
+<p><code>Animal</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">Animal</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">shout</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>Cat</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title class_">Cat</span> <span class="keyword">implements</span> <span class="title class_">Animal</span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title function_">shout</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>Dog</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title class_">Dog</span> <span class="keyword">implements</span> <span class="title class_">Animal</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title function_">shout</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>ChinaCat</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ChinaCat</span> <span class="keyword">extends</span> <span class="title class_">Cat</span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">shout</span><span class="params">()</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;china cat&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>ChinaDog</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public class ChinaDog extends Dog&#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void shout() &#123;</span><br><span class="line">        System.out.println(&quot;china dog&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>英国猫和英国狗同理</p>
+<p><code>FactoryInterface</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">FactoryInterface</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> Animal <span class="title function_">getAnimal</span><span class="params">(String catOrDog,String country)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>EnglandFactory</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">EnglandFactory</span> <span class="keyword">implements</span> <span class="title class_">FactoryInterface</span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> Animal <span class="title function_">getAnimal</span><span class="params">(String catOrDog,String country)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span>(catOrDog.equals(<span class="string">&quot;cat&quot;</span>))&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">EnglandCat</span>();</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (catOrDog.equals(<span class="string">&quot;dog&quot;</span>)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">EnglandDog</span>();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>ChinaFactory</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ChinaFactory</span> <span class="keyword">implements</span> <span class="title class_">FactoryInterface</span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> Animal <span class="title function_">getAnimal</span><span class="params">(String catOrDog,String country)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span>(catOrDog.equals(<span class="string">&quot;cat&quot;</span>))&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">ChinaCat</span>();</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (catOrDog.equals(<span class="string">&quot;dog&quot;</span>)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">ChinaDog</span>();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>接下来是<code>FactoryProxy</code>实现对工厂接口的动态代理</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">FactoryProxy</span> <span class="keyword">implements</span> <span class="title class_">MethodInterceptor</span> &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> Object <span class="title function_">intercept</span><span class="params">(Object o, Method method, Object[] objects, MethodProxy methodProxy)</span> <span class="keyword">throws</span> Throwable &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">country</span> <span class="operator">=</span> (String)objects[<span class="number">1</span>];</span><br><span class="line">        <span class="keyword">if</span>(country.equals(<span class="string">&quot;china&quot;</span>))&#123;</span><br><span class="line">            <span class="type">FactoryInterface</span> <span class="variable">factory</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ChinaFactory</span>();</span><br><span class="line">            <span class="keyword">return</span> factory.getAnimal((String)objects[<span class="number">0</span>],<span class="string">&quot;china&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="type">FactoryInterface</span> <span class="variable">factory</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">EnglandFactory</span>();</span><br><span class="line">            <span class="keyword">return</span> factory.getAnimal((String)objects[<span class="number">0</span>],<span class="string">&quot;england&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>Main</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Main</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span>&#123;</span><br><span class="line">        <span class="type">Enhancer</span> <span class="variable">enhancer</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Enhancer</span>();</span><br><span class="line">        enhancer.setSuperclass(FactoryInterface.class);</span><br><span class="line">        enhancer.setCallback(<span class="keyword">new</span> <span class="title class_">FactoryProxy</span>());</span><br><span class="line">        <span class="type">FactoryInterface</span> <span class="variable">factory</span> <span class="operator">=</span> (FactoryInterface) enhancer.create();</span><br><span class="line">        <span class="type">Animal</span> <span class="variable">animal</span> <span class="operator">=</span> factory.getAnimal(<span class="string">&quot;dog&quot;</span>,<span class="string">&quot;china&quot;</span>);</span><br><span class="line">        animal.shout();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>首先主程序new一个<code>Enhancer</code>并为<code>FactoryInterface</code>设置代理，然后用<code>enhancer</code>新建一个工厂实例，在调用<code>factory.getAnimal()</code>方法的时候会回调<code>FactoryProxy</code>中的<code>intercept()</code>方法，在<code>intercept()</code>方法中首先获取第二个参数以决定是什么工厂，然后new出相应的工厂，并调用<code>factory.getAnimal()</code>,object[0]是决定返回猫还是狗,接下来对应的工厂就会返回对应的动物。</p>
+<p>完整代码见<code>Helloworld</code>项目下<code>factory_pattern_demo</code>包</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0.html" data-id="clgek4hki0005owpmhbm16c03" data-title="" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/04/">April 2023</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/04/13/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
