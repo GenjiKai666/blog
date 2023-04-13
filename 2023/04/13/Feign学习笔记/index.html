@@ -112,8 +112,11 @@
 <p>首先是被调用的服务，我们命名为<code>provider</code></p>
 <p>调用其他服务接口的服务，命名为<code>consumer</code></p>
 <p>这两个子项目继承父项目依赖，其中Feign的依赖为</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-openfeign<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
+<pre><code class="xml">&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-cloud-starter-openfeign&lt;/artifactId&gt;
+&lt;/dependency&gt;
+</code></pre>
 <p>因为要搭配<code>Consul</code>服务注册中心使用，所以还需要引入<code>Consul</code>的相关依赖，详情见《Consul学习笔记.md》</p>
 <ul>
 <li>服务提供者<code>provider</code></li>
@@ -121,28 +124,97 @@
 <p>服务提供者<code>provider</code>并无特别的配置，除去需要在<code>Consul</code>注册服务外，跟普通的服务一样，对外提供<code>controller</code>中的接口，处理收到的<code>http</code>请求</p>
 <p>这里我们假设provider提供一个包装的服务，将参数包装成一个类</p>
 <p><code>UserProviderController</code></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserProviderController</span> &#123;</span><br><span class="line">    <span class="meta">@PostMapping(&quot;/api&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> User <span class="title function_">getUser</span><span class="params">(<span class="meta">@RequestParam(&quot;name&quot;)</span> String name,<span class="meta">@RequestParam(&quot;type&quot;)</span> String type)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">User</span>(name,type);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<pre><code class="java">@RestController
+public class UserProviderController &#123;
+    @PostMapping(&quot;/api&quot;)
+    public User getUser(@RequestParam(&quot;name&quot;) String name,@RequestParam(&quot;type&quot;) String type)&#123;
+        return new User(name,type);
+    &#125;
+&#125;
+</code></pre>
 <p>实体类<code>User</code></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="meta">@AllArgsConstructor</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">User</span> &#123;</span><br><span class="line">    String name;</span><br><span class="line">    String type;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<pre><code class="java">@Data
+@AllArgsConstructor
+public class User &#123;
+    String name;
+    String type;
+&#125;
+</code></pre>
 <p>在<code>bootstrap.yml</code>将服务注册成<code>provider</code>，这是被<code>consumer</code>调用的依据</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">application:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">provider</span> <span class="comment"># 应用名称</span></span><br><span class="line">  <span class="attr">profiles:</span></span><br><span class="line">    <span class="attr">active:</span> <span class="string">dev</span> <span class="comment"># 指定环境，默认加载 default 环境</span></span><br><span class="line">  <span class="attr">cloud:</span></span><br><span class="line">    <span class="attr">consul:</span></span><br><span class="line">      <span class="comment"># Consul 服务器地址</span></span><br><span class="line">      <span class="attr">host:</span> <span class="string">localhost</span></span><br><span class="line">      <span class="attr">port:</span> <span class="number">8500</span></span><br><span class="line">      <span class="comment"># 配置中心相关配置</span></span><br><span class="line">      <span class="attr">config:</span></span><br><span class="line">        <span class="comment"># 是否启用配置中心，默认值 true 开启</span></span><br><span class="line">        <span class="attr">enabled:</span> <span class="literal">true</span></span><br><span class="line">        <span class="comment"># 设置配置的基本文件夹，默认值 config 可以理解为配置文件所在的最外层文件夹</span></span><br><span class="line">        <span class="attr">prefix:</span> <span class="string">test-config</span></span><br><span class="line">        <span class="comment"># 设置应用的文件夹名称，默认值 application 一般建议设置为微服务应用名称</span></span><br><span class="line">        <span class="attr">default-context:</span> <span class="string">provider</span></span><br><span class="line">        <span class="comment"># 配置环境分隔符，默认值 &quot;,&quot; 和 default-context 配置项搭配</span></span><br><span class="line">        <span class="comment"># 例如应用 orderService 分别有环境 default、dev、test、prod</span></span><br><span class="line">        <span class="comment"># 只需在 config 文件夹下创建 orderService、orderService-dev、orderService-test、orderService-prod 文件夹即可</span></span><br><span class="line">        <span class="attr">profile-separator:</span> <span class="string">&#x27;-&#x27;</span></span><br><span class="line">        <span class="comment"># 指定配置格式为 yaml</span></span><br><span class="line">        <span class="attr">format:</span> <span class="string">YAML</span></span><br><span class="line">        <span class="comment"># Consul 的 Key/Values 中的 Key，Value 对应整个配置文件</span></span><br><span class="line">        <span class="attr">data-key:</span> <span class="string">provider</span></span><br><span class="line">        <span class="comment"># 以上配置可以理解为：加载 config/orderService/ 文件夹下 Key 为 orderServiceConfig 的 Value 对应的配置信息</span></span><br><span class="line">        <span class="attr">watch:</span></span><br><span class="line">          <span class="comment"># 是否开启自动刷新，默认值 true 开启</span></span><br><span class="line">          <span class="attr">enabled:</span> <span class="literal">true</span></span><br><span class="line">          <span class="comment"># 刷新频率，单位：毫秒，默认值 1000</span></span><br><span class="line">          <span class="attr">delay:</span> <span class="number">1000</span></span><br><span class="line">      <span class="comment"># 服务发现相关配置</span></span><br><span class="line">      <span class="attr">discovery:</span></span><br><span class="line">        <span class="attr">register:</span> <span class="literal">true</span>                                <span class="comment"># 是否需要注册</span></span><br><span class="line">        <span class="attr">instance-id:</span> <span class="string">$&#123;spring.application.name&#125;-01</span>    <span class="comment"># 注册实例 id（必须唯一）</span></span><br><span class="line">        <span class="attr">service-name:</span> <span class="string">$&#123;spring.application.name&#125;</span>      <span class="comment"># 服务名称</span></span><br><span class="line">        <span class="attr">port:</span> <span class="string">$&#123;server.port&#125;</span>                          <span class="comment"># 服务端口</span></span><br><span class="line">        <span class="attr">prefer-ip-address:</span> <span class="literal">true</span>                       <span class="comment"># 是否使用 ip 地址注册</span></span><br><span class="line">        <span class="attr">ip-address:</span> <span class="string">$&#123;spring.cloud.client.ip-address&#125;</span> <span class="comment"># 服务请求 ip</span></span><br></pre></td></tr></table></figure>
-
+<pre><code class="yaml">spring:
+  application:
+    name: provider # 应用名称
+  profiles:
+    active: dev # 指定环境，默认加载 default 环境
+  cloud:
+    consul:
+      # Consul 服务器地址
+      host: localhost
+      port: 8500
+      # 配置中心相关配置
+      config:
+        # 是否启用配置中心，默认值 true 开启
+        enabled: true
+        # 设置配置的基本文件夹，默认值 config 可以理解为配置文件所在的最外层文件夹
+        prefix: test-config
+        # 设置应用的文件夹名称，默认值 application 一般建议设置为微服务应用名称
+        default-context: provider
+        # 配置环境分隔符，默认值 &quot;,&quot; 和 default-context 配置项搭配
+        # 例如应用 orderService 分别有环境 default、dev、test、prod
+        # 只需在 config 文件夹下创建 orderService、orderService-dev、orderService-test、orderService-prod 文件夹即可
+        profile-separator: &#39;-&#39;
+        # 指定配置格式为 yaml
+        format: YAML
+        # Consul 的 Key/Values 中的 Key，Value 对应整个配置文件
+        data-key: provider
+        # 以上配置可以理解为：加载 config/orderService/ 文件夹下 Key 为 orderServiceConfig 的 Value 对应的配置信息
+        watch:
+          # 是否开启自动刷新，默认值 true 开启
+          enabled: true
+          # 刷新频率，单位：毫秒，默认值 1000
+          delay: 1000
+      # 服务发现相关配置
+      discovery:
+        register: true                                # 是否需要注册
+        instance-id: $&#123;spring.application.name&#125;-01    # 注册实例 id（必须唯一）
+        service-name: $&#123;spring.application.name&#125;      # 服务名称
+        port: $&#123;server.port&#125;                          # 服务端口
+        prefer-ip-address: true                       # 是否使用 ip 地址注册
+        ip-address: $&#123;spring.cloud.client.ip-address&#125; # 服务请求 ip
+</code></pre>
 <ul>
 <li>服务使用者<code>consumer</code></li>
 </ul>
 <p>首先是<code>UserClient</code></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="meta">@FeignClient(name = &quot;provider&quot;,configuration=UserClientConfig.class)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">UserClient</span> &#123;</span><br><span class="line">    <span class="meta">@PostMapping(&quot;/api&quot;)</span></span><br><span class="line">    User <span class="title function_">getUser</span><span class="params">(<span class="meta">@RequestParam(&quot;name&quot;)</span> String name,<span class="meta">@RequestParam(&quot;type&quot;)</span> String type)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<pre><code class="java">@Component
+@FeignClient(name = &quot;provider&quot;,configuration=UserClientConfig.class)
+public interface UserClient &#123;
+    @PostMapping(&quot;/api&quot;)
+    User getUser(@RequestParam(&quot;name&quot;) String name,@RequestParam(&quot;type&quot;) String type);
+&#125;
+</code></pre>
 <p><code>@FeignClient(name = &quot;provider&quot;,configuration=UserClientConfig.class)</code>表示这是调用<code>provider</code>服务的客户端，接口应和<code>provider</code>暴露出的接口相同</p>
 <p>接下来是配置类<code>UserClientConfig</code></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserClientConfig</span> &#123;</span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    Logger.Level <span class="title function_">feignLoggerLevel</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> Logger.Level.HEADERS;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<pre><code class="java">@Configuration
+public class UserClientConfig &#123;
+    @Bean
+    Logger.Level feignLoggerLevel() &#123;
+        return Logger.Level.HEADERS;
+    &#125;
+&#125;
+</code></pre>
 <p>这里配置日志等级</p>
 <p>然后是<code>consumer</code>自己的<code>Controller</code></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Controller</span> &#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    UserClient userClient;</span><br><span class="line">    <span class="meta">@PostMapping(&quot;/user&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> User <span class="title function_">getUser</span><span class="params">(<span class="meta">@RequestParam(&quot;name&quot;)</span>String name,<span class="meta">@RequestParam(&quot;id&quot;)</span> String id)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> userClient.getUser(id,name);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<pre><code class="java">@RestController
+public class Controller &#123;
+    @Autowired
+    UserClient userClient;
+    @PostMapping(&quot;/user&quot;)
+    public User getUser(@RequestParam(&quot;name&quot;)String name,@RequestParam(&quot;id&quot;) String id)&#123;
+        return userClient.getUser(id,name);
+    &#125;
+&#125;
+</code></pre>
 <p>这里可以直接用<code>@Autowired</code>注入<code>client</code>供<code>controller</code>调用，实现了跨服务的调用</p>
 <p><strong>总体流程</strong>：</p>
 <p>consumer收到请求，接收参数并调用<code>userClient</code>，然后根据<code>userClient</code>中的服务名去询问<code>Consul</code>得到真实的<code>ip</code>地址，然后<code>Feign</code>会发请求给provider得到结果并返回给consumer</p>
