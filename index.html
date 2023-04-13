@@ -382,7 +382,78 @@ public class Controller &#123;
     <div class="description">
         <div class="content" v-pre>
             
-            <p>Normal <em>Italic</em> <strong>Strong</strong></p>
+            <h1 id="AOP学习笔记"><a href="#AOP学习笔记" class="headerlink" title="AOP学习笔记"></a>AOP学习笔记</h1><p><strong>引入依赖</strong>:</p>
+<pre><code class="xml">&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-starter-aop&lt;/artifactId&gt;
+&lt;/dependency&gt;
+</code></pre>
+<p><strong>引入</strong>：有时候不同的模块需要调用相同的功能，例如日志记录，常见的做法是在每一个需要打印日志的地方注入日志类然后调用，但这样会导致重复代码过多且耦合度过高，更合适的做法是采用<code>SpringBoot</code>提供的<code>AOP</code></p>
+<p><strong>什么是AOP</strong>:<code>AOP</code>即面向切面的编程。这种思想将程序的执行分为了一个一个的切面，在这些切面间可以自定义得插入一些操作，例如在调用某个<code>service</code>前打印日志，调用完<code>service</code>完后也打印日志</p>
+<p><strong>几个常见注解</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>注解</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>@Aspect</td>
+<td>对类进行注释，定义一个切面</td>
+</tr>
+<tr>
+<td>@Pointcut</td>
+<td>对方法进行注释，定义一个切入点</td>
+</tr>
+<tr>
+<td>@Around</td>
+<td>在切点前后都执行</td>
+</tr>
+<tr>
+<td>@Before</td>
+<td>在切点前执行</td>
+</tr>
+<tr>
+<td>@After</td>
+<td>在切点后执行</td>
+</tr>
+</tbody></table>
+<p><strong>代码实现</strong>：以打印日志为例</p>
+<p>首先定义切面类：</p>
+<pre><code class="JAVA">@Aspect
+@Component
+public class AopAdvice &#123;
+    @Pointcut(&quot;@annotation(com.example.aop.annotation.Test)&quot;)
+    public void log()&#123;
+
+    &#125;
+    @Before(&quot;log()&quot;)
+    public void beforelog()&#123;
+        System.out.println(&quot;之前&quot;);
+    &#125;
+&#125;
+</code></pre>
+<p>这里切点定义为被<code>@Test</code>注解标记的方法</p>
+<p><code>Test</code></p>
+<pre><code class="java">@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.METHOD)
+public @interface Test &#123;
+&#125;
+</code></pre>
+<p>再写一个简单的<code>controller</code></p>
+<p><code>Controller</code></p>
+<pre><code class="java">@RestController
+public class Controller &#123;
+    @Test
+    @GetMapping(&quot;/api&quot;)
+    public void test()&#123;
+        System.out.println(&quot;方法内&quot;);
+    &#125;
+&#125;
+</code></pre>
+<p>这里的<code>test()</code>被<code>@Test</code>注解标记了，则在执行这个方法前会先调用切面类中的<code>beforelog()</code>方法</p>
+<p>完整代码见<code>SpringBoot_Test</code>项目中<code>aop</code>包</p>
 
             
         </div>
