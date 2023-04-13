@@ -8,7 +8,7 @@
         <meta name="description" content="乱写一气，瞎写一通。" />
         <meta name="keywords" content="" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-        <link rel="icon" href="/blog/images/favicon.png" />
+        <link rel="icon" href="/blog/images/crown.png" />
         <script src="https://cdn.staticfile.org/vue/3.2.47/vue.global.prod.min.js"></script>
 <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/6.3.0/css/all.min.css" />
 <link rel="stylesheet" href="/blog/css/fonts.min.css" />
@@ -89,7 +89,7 @@
     <div
         id="home-background"
         ref="homeBackground"
-        data-images="/blog/images/quebec.jpg"
+        data-images="/blog/images/unique.png"
     ></div>
     <div id="home-info" @click="homeClick">
         <span class="loop"></span>
@@ -110,8 +110,8 @@
         
 
 <div class="post">
-    <a href="/blog/2023/04/13/%E8%87%AA%E5%AE%9A%E4%B9%89%E8%A7%A3%E6%9E%90%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
-        <h2 class="post-title">自定义解析器学习笔记</h2>
+    <a href="/blog/2023/04/13/AOP%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+        <h2 class="post-title"></h2>
     </a>
     <div class="category-and-date">
         
@@ -120,6 +120,364 @@
                 <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
             2023/4/13
+        </span>
+        
+        
+    </div>
+    <div class="description">
+        <div class="content" v-pre>
+            
+            <hr>
+<p>title: AOP学习笔记<br>date: 2023-02-02</p>
+<h1 id="AOP学习笔记"><a href="#AOP学习笔记" class="headerlink" title="AOP学习笔记"></a>AOP学习笔记</h1><p><strong>引入依赖</strong>:</p>
+<pre><code class="xml">&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-starter-aop&lt;/artifactId&gt;
+&lt;/dependency&gt;
+</code></pre>
+<p><strong>引入</strong>：有时候不同的模块需要调用相同的功能，例如日志记录，常见的做法是在每一个需要打印日志的地方注入日志类然后调用，但这样会导致重复代码过多且耦合度过高，更合适的做法是采用<code>SpringBoot</code>提供的<code>AOP</code></p>
+<p><strong>什么是AOP</strong>:<code>AOP</code>即面向切面的编程。这种思想将程序的执行分为了一个一个的切面，在这些切面间可以自定义得插入一些操作，例如在调用某个<code>service</code>前打印日志，调用完<code>service</code>完后也打印日志</p>
+<p><strong>几个常见注解</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>注解</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>@Aspect</td>
+<td>对类进行注释，定义一个切面</td>
+</tr>
+<tr>
+<td>@Pointcut</td>
+<td>对方法进行注释，定义一个切入点</td>
+</tr>
+<tr>
+<td>@Around</td>
+<td>在切点前后都执行</td>
+</tr>
+<tr>
+<td>@Before</td>
+<td>在切点前执行</td>
+</tr>
+<tr>
+<td>@After</td>
+<td>在切点后执行</td>
+</tr>
+</tbody></table>
+<p><strong>代码实现</strong>：以打印日志为例</p>
+<p>首先定义切面类：</p>
+<pre><code class="JAVA">@Aspect
+@Component
+public class AopAdvice &#123;
+    @Pointcut(&quot;@annotation(com.example.aop.annotation.Test)&quot;)
+    public void log()&#123;
+
+    &#125;
+    @Before(&quot;log()&quot;)
+    public void beforelog()&#123;
+        System.out.println(&quot;之前&quot;);
+    &#125;
+&#125;
+</code></pre>
+<p>这里切点定义为被<code>@Test</code>注解标记的方法</p>
+<p><code>Test</code></p>
+<pre><code class="java">@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.METHOD)
+public @interface Test &#123;
+&#125;
+</code></pre>
+<p>再写一个简单的<code>controller</code></p>
+<p><code>Controller</code></p>
+<pre><code class="java">@RestController
+public class Controller &#123;
+    @Test
+    @GetMapping(&quot;/api&quot;)
+    public void test()&#123;
+        System.out.println(&quot;方法内&quot;);
+    &#125;
+&#125;
+</code></pre>
+<p>这里的<code>test()</code>被<code>@Test</code>注解标记了，则在执行这个方法前会先调用切面类中的<code>beforelog()</code>方法</p>
+<p>完整代码见<code>SpringBoot_Test</code>项目中<code>aop</code>包</p>
+
+            
+        </div>
+    </div>
+    <div class="post-tags">
+        
+        
+    </div>
+    <a href="/blog/2023/04/13/AOP%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="go-post">阅读全文</a>
+</div>
+
+<div class="post">
+    <a href="/blog/2023/02/06/Consul%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+        <h2 class="post-title">Consul学习笔记</h2>
+    </a>
+    <div class="category-and-date">
+        
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/2/6
+        </span>
+        
+        
+    </div>
+    <div class="description">
+        <div class="content" v-pre>
+            
+            <h1 id="Consul学习笔记"><a href="#Consul学习笔记" class="headerlink" title="Consul学习笔记"></a>Consul学习笔记</h1><p><strong>项目Demo</strong>：<code>feign_test</code>项目</p>
+<p><strong>Consul简介</strong>: 在多服务项目中，需要对繁多的项目进行管理，<code>Consul</code>就可以满足这样的需求。</p>
+<p><code>Consul</code>可以被用作服务注册中心。在一个服务启动的时候，这个服务会将自身的信息发送给<code>Consul</code>完成注册，同时<code>Consul</code>也会间隔一段时间对每个服务进行询问，确保每个服务是健康的，不然就将不健康的服务注销。</p>
+<p><code>Consul</code>可以用作配置中心。在多服务项目里面，由于配置众多，且分布相对分散，这时候可以用<code>Consul</code>将配置统一放在配置中心内，易于维护，同时支持动态修改。</p>
+<h2 id="服务注册中心"><a href="#服务注册中心" class="headerlink" title="服务注册中心"></a>服务注册中心</h2><p>服务注册相对简单，只用配置bootstrap.xml</p>
+<ul>
+<li>引入依赖</li>
+</ul>
+<pre><code class="xml">&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-cloud-starter-consul-discovery&lt;/artifactId&gt;
+&lt;/dependency&gt;
+
+&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-starter-actuator&lt;/artifactId&gt;
+&lt;/dependency&gt;
+</code></pre>
+<p>第一个依赖是consul服务发现的依赖，第二个是用来审查服务健康状态的依赖</p>
+<p>注意，引入<code>Consul</code>服务注册依赖前应先引入<code>Spring Cloud</code>的依赖</p>
+<ul>
+<li>配置<code>bootstrap.xml(或application.yml)</code></li>
+</ul>
+<pre><code class="yaml">cloud:
+  consul:
+    # Consul 服务器地址
+    host: localhost
+    port: 8500
+    # 服务发现相关配置
+    discovery:
+      register: true                                # 是否需要注册
+      instance-id: $&#123;spring.application.name&#125;-01    # 注册实例 id（必须唯一）
+      service-name: $&#123;spring.application.name&#125;      # 服务名称
+      port: $&#123;server.port&#125;                          # 服务端口
+      prefer-ip-address: true                       # 是否使用 ip 地址注册
+      ip-address: $&#123;spring.cloud.client.ip-address&#125; # 服务请求 ip
+</code></pre>
+<p>首先配置Consul服务器地址，要告诉服务去哪里注册，<code>discovery</code>下的配置便是服务自己的信息。</p>
+<p>配置完后，在服务启动时就会完成服务注册</p>
+<h2 id="配置中心"><a href="#配置中心" class="headerlink" title="配置中心"></a>配置中心</h2><p>配置中心的配置相对来说复杂一点</p>
+<ul>
+<li>首先引入依赖</li>
+</ul>
+<pre><code class="xml">&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-cloud-starter-consul-config&lt;/artifactId&gt;
+&lt;/dependency&gt;
+</code></pre>
+<p>这里引入<code>Consul</code>配置中心的依赖</p>
+<ul>
+<li>配置<code>bootstrap.xml(application.yml)</code></li>
+</ul>
+<pre><code class="yaml">cloud:
+  consul:
+    # 配置中心相关配置
+    config:
+      # 是否启用配置中心，默认值 true 开启
+      enabled: true
+      # 设置配置的基本文件夹，默认值 config 可以理解为配置文件所在的最外层文件夹
+      prefix: test-config
+      # 设置应用的文件夹名称，默认值 application 一般建议设置为微服务应用名称
+      default-context: provider
+      # 配置环境分隔符，默认值 &quot;,&quot; 和 default-context 配置项搭配
+      # 例如应用 orderService 分别有环境 default、dev、test、prod
+      # 只需在 config 文件夹下创建 orderService、orderService-dev、orderService-test、orderService-prod 文件夹即可
+      profile-separator: &#39;-&#39;
+      # 指定配置格式为 yaml
+      format: YAML
+      # Consul 的 Key/Values 中的 Key，Value 对应整个配置文件
+      data-key: provider
+      # 以上配置可以理解为：加载 config/orderService/ 文件夹下 Key 为 orderServiceConfig 的 Value 对应的配置信息
+      watch:
+        # 是否开启自动刷新，默认值 true 开启
+        enabled: true
+        # 刷新频率，单位：毫秒，默认值 1000
+        delay: 1000
+</code></pre>
+<p>这样配置后服务启动时会在<code>Consul</code>指定位置寻找配置文件</p>
+<ul>
+<li>在<code>Consul</code>中添加配置文件</li>
+</ul>
+<p>在<code>Consul</code>中添加配置文件与在本地并无不同，所以可以无缝将本地的配置文件迁移到<code>Consul</code>上</p>
+
+            
+        </div>
+    </div>
+    <div class="post-tags">
+        
+        
+    </div>
+    <a href="/blog/2023/02/06/Consul%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="go-post">阅读全文</a>
+</div>
+
+<div class="post">
+    <a href="/blog/2023/02/03/Feign%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+        <h2 class="post-title">Feign学习笔记</h2>
+    </a>
+    <div class="category-and-date">
+        
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/2/3
+        </span>
+        
+        
+    </div>
+    <div class="description">
+        <div class="content" v-pre>
+            
+            <h1 id="Feign学习笔记"><a href="#Feign学习笔记" class="headerlink" title="Feign学习笔记"></a>Feign学习笔记</h1><p><strong>Demo地址</strong>：<code>feign_test</code>项目</p>
+<p><strong>Feign简介</strong>：在多服务的项目中，有时不同的服务间需要相互调用，<code>Spring</code>提供了<code>RestTemplate</code>实现对不同服务的调用，但是<code>RestTemplate</code>是对<code>url</code>的直接访问，不易阅读，难于维护，<code>Feign</code>就是对这种<code>Http</code>调用进行了封装，同时满足了面向接口编程的习惯</p>
+<p><strong>代码实现</strong>：</p>
+<ul>
+<li>引入依赖</li>
+</ul>
+<p>首先是被调用的服务，我们命名为<code>provider</code></p>
+<p>调用其他服务接口的服务，命名为<code>consumer</code></p>
+<p>这两个子项目继承父项目依赖，其中Feign的依赖为</p>
+<pre><code class="xml">&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-cloud-starter-openfeign&lt;/artifactId&gt;
+&lt;/dependency&gt;
+</code></pre>
+<p>因为要搭配<code>Consul</code>服务注册中心使用，所以还需要引入<code>Consul</code>的相关依赖，详情见《Consul学习笔记.md》</p>
+<ul>
+<li>服务提供者<code>provider</code></li>
+</ul>
+<p>服务提供者<code>provider</code>并无特别的配置，除去需要在<code>Consul</code>注册服务外，跟普通的服务一样，对外提供<code>controller</code>中的接口，处理收到的<code>http</code>请求</p>
+<p>这里我们假设provider提供一个包装的服务，将参数包装成一个类</p>
+<p><code>UserProviderController</code></p>
+<pre><code class="java">@RestController
+public class UserProviderController &#123;
+    @PostMapping(&quot;/api&quot;)
+    public User getUser(@RequestParam(&quot;name&quot;) String name,@RequestParam(&quot;type&quot;) String type)&#123;
+        return new User(name,type);
+    &#125;
+&#125;
+</code></pre>
+<p>实体类<code>User</code></p>
+<pre><code class="java">@Data
+@AllArgsConstructor
+public class User &#123;
+    String name;
+    String type;
+&#125;
+</code></pre>
+<p>在<code>bootstrap.yml</code>将服务注册成<code>provider</code>，这是被<code>consumer</code>调用的依据</p>
+<pre><code class="yaml">spring:
+  application:
+    name: provider # 应用名称
+  profiles:
+    active: dev # 指定环境，默认加载 default 环境
+  cloud:
+    consul:
+      # Consul 服务器地址
+      host: localhost
+      port: 8500
+      # 配置中心相关配置
+      config:
+        # 是否启用配置中心，默认值 true 开启
+        enabled: true
+        # 设置配置的基本文件夹，默认值 config 可以理解为配置文件所在的最外层文件夹
+        prefix: test-config
+        # 设置应用的文件夹名称，默认值 application 一般建议设置为微服务应用名称
+        default-context: provider
+        # 配置环境分隔符，默认值 &quot;,&quot; 和 default-context 配置项搭配
+        # 例如应用 orderService 分别有环境 default、dev、test、prod
+        # 只需在 config 文件夹下创建 orderService、orderService-dev、orderService-test、orderService-prod 文件夹即可
+        profile-separator: &#39;-&#39;
+        # 指定配置格式为 yaml
+        format: YAML
+        # Consul 的 Key/Values 中的 Key，Value 对应整个配置文件
+        data-key: provider
+        # 以上配置可以理解为：加载 config/orderService/ 文件夹下 Key 为 orderServiceConfig 的 Value 对应的配置信息
+        watch:
+          # 是否开启自动刷新，默认值 true 开启
+          enabled: true
+          # 刷新频率，单位：毫秒，默认值 1000
+          delay: 1000
+      # 服务发现相关配置
+      discovery:
+        register: true                                # 是否需要注册
+        instance-id: $&#123;spring.application.name&#125;-01    # 注册实例 id（必须唯一）
+        service-name: $&#123;spring.application.name&#125;      # 服务名称
+        port: $&#123;server.port&#125;                          # 服务端口
+        prefer-ip-address: true                       # 是否使用 ip 地址注册
+        ip-address: $&#123;spring.cloud.client.ip-address&#125; # 服务请求 ip
+</code></pre>
+<ul>
+<li>服务使用者<code>consumer</code></li>
+</ul>
+<p>首先是<code>UserClient</code></p>
+<pre><code class="java">@Component
+@FeignClient(name = &quot;provider&quot;,configuration=UserClientConfig.class)
+public interface UserClient &#123;
+    @PostMapping(&quot;/api&quot;)
+    User getUser(@RequestParam(&quot;name&quot;) String name,@RequestParam(&quot;type&quot;) String type);
+&#125;
+</code></pre>
+<p><code>@FeignClient(name = &quot;provider&quot;,configuration=UserClientConfig.class)</code>表示这是调用<code>provider</code>服务的客户端，接口应和<code>provider</code>暴露出的接口相同</p>
+<p>接下来是配置类<code>UserClientConfig</code></p>
+<pre><code class="java">@Configuration
+public class UserClientConfig &#123;
+    @Bean
+    Logger.Level feignLoggerLevel() &#123;
+        return Logger.Level.HEADERS;
+    &#125;
+&#125;
+</code></pre>
+<p>这里配置日志等级</p>
+<p>然后是<code>consumer</code>自己的<code>Controller</code></p>
+<pre><code class="java">@RestController
+public class Controller &#123;
+    @Autowired
+    UserClient userClient;
+    @PostMapping(&quot;/user&quot;)
+    public User getUser(@RequestParam(&quot;name&quot;)String name,@RequestParam(&quot;id&quot;) String id)&#123;
+        return userClient.getUser(id,name);
+    &#125;
+&#125;
+</code></pre>
+<p>这里可以直接用<code>@Autowired</code>注入<code>client</code>供<code>controller</code>调用，实现了跨服务的调用</p>
+<p><strong>总体流程</strong>：</p>
+<p>consumer收到请求，接收参数并调用<code>userClient</code>，然后根据<code>userClient</code>中的服务名去询问<code>Consul</code>得到真实的<code>ip</code>地址，然后<code>Feign</code>会发请求给provider得到结果并返回给consumer</p>
+
+            
+        </div>
+    </div>
+    <div class="post-tags">
+        
+        
+    </div>
+    <a href="/blog/2023/02/03/Feign%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="go-post">阅读全文</a>
+</div>
+
+<div class="post">
+    <a href="/blog/2023/02/02/%E8%87%AA%E5%AE%9A%E4%B9%89%E8%A7%A3%E6%9E%90%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+        <h2 class="post-title">自定义解析器学习笔记</h2>
+    </a>
+    <div class="category-and-date">
+        
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/2/2
         </span>
         
         
@@ -197,11 +555,11 @@ public class Controller &#123;
         
         
     </div>
-    <a href="/blog/2023/04/13/%E8%87%AA%E5%AE%9A%E4%B9%89%E8%A7%A3%E6%9E%90%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="go-post">阅读全文</a>
+    <a href="/blog/2023/02/02/%E8%87%AA%E5%AE%9A%E4%B9%89%E8%A7%A3%E6%9E%90%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="go-post">阅读全文</a>
 </div>
 
 <div class="post">
-    <a href="/blog/2023/04/13/%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+    <a href="/blog/2023/01/31/%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
         <h2 class="post-title">工厂模式学习笔记</h2>
     </a>
     <div class="category-and-date">
@@ -210,7 +568,7 @@ public class Controller &#123;
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
-            2023/4/13
+            2023/1/31
         </span>
         
         
@@ -383,11 +741,11 @@ public class Controller &#123;
         
         
     </div>
-    <a href="/blog/2023/04/13/%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="go-post">阅读全文</a>
+    <a href="/blog/2023/01/31/%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="go-post">阅读全文</a>
 </div>
 
 <div class="post">
-    <a href="/blog/2023/04/13/JDK%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+    <a href="/blog/2023/01/30/JDK%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
         <h2 class="post-title">JDK动态代理学习笔记</h2>
     </a>
     <div class="category-and-date">
@@ -396,7 +754,7 @@ public class Controller &#123;
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
-            2023/4/13
+            2023/1/30
         </span>
         
         
@@ -650,363 +1008,7 @@ public class UploadServiceProxy implements InvocationHandler &#123;
         
         
     </div>
-    <a href="/blog/2023/04/13/JDK%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="go-post">阅读全文</a>
-</div>
-
-<div class="post">
-    <a href="/blog/2023/04/13/Feign%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
-        <h2 class="post-title">Feign学习笔记</h2>
-    </a>
-    <div class="category-and-date">
-        
-        <span class="date">
-            <span class="icon">
-                <i class="fa-solid fa-calendar fa-fw"></i>
-            </span>
-            2023/4/13
-        </span>
-        
-        
-    </div>
-    <div class="description">
-        <div class="content" v-pre>
-            
-            <h1 id="Feign学习笔记"><a href="#Feign学习笔记" class="headerlink" title="Feign学习笔记"></a>Feign学习笔记</h1><p><strong>Demo地址</strong>：<code>feign_test</code>项目</p>
-<p><strong>Feign简介</strong>：在多服务的项目中，有时不同的服务间需要相互调用，<code>Spring</code>提供了<code>RestTemplate</code>实现对不同服务的调用，但是<code>RestTemplate</code>是对<code>url</code>的直接访问，不易阅读，难于维护，<code>Feign</code>就是对这种<code>Http</code>调用进行了封装，同时满足了面向接口编程的习惯</p>
-<p><strong>代码实现</strong>：</p>
-<ul>
-<li>引入依赖</li>
-</ul>
-<p>首先是被调用的服务，我们命名为<code>provider</code></p>
-<p>调用其他服务接口的服务，命名为<code>consumer</code></p>
-<p>这两个子项目继承父项目依赖，其中Feign的依赖为</p>
-<pre><code class="xml">&lt;dependency&gt;
-    &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
-    &lt;artifactId&gt;spring-cloud-starter-openfeign&lt;/artifactId&gt;
-&lt;/dependency&gt;
-</code></pre>
-<p>因为要搭配<code>Consul</code>服务注册中心使用，所以还需要引入<code>Consul</code>的相关依赖，详情见《Consul学习笔记.md》</p>
-<ul>
-<li>服务提供者<code>provider</code></li>
-</ul>
-<p>服务提供者<code>provider</code>并无特别的配置，除去需要在<code>Consul</code>注册服务外，跟普通的服务一样，对外提供<code>controller</code>中的接口，处理收到的<code>http</code>请求</p>
-<p>这里我们假设provider提供一个包装的服务，将参数包装成一个类</p>
-<p><code>UserProviderController</code></p>
-<pre><code class="java">@RestController
-public class UserProviderController &#123;
-    @PostMapping(&quot;/api&quot;)
-    public User getUser(@RequestParam(&quot;name&quot;) String name,@RequestParam(&quot;type&quot;) String type)&#123;
-        return new User(name,type);
-    &#125;
-&#125;
-</code></pre>
-<p>实体类<code>User</code></p>
-<pre><code class="java">@Data
-@AllArgsConstructor
-public class User &#123;
-    String name;
-    String type;
-&#125;
-</code></pre>
-<p>在<code>bootstrap.yml</code>将服务注册成<code>provider</code>，这是被<code>consumer</code>调用的依据</p>
-<pre><code class="yaml">spring:
-  application:
-    name: provider # 应用名称
-  profiles:
-    active: dev # 指定环境，默认加载 default 环境
-  cloud:
-    consul:
-      # Consul 服务器地址
-      host: localhost
-      port: 8500
-      # 配置中心相关配置
-      config:
-        # 是否启用配置中心，默认值 true 开启
-        enabled: true
-        # 设置配置的基本文件夹，默认值 config 可以理解为配置文件所在的最外层文件夹
-        prefix: test-config
-        # 设置应用的文件夹名称，默认值 application 一般建议设置为微服务应用名称
-        default-context: provider
-        # 配置环境分隔符，默认值 &quot;,&quot; 和 default-context 配置项搭配
-        # 例如应用 orderService 分别有环境 default、dev、test、prod
-        # 只需在 config 文件夹下创建 orderService、orderService-dev、orderService-test、orderService-prod 文件夹即可
-        profile-separator: &#39;-&#39;
-        # 指定配置格式为 yaml
-        format: YAML
-        # Consul 的 Key/Values 中的 Key，Value 对应整个配置文件
-        data-key: provider
-        # 以上配置可以理解为：加载 config/orderService/ 文件夹下 Key 为 orderServiceConfig 的 Value 对应的配置信息
-        watch:
-          # 是否开启自动刷新，默认值 true 开启
-          enabled: true
-          # 刷新频率，单位：毫秒，默认值 1000
-          delay: 1000
-      # 服务发现相关配置
-      discovery:
-        register: true                                # 是否需要注册
-        instance-id: $&#123;spring.application.name&#125;-01    # 注册实例 id（必须唯一）
-        service-name: $&#123;spring.application.name&#125;      # 服务名称
-        port: $&#123;server.port&#125;                          # 服务端口
-        prefer-ip-address: true                       # 是否使用 ip 地址注册
-        ip-address: $&#123;spring.cloud.client.ip-address&#125; # 服务请求 ip
-</code></pre>
-<ul>
-<li>服务使用者<code>consumer</code></li>
-</ul>
-<p>首先是<code>UserClient</code></p>
-<pre><code class="java">@Component
-@FeignClient(name = &quot;provider&quot;,configuration=UserClientConfig.class)
-public interface UserClient &#123;
-    @PostMapping(&quot;/api&quot;)
-    User getUser(@RequestParam(&quot;name&quot;) String name,@RequestParam(&quot;type&quot;) String type);
-&#125;
-</code></pre>
-<p><code>@FeignClient(name = &quot;provider&quot;,configuration=UserClientConfig.class)</code>表示这是调用<code>provider</code>服务的客户端，接口应和<code>provider</code>暴露出的接口相同</p>
-<p>接下来是配置类<code>UserClientConfig</code></p>
-<pre><code class="java">@Configuration
-public class UserClientConfig &#123;
-    @Bean
-    Logger.Level feignLoggerLevel() &#123;
-        return Logger.Level.HEADERS;
-    &#125;
-&#125;
-</code></pre>
-<p>这里配置日志等级</p>
-<p>然后是<code>consumer</code>自己的<code>Controller</code></p>
-<pre><code class="java">@RestController
-public class Controller &#123;
-    @Autowired
-    UserClient userClient;
-    @PostMapping(&quot;/user&quot;)
-    public User getUser(@RequestParam(&quot;name&quot;)String name,@RequestParam(&quot;id&quot;) String id)&#123;
-        return userClient.getUser(id,name);
-    &#125;
-&#125;
-</code></pre>
-<p>这里可以直接用<code>@Autowired</code>注入<code>client</code>供<code>controller</code>调用，实现了跨服务的调用</p>
-<p><strong>总体流程</strong>：</p>
-<p>consumer收到请求，接收参数并调用<code>userClient</code>，然后根据<code>userClient</code>中的服务名去询问<code>Consul</code>得到真实的<code>ip</code>地址，然后<code>Feign</code>会发请求给provider得到结果并返回给consumer</p>
-
-            
-        </div>
-    </div>
-    <div class="post-tags">
-        
-        
-    </div>
-    <a href="/blog/2023/04/13/Feign%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="go-post">阅读全文</a>
-</div>
-
-<div class="post">
-    <a href="/blog/2023/04/13/Consul%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
-        <h2 class="post-title">Consul学习笔记</h2>
-    </a>
-    <div class="category-and-date">
-        
-        <span class="date">
-            <span class="icon">
-                <i class="fa-solid fa-calendar fa-fw"></i>
-            </span>
-            2023/4/13
-        </span>
-        
-        
-    </div>
-    <div class="description">
-        <div class="content" v-pre>
-            
-            <h1 id="Consul学习笔记"><a href="#Consul学习笔记" class="headerlink" title="Consul学习笔记"></a>Consul学习笔记</h1><p><strong>项目Demo</strong>：<code>feign_test</code>项目</p>
-<p><strong>Consul简介</strong>: 在多服务项目中，需要对繁多的项目进行管理，<code>Consul</code>就可以满足这样的需求。</p>
-<p><code>Consul</code>可以被用作服务注册中心。在一个服务启动的时候，这个服务会将自身的信息发送给<code>Consul</code>完成注册，同时<code>Consul</code>也会间隔一段时间对每个服务进行询问，确保每个服务是健康的，不然就将不健康的服务注销。</p>
-<p><code>Consul</code>可以用作配置中心。在多服务项目里面，由于配置众多，且分布相对分散，这时候可以用<code>Consul</code>将配置统一放在配置中心内，易于维护，同时支持动态修改。</p>
-<h2 id="服务注册中心"><a href="#服务注册中心" class="headerlink" title="服务注册中心"></a>服务注册中心</h2><p>服务注册相对简单，只用配置bootstrap.xml</p>
-<ul>
-<li>引入依赖</li>
-</ul>
-<pre><code class="xml">&lt;dependency&gt;
-    &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
-    &lt;artifactId&gt;spring-cloud-starter-consul-discovery&lt;/artifactId&gt;
-&lt;/dependency&gt;
-
-&lt;dependency&gt;
-    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-    &lt;artifactId&gt;spring-boot-starter-actuator&lt;/artifactId&gt;
-&lt;/dependency&gt;
-</code></pre>
-<p>第一个依赖是consul服务发现的依赖，第二个是用来审查服务健康状态的依赖</p>
-<p>注意，引入<code>Consul</code>服务注册依赖前应先引入<code>Spring Cloud</code>的依赖</p>
-<ul>
-<li>配置<code>bootstrap.xml(或application.yml)</code></li>
-</ul>
-<pre><code class="yaml">cloud:
-  consul:
-    # Consul 服务器地址
-    host: localhost
-    port: 8500
-    # 服务发现相关配置
-    discovery:
-      register: true                                # 是否需要注册
-      instance-id: $&#123;spring.application.name&#125;-01    # 注册实例 id（必须唯一）
-      service-name: $&#123;spring.application.name&#125;      # 服务名称
-      port: $&#123;server.port&#125;                          # 服务端口
-      prefer-ip-address: true                       # 是否使用 ip 地址注册
-      ip-address: $&#123;spring.cloud.client.ip-address&#125; # 服务请求 ip
-</code></pre>
-<p>首先配置Consul服务器地址，要告诉服务去哪里注册，<code>discovery</code>下的配置便是服务自己的信息。</p>
-<p>配置完后，在服务启动时就会完成服务注册</p>
-<h2 id="配置中心"><a href="#配置中心" class="headerlink" title="配置中心"></a>配置中心</h2><p>配置中心的配置相对来说复杂一点</p>
-<ul>
-<li>首先引入依赖</li>
-</ul>
-<pre><code class="xml">&lt;dependency&gt;
-    &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
-    &lt;artifactId&gt;spring-cloud-starter-consul-config&lt;/artifactId&gt;
-&lt;/dependency&gt;
-</code></pre>
-<p>这里引入<code>Consul</code>配置中心的依赖</p>
-<ul>
-<li>配置<code>bootstrap.xml(application.yml)</code></li>
-</ul>
-<pre><code class="yaml">cloud:
-  consul:
-    # 配置中心相关配置
-    config:
-      # 是否启用配置中心，默认值 true 开启
-      enabled: true
-      # 设置配置的基本文件夹，默认值 config 可以理解为配置文件所在的最外层文件夹
-      prefix: test-config
-      # 设置应用的文件夹名称，默认值 application 一般建议设置为微服务应用名称
-      default-context: provider
-      # 配置环境分隔符，默认值 &quot;,&quot; 和 default-context 配置项搭配
-      # 例如应用 orderService 分别有环境 default、dev、test、prod
-      # 只需在 config 文件夹下创建 orderService、orderService-dev、orderService-test、orderService-prod 文件夹即可
-      profile-separator: &#39;-&#39;
-      # 指定配置格式为 yaml
-      format: YAML
-      # Consul 的 Key/Values 中的 Key，Value 对应整个配置文件
-      data-key: provider
-      # 以上配置可以理解为：加载 config/orderService/ 文件夹下 Key 为 orderServiceConfig 的 Value 对应的配置信息
-      watch:
-        # 是否开启自动刷新，默认值 true 开启
-        enabled: true
-        # 刷新频率，单位：毫秒，默认值 1000
-        delay: 1000
-</code></pre>
-<p>这样配置后服务启动时会在<code>Consul</code>指定位置寻找配置文件</p>
-<ul>
-<li>在<code>Consul</code>中添加配置文件</li>
-</ul>
-<p>在<code>Consul</code>中添加配置文件与在本地并无不同，所以可以无缝将本地的配置文件迁移到<code>Consul</code>上</p>
-
-            
-        </div>
-    </div>
-    <div class="post-tags">
-        
-        
-    </div>
-    <a href="/blog/2023/04/13/Consul%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="go-post">阅读全文</a>
-</div>
-
-<div class="post">
-    <a href="/blog/2023/04/13/AOP%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
-        <h2 class="post-title">AOP学习笔记</h2>
-    </a>
-    <div class="category-and-date">
-        
-        <span class="date">
-            <span class="icon">
-                <i class="fa-solid fa-calendar fa-fw"></i>
-            </span>
-            2023/4/13
-        </span>
-        
-        
-    </div>
-    <div class="description">
-        <div class="content" v-pre>
-            
-            <h1 id="AOP学习笔记"><a href="#AOP学习笔记" class="headerlink" title="AOP学习笔记"></a>AOP学习笔记</h1><p><strong>引入依赖</strong>:</p>
-<pre><code class="xml">&lt;dependency&gt;
-    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-    &lt;artifactId&gt;spring-boot-starter-aop&lt;/artifactId&gt;
-&lt;/dependency&gt;
-</code></pre>
-<p><strong>引入</strong>：有时候不同的模块需要调用相同的功能，例如日志记录，常见的做法是在每一个需要打印日志的地方注入日志类然后调用，但这样会导致重复代码过多且耦合度过高，更合适的做法是采用<code>SpringBoot</code>提供的<code>AOP</code></p>
-<p><strong>什么是AOP</strong>:<code>AOP</code>即面向切面的编程。这种思想将程序的执行分为了一个一个的切面，在这些切面间可以自定义得插入一些操作，例如在调用某个<code>service</code>前打印日志，调用完<code>service</code>完后也打印日志</p>
-<p><strong>几个常见注解</strong>:</p>
-<table>
-<thead>
-<tr>
-<th>注解</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>@Aspect</td>
-<td>对类进行注释，定义一个切面</td>
-</tr>
-<tr>
-<td>@Pointcut</td>
-<td>对方法进行注释，定义一个切入点</td>
-</tr>
-<tr>
-<td>@Around</td>
-<td>在切点前后都执行</td>
-</tr>
-<tr>
-<td>@Before</td>
-<td>在切点前执行</td>
-</tr>
-<tr>
-<td>@After</td>
-<td>在切点后执行</td>
-</tr>
-</tbody></table>
-<p><strong>代码实现</strong>：以打印日志为例</p>
-<p>首先定义切面类：</p>
-<pre><code class="JAVA">@Aspect
-@Component
-public class AopAdvice &#123;
-    @Pointcut(&quot;@annotation(com.example.aop.annotation.Test)&quot;)
-    public void log()&#123;
-
-    &#125;
-    @Before(&quot;log()&quot;)
-    public void beforelog()&#123;
-        System.out.println(&quot;之前&quot;);
-    &#125;
-&#125;
-</code></pre>
-<p>这里切点定义为被<code>@Test</code>注解标记的方法</p>
-<p><code>Test</code></p>
-<pre><code class="java">@Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.METHOD)
-public @interface Test &#123;
-&#125;
-</code></pre>
-<p>再写一个简单的<code>controller</code></p>
-<p><code>Controller</code></p>
-<pre><code class="java">@RestController
-public class Controller &#123;
-    @Test
-    @GetMapping(&quot;/api&quot;)
-    public void test()&#123;
-        System.out.println(&quot;方法内&quot;);
-    &#125;
-&#125;
-</code></pre>
-<p>这里的<code>test()</code>被<code>@Test</code>注解标记了，则在执行这个方法前会先调用切面类中的<code>beforelog()</code>方法</p>
-<p>完整代码见<code>SpringBoot_Test</code>项目中<code>aop</code>包</p>
-
-            
-        </div>
-    </div>
-    <div class="post-tags">
-        
-        
-    </div>
-    <a href="/blog/2023/04/13/AOP%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="go-post">阅读全文</a>
+    <a href="/blog/2023/01/30/JDK%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="go-post">阅读全文</a>
 </div>
 
 
@@ -1030,7 +1032,7 @@ public class Controller &#123;
         <div id="card-div">
     <div class="card-style">
         <div class="avatar">
-            <img src="/blog/images/avatar.jpg" alt="avatar" />
+            <img src="/blog/images/judy.png" alt="avatar" />
         </div>
         <div class="name">Jerry</div>
         <div class="description">

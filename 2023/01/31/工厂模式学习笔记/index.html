@@ -1,0 +1,311 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>工厂模式学习笔记 | Jerry的博客</title>
+        <meta name="author" content="Jerry" />
+        <meta name="description" content="乱写一气，瞎写一通。" />
+        <meta name="keywords" content="" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+        <link rel="icon" href="/blog/images/crown.png" />
+        <script src="https://cdn.staticfile.org/vue/3.2.47/vue.global.prod.min.js"></script>
+<link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/6.3.0/css/all.min.css" />
+<link rel="stylesheet" href="/blog/css/fonts.min.css" />
+<script> const mixins = {}; </script>
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+
+
+<script src="https://cdn.staticfile.org/highlight.js/11.7.0/highlight.min.js"></script>
+<link
+    rel="stylesheet"
+    href="https://cdn.staticfile.org/highlight.js/11.7.0/styles/github.min.css"
+/>
+<script src="/blog/js/lib/highlight.js"></script>
+
+
+
+<script src="/blog/js/lib/preview.js"></script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/blog/css/main.css" />
+
+    <meta name="generator" content="Hexo 6.3.0"></head>
+    <body>
+        <div id="layout">
+            <transition name="fade">
+            <div id="loading" v-show="loading">
+                <div id="loading-circle">
+                    <h2>LOADING</h2>
+                    <p>加载过慢请开启缓存 浏览器默认开启</p>
+                    <img src="/blog/images/loading.gif" />
+                </div>
+            </div>
+            </transition>
+            <nav id="menu" :class="{ hidden: hiddenMenu, 'menu-color': menuColor}">
+    <div class="desktop-menu">
+        <a class="title" href="/blog/">
+            <span>JERRY的博客</span>
+        </a>
+        
+        <a href="/blog/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;Home</span>
+        </a>
+        
+    </div>
+    <div id="mobile-menu">
+        <div class="curtain" @click="shouMenuItems = !shouMenuItems" v-show="shouMenuItems"></div>
+        <div class="title" @click="shouMenuItems = !shouMenuItems">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;JERRY的博客</span>
+        </div>
+        <transition name="slide">
+        <div class="items" v-show="shouMenuItems">
+            
+            <a href="/blog/">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-house fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Home</div>
+                </div>
+            </a>
+            
+        </div>
+        </transition>
+    </div>
+</nav>
+
+            <transition name="into">
+            <div id="main" v-show="!loading">
+                <div class="article">
+    <div>
+        <h1>工厂模式学习笔记</h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/1/31
+        </span>
+        
+        
+    </div>
+    
+    <div class="content" v-pre>
+        <h1 id="工厂模式学习笔记"><a href="#工厂模式学习笔记" class="headerlink" title="工厂模式学习笔记"></a>工厂模式学习笔记</h1><h2 id="1、工厂设计模式"><a href="#1、工厂设计模式" class="headerlink" title="1、工厂设计模式"></a>1、工厂设计模式</h2><p><strong>简介</strong>：一种设计模式，在创建类的时候并不直接创建，而是通过工厂类来创建类，例如我们并不直接生产沙发，当需要沙发的时候就去通知工厂说我们需要沙发，然后工厂会为我们生产沙发并运送给我们，当我们需要椅子的时候也是同理。</p>
+<p><strong>代码实现</strong>：这里以养宠物为例，首先是动物的接口<code>Animal</code>,接下来是具体的动物类<code>Dog</code>，<code>Cat</code>，我们想养某个宠物的时候是去找宠物店(<code>Factory</code>)要，而不是直接变出来一个宠物。</p>
+<p><code>Animal</code></p>
+<pre><code class="java">public interface Animal &#123;
+    public void eat();
+
+    public void birth();
+&#125;
+</code></pre>
+<p><code>Cat</code></p>
+<pre><code class="java">public class Cat implements Animal&#123;
+    public void birth()&#123;
+        System.out.println(&quot;猫出生了&quot;);
+    &#125;
+    public void eat()&#123;
+        System.out.println(&quot;猫正在吃东西&quot;);
+    &#125;
+&#125;
+</code></pre>
+<p><code>Dog</code></p>
+<pre><code class="java">public class Dog implements Animal &#123;
+    public void birth()&#123;
+        System.out.println(&quot;狗出生了&quot;);
+    &#125;
+    public void eat()&#123;
+        System.out.println(&quot;狗正在吃东西&quot;);
+    &#125;
+&#125;
+</code></pre>
+<p><code>Factory</code></p>
+<pre><code class="java">public class Factory &#123;
+    public Animal getNewInstance(String type)&#123;
+        if(type.equals(&quot;猫&quot;))&#123;
+            return new Cat();
+        &#125; else if (type.equals(&quot;狗&quot;)) &#123;
+            return new Dog();
+        &#125;
+        else&#123;
+            return null;
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+<p><code>FactoryPatternTest</code></p>
+<pre><code class="java">public class FactoryPatternTest &#123;
+    public static void main(String[] args)&#123;
+        Factory factory = new Factory();
+        Animal cat = factory.getNewInstance(&quot;猫&quot;);
+        Animal dog = factory.getNewInstance(&quot;狗&quot;);
+        cat.birth();
+        cat.eat();
+        dog.birth();
+        dog.eat();
+    &#125;
+&#125;
+</code></pre>
+<p>在主程序中我们先new一个工厂类，然后调用<code>factory.getNewInstance()</code>方法来获取宠物，同时将动物的种类作为参数传入，告诉工厂类我们需要什么宠物，工厂类根据传入的参数new不同的动物出来并赋值给对应的变量，接下来我们就可以对不同的动物进行调用。这样的好处是以后如果出现了新的宠物，我们只需要更改工厂类以及调用的类，不对其他代码进行改变，符合开闭原则。</p>
+<h2 id="2、抽象工厂模式"><a href="#2、抽象工厂模式" class="headerlink" title="2、抽象工厂模式"></a>2、抽象工厂模式</h2><p><strong>简介</strong>:抽象工厂模式是在工厂模式的基础上对工厂进行抽象，因为可能存在很多种工厂，有中国工厂生产中国风的沙发、椅子，有英国的工厂生产英伦风的沙发、椅子，这个时候工厂模式就无法满足这种需求了，所以引入抽象工厂模式，这里用<code>cglib</code>动态代理来自动选择相应的工厂类.</p>
+<p><strong>代码实现</strong>:这里依旧用养宠物为例，有<code>Animal</code>接口，抽象类<code>Dog</code>、<code>Cat</code>分别实现<code>Animal</code>接口。<code>ChinaDog</code>和<code>EnglandDog</code>继承<code>Dog</code>抽象类,<code>ChinaCat</code>和<code>EnglandCat</code>继承<code>Cat</code>抽象类。</p>
+<p><code>FactoryInterface</code>接口,<code>ChinaFactory</code>、<code>EnglandFactory</code>实现这个接口。</p>
+<p><code>Animal</code></p>
+<pre><code class="java">public interface Animal &#123;
+    public void shout();
+&#125;
+</code></pre>
+<p><code>Cat</code></p>
+<pre><code class="java">public abstract class Cat implements Animal&#123;
+    public abstract void shout();
+&#125;
+</code></pre>
+<p><code>Dog</code></p>
+<pre><code class="java">public abstract class Dog implements Animal &#123;
+    public abstract void shout();
+&#125;
+</code></pre>
+<p><code>ChinaCat</code></p>
+<pre><code class="java">public class ChinaCat extends Cat&#123;
+    public void shout()&#123;
+        System.out.println(&quot;china cat&quot;);
+    &#125;
+&#125;
+</code></pre>
+<p><code>ChinaDog</code></p>
+<pre><code>public class ChinaDog extends Dog&#123;
+    @Override
+    public void shout() &#123;
+        System.out.println(&quot;china dog&quot;);
+    &#125;
+&#125;
+</code></pre>
+<p>英国猫和英国狗同理</p>
+<p><code>FactoryInterface</code></p>
+<pre><code class="java">public interface FactoryInterface &#123;
+    public Animal getAnimal(String catOrDog,String country);
+&#125;
+</code></pre>
+<p><code>EnglandFactory</code></p>
+<pre><code class="java">public class EnglandFactory implements FactoryInterface&#123;
+    @Override
+    public Animal getAnimal(String catOrDog,String country) &#123;
+        if(catOrDog.equals(&quot;cat&quot;))&#123;
+            return new EnglandCat();
+        &#125; else if (catOrDog.equals(&quot;dog&quot;)) &#123;
+            return new EnglandDog();
+        &#125;
+        else &#123;
+            return null;
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+<p><code>ChinaFactory</code></p>
+<pre><code class="java">public class ChinaFactory implements FactoryInterface&#123;
+    @Override
+    public Animal getAnimal(String catOrDog,String country) &#123;
+        if(catOrDog.equals(&quot;cat&quot;))&#123;
+            return new ChinaCat();
+        &#125; else if (catOrDog.equals(&quot;dog&quot;)) &#123;
+            return new ChinaDog();
+        &#125;
+        else &#123;
+            return null;
+        &#125;
+    &#125;
+
+&#125;
+</code></pre>
+<p>接下来是<code>FactoryProxy</code>实现对工厂接口的动态代理</p>
+<pre><code class="java">public class FactoryProxy implements MethodInterceptor &#123;
+    @Override
+    public Object intercept(Object o, Method method, Object[] objects, MethodProxy methodProxy) throws Throwable &#123;
+        String country = (String)objects[1];
+        if(country.equals(&quot;china&quot;))&#123;
+            FactoryInterface factory = new ChinaFactory();
+            return factory.getAnimal((String)objects[0],&quot;china&quot;);
+        &#125;
+        else&#123;
+            FactoryInterface factory = new EnglandFactory();
+            return factory.getAnimal((String)objects[0],&quot;england&quot;);
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+<p><code>Main</code></p>
+<pre><code class="java">public class Main &#123;
+    public static void main(String[] args)&#123;
+        Enhancer enhancer = new Enhancer();
+        enhancer.setSuperclass(FactoryInterface.class);
+        enhancer.setCallback(new FactoryProxy());
+        FactoryInterface factory = (FactoryInterface) enhancer.create();
+        Animal animal = factory.getAnimal(&quot;dog&quot;,&quot;china&quot;);
+        animal.shout();
+    &#125;
+&#125;
+</code></pre>
+<p>首先主程序new一个<code>Enhancer</code>并为<code>FactoryInterface</code>设置代理，然后用<code>enhancer</code>新建一个工厂实例，在调用<code>factory.getAnimal()</code>方法的时候会回调<code>FactoryProxy</code>中的<code>intercept()</code>方法，在<code>intercept()</code>方法中首先获取第二个参数以决定是什么工厂，然后new出相应的工厂，并调用<code>factory.getAnimal()</code>,object[0]是决定返回猫还是狗,接下来对应的工厂就会返回对应的动物。</p>
+<p>完整代码见<code>Helloworld</code>项目下<code>factory_pattern_demo</code>包</p>
+
+    </div>
+    
+    
+    
+    
+    
+    
+    
+</div>
+
+                <footer id="footer">
+    <div id="footer-wrap">
+        <div>
+            &copy;
+            2022 - 2023 Jerry的博客
+            <span id="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            &commat;Jerry
+        </div>
+        <div>
+            Based on the <a target="_blank" rel="noopener" href="https://hexo.io">Hexo Engine</a> &amp;
+            <a target="_blank" rel="noopener" href="https://github.com/argvchs/hexo-theme-particlex">ParticleX Theme</a>
+        </div>
+        
+    </div>
+</footer>
+
+            </div>
+            </transition>
+            
+            <transition name="fade">
+            <div id="preview" ref="preview" v-show="previewShow">
+                <img id="preview-content" ref="previewContent" />
+            </div>
+            </transition>
+            
+        </div>
+        <script src="/blog/js/main.js"></script>
+        
+        
+
+
+
+
+        
+    </body>
+</html>
