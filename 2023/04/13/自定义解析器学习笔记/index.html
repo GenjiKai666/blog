@@ -162,25 +162,63 @@
         <h1 id="自定义解析器学习笔记"><a href="#自定义解析器学习笔记" class="headerlink" title="自定义解析器学习笔记"></a>自定义解析器学习笔记</h1><p><strong>描述</strong>：解析器是对请求进行处理，得到指定类的工具</p>
 <p><strong>实现</strong>：<code>Springboot</code>提供了<code>HandleMethodArgumentResolver</code>接口，只要对这个接口进行实现变可以对请求的处理实现自定义</p>
 <p>首先定义一个注解接口用于对<code>controller</code>中的参数进行标注，例如我们模拟用户登陆，定义一个<code>@User</code>的注解接口</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target(&#123;ElementType.PARAMETER&#125;)</span></span><br><span class="line"><span class="meta">@Retention(RetentionPolicy.RUNTIME)</span></span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> User &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<pre><code class="java">@Target(&#123;ElementType.PARAMETER&#125;)
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+public @interface User &#123;
+&#125;
+</code></pre>
 <p>然后定义一个<code>UserDTO</code>类</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@NoArgsConstructor</span></span><br><span class="line"><span class="meta">@AllArgsConstructor</span></span><br><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="meta">@EqualsAndHashCode</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserDTO</span> &#123;</span><br><span class="line">    String id;</span><br><span class="line">    String name;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<pre><code class="java">@NoArgsConstructor
+@AllArgsConstructor
+@Data
+@EqualsAndHashCode
+public class UserDTO &#123;
+    String id;
+    String name;
+&#125;
+</code></pre>
 <p>接下来是解析器<code>UserResolver</code></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserResolver</span> <span class="keyword">implements</span> <span class="title class_">HandlerMethodArgumentResolver</span> &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> Object <span class="title function_">resolveArgument</span><span class="params">(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="type">HttpServletRequest</span> <span class="variable">request</span> <span class="operator">=</span> webRequest.getNativeRequest(HttpServletRequest.class);</span><br><span class="line">        <span class="type">String</span> <span class="variable">id</span> <span class="operator">=</span> (String) request.getParameter(<span class="string">&quot;id&quot;</span>);</span><br><span class="line">        <span class="type">String</span> <span class="variable">name</span> <span class="operator">=</span> (String) request.getParameter(<span class="string">&quot;name&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">UserDTO</span>(id,name);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">supportsParameter</span><span class="params">(MethodParameter parameter)</span> &#123;</span><br><span class="line">        <span class="type">User</span> <span class="variable">ann</span> <span class="operator">=</span> parameter.getParameterAnnotation(User.class);</span><br><span class="line">        Class&lt;?&gt; parameterType = parameter.getParameterType();</span><br><span class="line">        <span class="keyword">return</span> (ann != <span class="literal">null</span>) &amp;&amp; UserDTO.class.isAssignableFrom(parameterType);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="java">public class UserResolver implements HandlerMethodArgumentResolver &#123;
+    @Override
+    public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception &#123;
+        HttpServletRequest request = webRequest.getNativeRequest(HttpServletRequest.class);
+        String id = (String) request.getParameter(&quot;id&quot;);
+        String name = (String) request.getParameter(&quot;name&quot;);
+        return new UserDTO(id,name);
+    &#125;
 
+    @Override
+    public boolean supportsParameter(MethodParameter parameter) &#123;
+        User ann = parameter.getParameterAnnotation(User.class);
+        Class&lt;?&gt; parameterType = parameter.getParameterType();
+        return (ann != null) &amp;&amp; UserDTO.class.isAssignableFrom(parameterType);
+    &#125;
+&#125;
+</code></pre>
 <p>其中方法<code>supportsParameter(MethodParameter parameter)</code>用来判定对什么类型的注解以及被注解的类生效，例如这里这里只对<code>@User</code>注解以及<code>UserDTO</code>类生效</p>
 <p>方法<code>resolveArgument()</code>方法是对请求进行处理的部分，<code>parameter</code>是要为之解析的参数，	<code>mavContainer</code>是<code>Model</code>和<code>View</code>的容器，<code>webRequest</code>是请求，例如这里先从<code>request</code>中获取<code>id</code>和<code>name</code>，然后封装成<code>UserDTO</code>并返回，这时候<code>controller</code>中的<code>UserDTO</code>便会被构建</p>
 <p>在解析器写好后，利用配置类加载</p>
 <p><code>MyConfig</code></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@EnableWebMvc</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyConfig</span> <span class="keyword">extends</span> <span class="title class_">WebMvcConfigurationSupport</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">addArgumentResolvers</span><span class="params">(List&lt;HandlerMethodArgumentResolver&gt; argumentResolvers)</span>&#123;</span><br><span class="line">        argumentResolvers.add(<span class="keyword">new</span> <span class="title class_">UserResolver</span>());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<pre><code class="java">@Configuration
+@EnableWebMvc
+public class MyConfig extends WebMvcConfigurationSupport &#123;
+    public void addArgumentResolvers(List&lt;HandlerMethodArgumentResolver&gt; argumentResolvers)&#123;
+        argumentResolvers.add(new UserResolver());
+    &#125;
+&#125;
+</code></pre>
 <p>在<code>springboot</code>启动的时候就将解析器加载到<code>argumentResolvers</code>中</p>
 <p>接下来写一个简单的<code>controller</code></p>
 <p><code>Controller</code></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Controller</span> &#123;</span><br><span class="line">    <span class="meta">@GetMapping(&quot;/get&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">handle</span><span class="params">(<span class="meta">@User</span> UserDTO userDTO)</span>&#123;</span><br><span class="line">        System.out.println(userDTO.getId()+<span class="string">&quot; &quot;</span>+userDTO.getName());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<pre><code class="java">@RestController
+public class Controller &#123;
+    @GetMapping(&quot;/get&quot;)
+    public void handle(@User UserDTO userDTO)&#123;
+        System.out.println(userDTO.getId()+&quot; &quot;+userDTO.getName());
+    &#125;
+&#125;
+</code></pre>
 <p>在收到请求后，解析器会将请求中的<code>id</code>和<code>name</code>封装成<code>UserDTO</code>并赋值给<code>userDTO</code></p>
 <p>完整代码见<code>SpringBoot_Test</code>项目的<code>resolver</code>包</p>
 

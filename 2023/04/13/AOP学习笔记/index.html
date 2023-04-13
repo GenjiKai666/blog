@@ -160,8 +160,11 @@
     
     <div class="content" v-pre>
         <h1 id="AOP学习笔记"><a href="#AOP学习笔记" class="headerlink" title="AOP学习笔记"></a>AOP学习笔记</h1><p><strong>引入依赖</strong>:</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-aop<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
+<pre><code class="xml">&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-starter-aop&lt;/artifactId&gt;
+&lt;/dependency&gt;
+</code></pre>
 <p><strong>引入</strong>：有时候不同的模块需要调用相同的功能，例如日志记录，常见的做法是在每一个需要打印日志的地方注入日志类然后调用，但这样会导致重复代码过多且耦合度过高，更合适的做法是采用<code>SpringBoot</code>提供的<code>AOP</code></p>
 <p><strong>什么是AOP</strong>:<code>AOP</code>即面向切面的编程。这种思想将程序的执行分为了一个一个的切面，在这些切面间可以自定义得插入一些操作，例如在调用某个<code>service</code>前打印日志，调用完<code>service</code>完后也打印日志</p>
 <p><strong>几个常见注解</strong>:</p>
@@ -195,16 +198,37 @@
 </tbody></table>
 <p><strong>代码实现</strong>：以打印日志为例</p>
 <p>首先定义切面类：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Aspect</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">AopAdvice</span> &#123;</span><br><span class="line">    <span class="meta">@Pointcut(&quot;@annotation(com.example.aop.annotation.Test)&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">log</span><span class="params">()</span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Before(&quot;log()&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">beforelog</span><span class="params">()</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;之前&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="JAVA">@Aspect
+@Component
+public class AopAdvice &#123;
+    @Pointcut(&quot;@annotation(com.example.aop.annotation.Test)&quot;)
+    public void log()&#123;
 
+    &#125;
+    @Before(&quot;log()&quot;)
+    public void beforelog()&#123;
+        System.out.println(&quot;之前&quot;);
+    &#125;
+&#125;
+</code></pre>
 <p>这里切点定义为被<code>@Test</code>注解标记的方法</p>
 <p><code>Test</code></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Retention(RetentionPolicy.RUNTIME)</span></span><br><span class="line"><span class="meta">@Target(ElementType.METHOD)</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Test &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<pre><code class="java">@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.METHOD)
+public @interface Test &#123;
+&#125;
+</code></pre>
 <p>再写一个简单的<code>controller</code></p>
 <p><code>Controller</code></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Controller</span> &#123;</span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="meta">@GetMapping(&quot;/api&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">test</span><span class="params">()</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;方法内&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<pre><code class="java">@RestController
+public class Controller &#123;
+    @Test
+    @GetMapping(&quot;/api&quot;)
+    public void test()&#123;
+        System.out.println(&quot;方法内&quot;);
+    &#125;
+&#125;
+</code></pre>
 <p>这里的<code>test()</code>被<code>@Test</code>注解标记了，则在执行这个方法前会先调用切面类中的<code>beforelog()</code>方法</p>
 <p>完整代码见<code>SpringBoot_Test</code>项目中<code>aop</code>包</p>
 
