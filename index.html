@@ -1,733 +1,339 @@
-
 <!DOCTYPE html>
-<html lang="zh-CN">
-    <head>
-        <meta charset="utf-8" />
-        <title>Jerry的博客</title>
-        <meta name="author" content="Jerry" />
-        <meta name="description" content="" />
-        <meta name="keywords" content="" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-        <link rel="icon" href="/blog/images/favicon.png" />
-        <script src="https://cdn.staticfile.org/vue/3.2.47/vue.global.prod.min.js"></script>
-<link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/6.3.0/css/all.min.css" />
-<link rel="stylesheet" href="/blog/css/fonts.min.css" />
-<script> const mixins = {}; </script>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Jerry的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Jerry的博客">
+<meta property="og:url" content="https://genjikai666.github.io/blog/index.html">
+<meta property="og:site_name" content="Jerry的博客">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="Jerry">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/blog/atom.xml" title="Jerry的博客" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/blog/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
 
-<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+  
+  
+<link rel="stylesheet" href="/blog/css/style.css">
 
+  
+    
+<link rel="stylesheet" href="/blog/fancybox/jquery.fancybox.min.css">
 
-<script src="https://cdn.staticfile.org/highlight.js/11.7.0/highlight.min.js"></script>
-<link
-    rel="stylesheet"
-    href="https://cdn.staticfile.org/highlight.js/11.7.0/styles/github.min.css"
-/>
-<script src="/blog/js/lib/highlight.js"></script>
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
 
-
-
-<script src="/blog/js/lib/preview.js"></script>
-
-
-
-
-
-<script src="/blog/js/lib/home.js"></script>
-
-<link rel="stylesheet" href="/blog/css/main.css" />
-
-    <meta name="generator" content="Hexo 6.3.0"></head>
-    <body>
-        <div id="layout">
-            <transition name="fade">
-            <div id="loading" v-show="loading">
-                <div id="loading-circle">
-                    <h2>LOADING</h2>
-                    <p>加载过慢请开启缓存 浏览器默认开启</p>
-                    <img src="/blog/images/loading.gif" />
-                </div>
-            </div>
-            </transition>
-            <nav id="menu" :class="{ hidden: hiddenMenu, 'menu-color': menuColor}">
-    <div class="desktop-menu">
-        <a class="title" href="/blog/">
-            <span>JERRY的博客</span>
-        </a>
-        
-        <a href="/blog/">
-            <i class="fa-solid fa-house fa-fw"></i>
-            <span>&ensp;Home</span>
-        </a>
-        
-        <a href="/blog/about">
-            <i class="fa-solid fa-id-card fa-fw"></i>
-            <span>&ensp;About</span>
-        </a>
-        
-        <a href="/blog/archives">
-            <i class="fa-solid fa-box-archive fa-fw"></i>
-            <span>&ensp;Archives</span>
-        </a>
-        
-        <a href="/blog/categories">
-            <i class="fa-solid fa-bookmark fa-fw"></i>
-            <span>&ensp;Categories</span>
-        </a>
-        
-        <a href="/blog/tags">
-            <i class="fa-solid fa-tags fa-fw"></i>
-            <span>&ensp;Tags</span>
-        </a>
-        
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/blog/" id="logo">Jerry的博客</a>
+      </h1>
+      
     </div>
-    <div id="mobile-menu">
-        <div class="curtain" @click="shouMenuItems = !shouMenuItems" v-show="shouMenuItems"></div>
-        <div class="title" @click="shouMenuItems = !shouMenuItems">
-            <i class="fa-solid fa-bars fa-fw"></i>
-            <span>&emsp;JERRY的博客</span>
-        </div>
-        <transition name="slide">
-        <div class="items" v-show="shouMenuItems">
-            
-            <a href="/blog/">
-                <div class="item">
-                    <div style="min-width: 20px; max-width: 50px; width: 10%">
-                        <i class="fa-solid fa-house fa-fw"></i>
-                    </div>
-                    <div style="min-width: 100px; max-width: 150%; width: 20%">Home</div>
-                </div>
-            </a>
-            
-            <a href="/blog/about">
-                <div class="item">
-                    <div style="min-width: 20px; max-width: 50px; width: 10%">
-                        <i class="fa-solid fa-id-card fa-fw"></i>
-                    </div>
-                    <div style="min-width: 100px; max-width: 150%; width: 20%">About</div>
-                </div>
-            </a>
-            
-            <a href="/blog/archives">
-                <div class="item">
-                    <div style="min-width: 20px; max-width: 50px; width: 10%">
-                        <i class="fa-solid fa-box-archive fa-fw"></i>
-                    </div>
-                    <div style="min-width: 100px; max-width: 150%; width: 20%">Archives</div>
-                </div>
-            </a>
-            
-            <a href="/blog/categories">
-                <div class="item">
-                    <div style="min-width: 20px; max-width: 50px; width: 10%">
-                        <i class="fa-solid fa-bookmark fa-fw"></i>
-                    </div>
-                    <div style="min-width: 100px; max-width: 150%; width: 20%">Categories</div>
-                </div>
-            </a>
-            
-            <a href="/blog/tags">
-                <div class="item">
-                    <div style="min-width: 20px; max-width: 50px; width: 10%">
-                        <i class="fa-solid fa-tags fa-fw"></i>
-                    </div>
-                    <div style="min-width: 100px; max-width: 150%; width: 20%">Tags</div>
-                </div>
-            </a>
-            
-        </div>
-        </transition>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/blog/">Home</a>
+        
+          <a class="main-nav-link" href="/blog/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/blog/atom.xml" title="RSS 订阅"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://genjikai666.github.io/blog"></form>
+      </div>
     </div>
-</nav>
+  </div>
+</header>
 
-            <transition name="into">
-            <div id="main" v-show="!loading">
-                <div id="home-head">
-    <div
-        id="home-background"
-        ref="homeBackground"
-        data-images="/blog/images/background.jpg"
-    ></div>
-    <div id="home-info" @click="homeClick">
-        <span class="loop"></span>
-        <span class="loop"></span>
-        <span class="loop"></span>
-        <span class="loop"></span>
-        <span class="info">
-            <div class="wrap">
-                <h1>Jerry的博客</h1>
-                <h3></h3>
-                <h5></h5>
-            </div>
-        </span>
-    </div>
-</div>
-<div id="home-posts-wrap"  ref="homePostsWrap">
-    <div id="home-posts">
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-自定义解析器学习笔记" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/blog/2023/04/13/%E8%87%AA%E5%AE%9A%E4%B9%89%E8%A7%A3%E6%9E%90%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="article-date">
+  <time class="dt-published" datetime="2023-04-13T03:24:42.763Z" itemprop="datePublished">2023-04-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
         
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/blog/2023/04/13/%E8%87%AA%E5%AE%9A%E4%B9%89%E8%A7%A3%E6%9E%90%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">自定义解析器学习笔记</a>
+    </h1>
+  
 
-<div class="post">
-    <a href="/blog/2023/04/13/%E8%87%AA%E5%AE%9A%E4%B9%89%E8%A7%A3%E6%9E%90%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
-        <h2 class="post-title">自定义解析器学习笔记</h2>
-    </a>
-    <div class="category-and-date">
-        
-        <span class="date">
-            <span class="icon">
-                <i class="fa-solid fa-calendar fa-fw"></i>
-            </span>
-            2023/4/13
-        </span>
-        
-        
-    </div>
-    <div class="description">
-        <div class="content" v-pre>
-            
-            <h1 id="自定义解析器学习笔记"><a href="#自定义解析器学习笔记" class="headerlink" title="自定义解析器学习笔记"></a>自定义解析器学习笔记</h1><p><strong>描述</strong>：解析器是对请求进行处理，得到指定类的工具</p>
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="自定义解析器学习笔记"><a href="#自定义解析器学习笔记" class="headerlink" title="自定义解析器学习笔记"></a>自定义解析器学习笔记</h1><p><strong>描述</strong>：解析器是对请求进行处理，得到指定类的工具</p>
 <p><strong>实现</strong>：<code>Springboot</code>提供了<code>HandleMethodArgumentResolver</code>接口，只要对这个接口进行实现变可以对请求的处理实现自定义</p>
 <p>首先定义一个注解接口用于对<code>controller</code>中的参数进行标注，例如我们模拟用户登陆，定义一个<code>@User</code>的注解接口</p>
-<pre><code class="java">@Target(&#123;ElementType.PARAMETER&#125;)
-@Retention(RetentionPolicy.RUNTIME)
-@Documented
-public @interface User &#123;
-&#125;
-</code></pre>
-<p>然后定义一个<code>UserDTO</code>类</p>
-<pre><code class="java">@NoArgsConstructor
-@AllArgsConstructor
-@Data
-@EqualsAndHashCode
-public class UserDTO &#123;
-    String id;
-    String name;
-&#125;
-</code></pre>
-<p>接下来是解析器<code>UserResolver</code></p>
-<pre><code class="java">public class UserResolver implements HandlerMethodArgumentResolver &#123;
-    @Override
-    public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception &#123;
-        HttpServletRequest request = webRequest.getNativeRequest(HttpServletRequest.class);
-        String id = (String) request.getParameter(&quot;id&quot;);
-        String name = (String) request.getParameter(&quot;name&quot;);
-        return new UserDTO(id,name);
-    &#125;
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target(&#123;ElementType.PARAMETER&#125;)</span></span><br><span class="line"><span class="meta">@Retention(RetentionPolicy.RUNTIME)</span></span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> User &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-    @Override
-    public boolean supportsParameter(MethodParameter parameter) &#123;
-        User ann = parameter.getParameterAnnotation(User.class);
-        Class&lt;?&gt; parameterType = parameter.getParameterType();
-        return (ann != null) &amp;&amp; UserDTO.class.isAssignableFrom(parameterType);
-    &#125;
-&#125;
-</code></pre>
+<p>然后定义一个<code>UserDTO</code>类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@NoArgsConstructor</span></span><br><span class="line"><span class="meta">@AllArgsConstructor</span></span><br><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="meta">@EqualsAndHashCode</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserDTO</span> &#123;</span><br><span class="line">    String id;</span><br><span class="line">    String name;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>接下来是解析器<code>UserResolver</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserResolver</span> <span class="keyword">implements</span> <span class="title class_">HandlerMethodArgumentResolver</span> &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> Object <span class="title function_">resolveArgument</span><span class="params">(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="type">HttpServletRequest</span> <span class="variable">request</span> <span class="operator">=</span> webRequest.getNativeRequest(HttpServletRequest.class);</span><br><span class="line">        <span class="type">String</span> <span class="variable">id</span> <span class="operator">=</span> (String) request.getParameter(<span class="string">&quot;id&quot;</span>);</span><br><span class="line">        <span class="type">String</span> <span class="variable">name</span> <span class="operator">=</span> (String) request.getParameter(<span class="string">&quot;name&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">UserDTO</span>(id,name);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">supportsParameter</span><span class="params">(MethodParameter parameter)</span> &#123;</span><br><span class="line">        <span class="type">User</span> <span class="variable">ann</span> <span class="operator">=</span> parameter.getParameterAnnotation(User.class);</span><br><span class="line">        Class&lt;?&gt; parameterType = parameter.getParameterType();</span><br><span class="line">        <span class="keyword">return</span> (ann != <span class="literal">null</span>) &amp;&amp; UserDTO.class.isAssignableFrom(parameterType);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>其中方法<code>supportsParameter(MethodParameter parameter)</code>用来判定对什么类型的注解以及被注解的类生效，例如这里这里只对<code>@User</code>注解以及<code>UserDTO</code>类生效</p>
 <p>方法<code>resolveArgument()</code>方法是对请求进行处理的部分，<code>parameter</code>是要为之解析的参数，	<code>mavContainer</code>是<code>Model</code>和<code>View</code>的容器，<code>webRequest</code>是请求，例如这里先从<code>request</code>中获取<code>id</code>和<code>name</code>，然后封装成<code>UserDTO</code>并返回，这时候<code>controller</code>中的<code>UserDTO</code>便会被构建</p>
 <p>在解析器写好后，利用配置类加载</p>
 <p><code>MyConfig</code></p>
-<pre><code class="java">@Configuration
-@EnableWebMvc
-public class MyConfig extends WebMvcConfigurationSupport &#123;
-    public void addArgumentResolvers(List&lt;HandlerMethodArgumentResolver&gt; argumentResolvers)&#123;
-        argumentResolvers.add(new UserResolver());
-    &#125;
-&#125;
-</code></pre>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@EnableWebMvc</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyConfig</span> <span class="keyword">extends</span> <span class="title class_">WebMvcConfigurationSupport</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">addArgumentResolvers</span><span class="params">(List&lt;HandlerMethodArgumentResolver&gt; argumentResolvers)</span>&#123;</span><br><span class="line">        argumentResolvers.add(<span class="keyword">new</span> <span class="title class_">UserResolver</span>());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>在<code>springboot</code>启动的时候就将解析器加载到<code>argumentResolvers</code>中</p>
 <p>接下来写一个简单的<code>controller</code></p>
 <p><code>Controller</code></p>
-<pre><code class="java">@RestController
-public class Controller &#123;
-    @GetMapping(&quot;/get&quot;)
-    public void handle(@User UserDTO userDTO)&#123;
-        System.out.println(userDTO.getId()+&quot; &quot;+userDTO.getName());
-    &#125;
-&#125;
-</code></pre>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Controller</span> &#123;</span><br><span class="line">    <span class="meta">@GetMapping(&quot;/get&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">handle</span><span class="params">(<span class="meta">@User</span> UserDTO userDTO)</span>&#123;</span><br><span class="line">        System.out.println(userDTO.getId()+<span class="string">&quot; &quot;</span>+userDTO.getName());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>在收到请求后，解析器会将请求中的<code>id</code>和<code>name</code>封装成<code>UserDTO</code>并赋值给<code>userDTO</code></p>
 <p>完整代码见<code>SpringBoot_Test</code>项目的<code>resolver</code>包</p>
 
-            
-        </div>
+      
     </div>
-    <div class="post-tags">
-        
-        
-    </div>
-    <a href="/blog/2023/04/13/%E8%87%AA%E5%AE%9A%E4%B9%89%E8%A7%A3%E6%9E%90%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="go-post">阅读全文</a>
-</div>
+    <footer class="article-footer">
+      <a data-url="https://genjikai666.github.io/blog/2023/04/13/%E8%87%AA%E5%AE%9A%E4%B9%89%E8%A7%A3%E6%9E%90%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" data-id="clgemwg4r0005iwpmesftawke" data-title="自定义解析器学习笔记" class="article-share-link">分享</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
 
-<div class="post">
-    <a href="/blog/2023/04/13/%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
-        <h2 class="post-title">工厂模式学习笔记</h2>
-    </a>
-    <div class="category-and-date">
+
+
+  
+    <article id="post-工厂模式学习笔记" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/blog/2023/04/13/%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="article-date">
+  <time class="dt-published" datetime="2023-04-13T03:24:42.760Z" itemprop="datePublished">2023-04-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
         
-        <span class="date">
-            <span class="icon">
-                <i class="fa-solid fa-calendar fa-fw"></i>
-            </span>
-            2023/4/13
-        </span>
-        
-        
-    </div>
-    <div class="description">
-        <div class="content" v-pre>
-            
-            <h1 id="工厂模式学习笔记"><a href="#工厂模式学习笔记" class="headerlink" title="工厂模式学习笔记"></a>工厂模式学习笔记</h1><h2 id="1、工厂设计模式"><a href="#1、工厂设计模式" class="headerlink" title="1、工厂设计模式"></a>1、工厂设计模式</h2><p><strong>简介</strong>：一种设计模式，在创建类的时候并不直接创建，而是通过工厂类来创建类，例如我们并不直接生产沙发，当需要沙发的时候就去通知工厂说我们需要沙发，然后工厂会为我们生产沙发并运送给我们，当我们需要椅子的时候也是同理。</p>
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/blog/2023/04/13/%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">工厂模式学习笔记</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="工厂模式学习笔记"><a href="#工厂模式学习笔记" class="headerlink" title="工厂模式学习笔记"></a>工厂模式学习笔记</h1><h2 id="1、工厂设计模式"><a href="#1、工厂设计模式" class="headerlink" title="1、工厂设计模式"></a>1、工厂设计模式</h2><p><strong>简介</strong>：一种设计模式，在创建类的时候并不直接创建，而是通过工厂类来创建类，例如我们并不直接生产沙发，当需要沙发的时候就去通知工厂说我们需要沙发，然后工厂会为我们生产沙发并运送给我们，当我们需要椅子的时候也是同理。</p>
 <p><strong>代码实现</strong>：这里以养宠物为例，首先是动物的接口<code>Animal</code>,接下来是具体的动物类<code>Dog</code>，<code>Cat</code>，我们想养某个宠物的时候是去找宠物店(<code>Factory</code>)要，而不是直接变出来一个宠物。</p>
 <p><code>Animal</code></p>
-<pre><code class="java">public interface Animal &#123;
-    public void eat();
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">Animal</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">eat</span><span class="params">()</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">birth</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-    public void birth();
-&#125;
-</code></pre>
 <p><code>Cat</code></p>
-<pre><code class="java">public class Cat implements Animal&#123;
-    public void birth()&#123;
-        System.out.println(&quot;猫出生了&quot;);
-    &#125;
-    public void eat()&#123;
-        System.out.println(&quot;猫正在吃东西&quot;);
-    &#125;
-&#125;
-</code></pre>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Cat</span> <span class="keyword">implements</span> <span class="title class_">Animal</span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">birth</span><span class="params">()</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;猫出生了&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">eat</span><span class="params">()</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;猫正在吃东西&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p><code>Dog</code></p>
-<pre><code class="java">public class Dog implements Animal &#123;
-    public void birth()&#123;
-        System.out.println(&quot;狗出生了&quot;);
-    &#125;
-    public void eat()&#123;
-        System.out.println(&quot;狗正在吃东西&quot;);
-    &#125;
-&#125;
-</code></pre>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Dog</span> <span class="keyword">implements</span> <span class="title class_">Animal</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">birth</span><span class="params">()</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;狗出生了&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">eat</span><span class="params">()</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;狗正在吃东西&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p><code>Factory</code></p>
-<pre><code class="java">public class Factory &#123;
-    public Animal getNewInstance(String type)&#123;
-        if(type.equals(&quot;猫&quot;))&#123;
-            return new Cat();
-        &#125; else if (type.equals(&quot;狗&quot;)) &#123;
-            return new Dog();
-        &#125;
-        else&#123;
-            return null;
-        &#125;
-    &#125;
-&#125;
-</code></pre>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Factory</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> Animal <span class="title function_">getNewInstance</span><span class="params">(String type)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(type.equals(<span class="string">&quot;猫&quot;</span>))&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Cat</span>();</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (type.equals(<span class="string">&quot;狗&quot;</span>)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Dog</span>();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p><code>FactoryPatternTest</code></p>
-<pre><code class="java">public class FactoryPatternTest &#123;
-    public static void main(String[] args)&#123;
-        Factory factory = new Factory();
-        Animal cat = factory.getNewInstance(&quot;猫&quot;);
-        Animal dog = factory.getNewInstance(&quot;狗&quot;);
-        cat.birth();
-        cat.eat();
-        dog.birth();
-        dog.eat();
-    &#125;
-&#125;
-</code></pre>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">FactoryPatternTest</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span>&#123;</span><br><span class="line">        <span class="type">Factory</span> <span class="variable">factory</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Factory</span>();</span><br><span class="line">        <span class="type">Animal</span> <span class="variable">cat</span> <span class="operator">=</span> factory.getNewInstance(<span class="string">&quot;猫&quot;</span>);</span><br><span class="line">        <span class="type">Animal</span> <span class="variable">dog</span> <span class="operator">=</span> factory.getNewInstance(<span class="string">&quot;狗&quot;</span>);</span><br><span class="line">        cat.birth();</span><br><span class="line">        cat.eat();</span><br><span class="line">        dog.birth();</span><br><span class="line">        dog.eat();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>在主程序中我们先new一个工厂类，然后调用<code>factory.getNewInstance()</code>方法来获取宠物，同时将动物的种类作为参数传入，告诉工厂类我们需要什么宠物，工厂类根据传入的参数new不同的动物出来并赋值给对应的变量，接下来我们就可以对不同的动物进行调用。这样的好处是以后如果出现了新的宠物，我们只需要更改工厂类以及调用的类，不对其他代码进行改变，符合开闭原则。</p>
 <h2 id="2、抽象工厂模式"><a href="#2、抽象工厂模式" class="headerlink" title="2、抽象工厂模式"></a>2、抽象工厂模式</h2><p><strong>简介</strong>:抽象工厂模式是在工厂模式的基础上对工厂进行抽象，因为可能存在很多种工厂，有中国工厂生产中国风的沙发、椅子，有英国的工厂生产英伦风的沙发、椅子，这个时候工厂模式就无法满足这种需求了，所以引入抽象工厂模式，这里用<code>cglib</code>动态代理来自动选择相应的工厂类.</p>
 <p><strong>代码实现</strong>:这里依旧用养宠物为例，有<code>Animal</code>接口，抽象类<code>Dog</code>、<code>Cat</code>分别实现<code>Animal</code>接口。<code>ChinaDog</code>和<code>EnglandDog</code>继承<code>Dog</code>抽象类,<code>ChinaCat</code>和<code>EnglandCat</code>继承<code>Cat</code>抽象类。</p>
 <p><code>FactoryInterface</code>接口,<code>ChinaFactory</code>、<code>EnglandFactory</code>实现这个接口。</p>
 <p><code>Animal</code></p>
-<pre><code class="java">public interface Animal &#123;
-    public void shout();
-&#125;
-</code></pre>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">Animal</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">shout</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p><code>Cat</code></p>
-<pre><code class="java">public abstract class Cat implements Animal&#123;
-    public abstract void shout();
-&#125;
-</code></pre>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title class_">Cat</span> <span class="keyword">implements</span> <span class="title class_">Animal</span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title function_">shout</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p><code>Dog</code></p>
-<pre><code class="java">public abstract class Dog implements Animal &#123;
-    public abstract void shout();
-&#125;
-</code></pre>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title class_">Dog</span> <span class="keyword">implements</span> <span class="title class_">Animal</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title function_">shout</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p><code>ChinaCat</code></p>
-<pre><code class="java">public class ChinaCat extends Cat&#123;
-    public void shout()&#123;
-        System.out.println(&quot;china cat&quot;);
-    &#125;
-&#125;
-</code></pre>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ChinaCat</span> <span class="keyword">extends</span> <span class="title class_">Cat</span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">shout</span><span class="params">()</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;china cat&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p><code>ChinaDog</code></p>
-<pre><code>public class ChinaDog extends Dog&#123;
-    @Override
-    public void shout() &#123;
-        System.out.println(&quot;china dog&quot;);
-    &#125;
-&#125;
-</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public class ChinaDog extends Dog&#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void shout() &#123;</span><br><span class="line">        System.out.println(&quot;china dog&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>英国猫和英国狗同理</p>
 <p><code>FactoryInterface</code></p>
-<pre><code class="java">public interface FactoryInterface &#123;
-    public Animal getAnimal(String catOrDog,String country);
-&#125;
-</code></pre>
-<p><code>EnglandFactory</code></p>
-<pre><code class="java">public class EnglandFactory implements FactoryInterface&#123;
-    @Override
-    public Animal getAnimal(String catOrDog,String country) &#123;
-        if(catOrDog.equals(&quot;cat&quot;))&#123;
-            return new EnglandCat();
-        &#125; else if (catOrDog.equals(&quot;dog&quot;)) &#123;
-            return new EnglandDog();
-        &#125;
-        else &#123;
-            return null;
-        &#125;
-    &#125;
-&#125;
-</code></pre>
-<p><code>ChinaFactory</code></p>
-<pre><code class="java">public class ChinaFactory implements FactoryInterface&#123;
-    @Override
-    public Animal getAnimal(String catOrDog,String country) &#123;
-        if(catOrDog.equals(&quot;cat&quot;))&#123;
-            return new ChinaCat();
-        &#125; else if (catOrDog.equals(&quot;dog&quot;)) &#123;
-            return new ChinaDog();
-        &#125;
-        else &#123;
-            return null;
-        &#125;
-    &#125;
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">FactoryInterface</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> Animal <span class="title function_">getAnimal</span><span class="params">(String catOrDog,String country)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-&#125;
-</code></pre>
+<p><code>EnglandFactory</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">EnglandFactory</span> <span class="keyword">implements</span> <span class="title class_">FactoryInterface</span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> Animal <span class="title function_">getAnimal</span><span class="params">(String catOrDog,String country)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span>(catOrDog.equals(<span class="string">&quot;cat&quot;</span>))&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">EnglandCat</span>();</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (catOrDog.equals(<span class="string">&quot;dog&quot;</span>)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">EnglandDog</span>();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>ChinaFactory</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ChinaFactory</span> <span class="keyword">implements</span> <span class="title class_">FactoryInterface</span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> Animal <span class="title function_">getAnimal</span><span class="params">(String catOrDog,String country)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span>(catOrDog.equals(<span class="string">&quot;cat&quot;</span>))&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">ChinaCat</span>();</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (catOrDog.equals(<span class="string">&quot;dog&quot;</span>)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">ChinaDog</span>();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>接下来是<code>FactoryProxy</code>实现对工厂接口的动态代理</p>
-<pre><code class="java">public class FactoryProxy implements MethodInterceptor &#123;
-    @Override
-    public Object intercept(Object o, Method method, Object[] objects, MethodProxy methodProxy) throws Throwable &#123;
-        String country = (String)objects[1];
-        if(country.equals(&quot;china&quot;))&#123;
-            FactoryInterface factory = new ChinaFactory();
-            return factory.getAnimal((String)objects[0],&quot;china&quot;);
-        &#125;
-        else&#123;
-            FactoryInterface factory = new EnglandFactory();
-            return factory.getAnimal((String)objects[0],&quot;england&quot;);
-        &#125;
-    &#125;
-&#125;
-</code></pre>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">FactoryProxy</span> <span class="keyword">implements</span> <span class="title class_">MethodInterceptor</span> &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> Object <span class="title function_">intercept</span><span class="params">(Object o, Method method, Object[] objects, MethodProxy methodProxy)</span> <span class="keyword">throws</span> Throwable &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">country</span> <span class="operator">=</span> (String)objects[<span class="number">1</span>];</span><br><span class="line">        <span class="keyword">if</span>(country.equals(<span class="string">&quot;china&quot;</span>))&#123;</span><br><span class="line">            <span class="type">FactoryInterface</span> <span class="variable">factory</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ChinaFactory</span>();</span><br><span class="line">            <span class="keyword">return</span> factory.getAnimal((String)objects[<span class="number">0</span>],<span class="string">&quot;china&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="type">FactoryInterface</span> <span class="variable">factory</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">EnglandFactory</span>();</span><br><span class="line">            <span class="keyword">return</span> factory.getAnimal((String)objects[<span class="number">0</span>],<span class="string">&quot;england&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p><code>Main</code></p>
-<pre><code class="java">public class Main &#123;
-    public static void main(String[] args)&#123;
-        Enhancer enhancer = new Enhancer();
-        enhancer.setSuperclass(FactoryInterface.class);
-        enhancer.setCallback(new FactoryProxy());
-        FactoryInterface factory = (FactoryInterface) enhancer.create();
-        Animal animal = factory.getAnimal(&quot;dog&quot;,&quot;china&quot;);
-        animal.shout();
-    &#125;
-&#125;
-</code></pre>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Main</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span>&#123;</span><br><span class="line">        <span class="type">Enhancer</span> <span class="variable">enhancer</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Enhancer</span>();</span><br><span class="line">        enhancer.setSuperclass(FactoryInterface.class);</span><br><span class="line">        enhancer.setCallback(<span class="keyword">new</span> <span class="title class_">FactoryProxy</span>());</span><br><span class="line">        <span class="type">FactoryInterface</span> <span class="variable">factory</span> <span class="operator">=</span> (FactoryInterface) enhancer.create();</span><br><span class="line">        <span class="type">Animal</span> <span class="variable">animal</span> <span class="operator">=</span> factory.getAnimal(<span class="string">&quot;dog&quot;</span>,<span class="string">&quot;china&quot;</span>);</span><br><span class="line">        animal.shout();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>首先主程序new一个<code>Enhancer</code>并为<code>FactoryInterface</code>设置代理，然后用<code>enhancer</code>新建一个工厂实例，在调用<code>factory.getAnimal()</code>方法的时候会回调<code>FactoryProxy</code>中的<code>intercept()</code>方法，在<code>intercept()</code>方法中首先获取第二个参数以决定是什么工厂，然后new出相应的工厂，并调用<code>factory.getAnimal()</code>,object[0]是决定返回猫还是狗,接下来对应的工厂就会返回对应的动物。</p>
 <p>完整代码见<code>Helloworld</code>项目下<code>factory_pattern_demo</code>包</p>
 
-            
-        </div>
+      
     </div>
-    <div class="post-tags">
-        
-        
-    </div>
-    <a href="/blog/2023/04/13/%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="go-post">阅读全文</a>
-</div>
+    <footer class="article-footer">
+      <a data-url="https://genjikai666.github.io/blog/2023/04/13/%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" data-id="clgemwg4q0003iwpm9f9ke3me" data-title="工厂模式学习笔记" class="article-share-link">分享</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
 
-<div class="post">
-    <a href="/blog/2023/04/13/JDK%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
-        <h2 class="post-title">JDK动态代理学习笔记</h2>
-    </a>
-    <div class="category-and-date">
+
+
+  
+    <article id="post-JDK动态代理学习笔记" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/blog/2023/04/13/JDK%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="article-date">
+  <time class="dt-published" datetime="2023-04-13T03:24:42.757Z" itemprop="datePublished">2023-04-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
         
-        <span class="date">
-            <span class="icon">
-                <i class="fa-solid fa-calendar fa-fw"></i>
-            </span>
-            2023/4/13
-        </span>
-        
-        
-    </div>
-    <div class="description">
-        <div class="content" v-pre>
-            
-            <h1 id="JDK动态代理学习笔记"><a href="#JDK动态代理学习笔记" class="headerlink" title="JDK动态代理学习笔记"></a>JDK动态代理学习笔记</h1><h2 id="1、JDK动态代理介绍"><a href="#1、JDK动态代理介绍" class="headerlink" title="1、JDK动态代理介绍"></a>1、JDK动态代理介绍</h2><p>JDK动态代理是JDK自带的一种实现动态代理的方式，这种方式只能代理接口。</p>
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/blog/2023/04/13/JDK%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">JDK动态代理学习笔记</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="JDK动态代理学习笔记"><a href="#JDK动态代理学习笔记" class="headerlink" title="JDK动态代理学习笔记"></a>JDK动态代理学习笔记</h1><h2 id="1、JDK动态代理介绍"><a href="#1、JDK动态代理介绍" class="headerlink" title="1、JDK动态代理介绍"></a>1、JDK动态代理介绍</h2><p>JDK动态代理是JDK自带的一种实现动态代理的方式，这种方式只能代理接口。</p>
 <h2 id="2、应用"><a href="#2、应用" class="headerlink" title="2、应用"></a>2、应用</h2><p>JDK动态代理主要有两种应用。</p>
 <h3 id="1、对业务逻辑进行增强"><a href="#1、对业务逻辑进行增强" class="headerlink" title="1、对业务逻辑进行增强"></a>1、对业务逻辑进行增强</h3><p>JDK动态代理可以对已有的代码进行增强，例如现在有一个<code>UploadService</code>的接口，<code>UploadServiceImpl</code>是它的实现类，这里为了方便将它们写在<code>Main.java</code>类中</p>
-<pre><code class="java">interface UploadService &#123;
-    public String upload(File file);
-    public String delete(File file);
-&#125;
-class UploadServiceImpl implements UploadService&#123;
-    public String upload(File file)&#123;
-        System.out.println(&quot;上传中&quot;);
-        return null;
-    &#125;
-    public String delete(File file)&#123;
-        System.out.println(&quot;删除中&quot;);
-        return null;
-    &#125;
-&#125;
-</code></pre>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> <span class="title class_">UploadService</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">upload</span><span class="params">(File file)</span>;</span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">delete</span><span class="params">(File file)</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">UploadServiceImpl</span> <span class="keyword">implements</span> <span class="title class_">UploadService</span>&#123;</span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">upload</span><span class="params">(File file)</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;上传中&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">delete</span><span class="params">(File file)</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;删除中&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>现在想要在上传或者删除前后加上日志记录，一般的做法是改写<code>UploadServiceImpl</code></p>
-<pre><code class="java">class UploadServiceImpl implements UploadService&#123;
-    public String upload(File file)&#123;
-        System.out.println(&quot;正在上传&quot;);
-        System.out.println(&quot;上传中&quot;);
-        System.out.println(&quot;上传成功&quot;);
-        return null;
-    &#125;
-    public String delete(File file)&#123;
-        System.out.println(&quot;正在删除&quot;);
-        System.out.println(&quot;删除中&quot;);
-        System.out.println(&quot;删除成功&quot;)
-        return null;
-    &#125;
-&#125;
-</code></pre>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">UploadServiceImpl</span> <span class="keyword">implements</span> <span class="title class_">UploadService</span>&#123;</span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">upload</span><span class="params">(File file)</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;正在上传&quot;</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot;上传中&quot;</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot;上传成功&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">delete</span><span class="params">(File file)</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;正在删除&quot;</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot;删除中&quot;</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot;删除成功&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>但是这会破坏原有代码的业务逻辑，我们应该避免侵入式编程，接下来引入JDK动态代理的做法。</p>
 <p>首先我们新建一个代理类<code>UploadServiceProxy</code>来对<code>UploadService</code>进行代理，这个代理类要继承<code>InvocationHandler</code>接口</p>
-<pre><code class="java">public class UploadServiceProxy implements InvocationHandler &#123;
-    private Object proxytarget;
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UploadServiceProxy</span> <span class="keyword">implements</span> <span class="title class_">InvocationHandler</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> Object proxytarget;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> Object <span class="title function_">getProxyInstance</span><span class="params">(Object target)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.proxytarget = target;</span><br><span class="line">        <span class="keyword">return</span> Proxy.newProxyInstance(proxytarget.getClass().getClassLoader(),</span><br><span class="line">                proxytarget.getClass().getInterfaces(),</span><br><span class="line">                <span class="built_in">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> Object <span class="title function_">invoke</span><span class="params">(Object proxy, Method method, Object[] args)</span> <span class="keyword">throws</span> Throwable &#123;</span><br><span class="line">        <span class="keyword">if</span> (method.getName().equals(<span class="string">&quot;upload&quot;</span>)) &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;开始上传&quot;</span>);</span><br><span class="line">            method.invoke(proxytarget,args);</span><br><span class="line">            System.out.println(<span class="string">&quot;上传成功&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;开始删除&quot;</span>);</span><br><span class="line">            method.invoke(proxytarget,args);</span><br><span class="line">            System.out.println(<span class="string">&quot;删除成功&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-    public Object getProxyInstance(Object target) &#123;
-        this.proxytarget = target;
-        return Proxy.newProxyInstance(proxytarget.getClass().getClassLoader(),
-                proxytarget.getClass().getInterfaces(),
-                this);
-    &#125;
-
-    @Override
-    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable &#123;
-        if (method.getName().equals(&quot;upload&quot;)) &#123;
-            System.out.println(&quot;开始上传&quot;);
-            method.invoke(proxytarget,args);
-            System.out.println(&quot;上传成功&quot;);
-        &#125;
-        else&#123;
-            System.out.println(&quot;开始删除&quot;);
-            method.invoke(proxytarget,args);
-            System.out.println(&quot;删除成功&quot;);
-        &#125;
-        return null;
-    &#125;
-&#125;
-</code></pre>
 <p><code>UploadServiceProxy</code>重写了<code>InvocationHandler</code>的<code>invoke()</code>方法，首先判断外部是调用的那个方法，这个通过<code>method.getName()</code>实现，如何分别对这几个方法进行增强。例如对<code>upload()</code>方法的增强在第一个<code>if</code>里面，首先打印日志<strong>开始上传</strong></p>
 <p>然后调用<code>method.invoke(proxytarget,args)</code>执行被代理的接口<code>UploadService</code>中<code>upload()</code>本来的业务逻辑，即打印<strong>上传中</strong>,然后再打印日志<strong>上传成功</strong>，那这个<code>proxytarget</code>是如何来的呢，我们看<code>Main</code></p>
-<pre><code class="java">public class Main &#123;
-    public static void main(String[] args) &#123;
-        UploadServiceProxy proxy = new UploadServiceProxy();
-        UploadService uploadService = (UploadService) proxy.getProxyInstance(new UploadServiceImpl());
-        File file = new File(&quot;asdadsadsasd&quot;);
-        uploadService.delete(file);
-        uploadService.upload(file);
-    &#125;
-&#125;
-</code></pre>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Main</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">UploadServiceProxy</span> <span class="variable">proxy</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">UploadServiceProxy</span>();</span><br><span class="line">        <span class="type">UploadService</span> <span class="variable">uploadService</span> <span class="operator">=</span> (UploadService) proxy.getProxyInstance(<span class="keyword">new</span> <span class="title class_">UploadServiceImpl</span>());</span><br><span class="line">        <span class="type">File</span> <span class="variable">file</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">File</span>(<span class="string">&quot;asdadsadsasd&quot;</span>);</span><br><span class="line">        uploadService.delete(file);</span><br><span class="line">        uploadService.upload(file);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>我们new了一个代理对象，然后调用<code>proxy.getProxyInstance(new UploadServiceImpl())</code>将被代理接口的实现类传入了代理类，然后代理类就可以调用实现类的业务逻辑了,执行一下就可以看到现在能够正常打印日志，同时没有对原代码进行入侵。</p>
 <p>完整代码：</p>
 <p><code>Main.java</code></p>
-<pre><code class="java">public class Main &#123;
-    public static void main(String[] args) &#123;
-        UploadServiceProxy proxy = new UploadServiceProxy();
-        UploadService uploadService = (UploadService) proxy.getProxyInstance(new UploadServiceImpl());
-        File file = new File(&quot;asdadsadsasd&quot;);
-        uploadService.delete(file);
-        uploadService.upload(file);
-    &#125;
-&#125;
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Main</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">UploadServiceProxy</span> <span class="variable">proxy</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">UploadServiceProxy</span>();</span><br><span class="line">        <span class="type">UploadService</span> <span class="variable">uploadService</span> <span class="operator">=</span> (UploadService) proxy.getProxyInstance(<span class="keyword">new</span> <span class="title class_">UploadServiceImpl</span>());</span><br><span class="line">        <span class="type">File</span> <span class="variable">file</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">File</span>(<span class="string">&quot;asdadsadsasd&quot;</span>);</span><br><span class="line">        uploadService.delete(file);</span><br><span class="line">        uploadService.upload(file);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">File</span> &#123;</span><br><span class="line">    String type;</span><br><span class="line">    File(String type)&#123;</span><br><span class="line">        <span class="built_in">this</span>.type = type;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">UploadService</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">upload</span><span class="params">(File file)</span>;</span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">delete</span><span class="params">(File file)</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">UploadServiceImpl</span> <span class="keyword">implements</span> <span class="title class_">UploadService</span>&#123;</span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">upload</span><span class="params">(File file)</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;上传中&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">delete</span><span class="params">(File file)</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;删除中&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-class File &#123;
-    String type;
-    File(String type)&#123;
-        this.type = type;
-    &#125;
-&#125;
-
-interface UploadService &#123;
-    public String upload(File file);
-    public String delete(File file);
-&#125;
-class UploadServiceImpl implements UploadService&#123;
-    public String upload(File file)&#123;
-        System.out.println(&quot;上传中&quot;);
-        return null;
-    &#125;
-    public String delete(File file)&#123;
-        System.out.println(&quot;删除中&quot;);
-        return null;
-    &#125;
-&#125;
-</code></pre>
 <p><code>UploadServiceProxy.java</code></p>
-<pre><code class="java">import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
-import java.lang.reflect.Proxy;
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.lang.reflect.InvocationHandler;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Method;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Proxy;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UploadServiceProxy</span> <span class="keyword">implements</span> <span class="title class_">InvocationHandler</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> Object proxytarget;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> Object <span class="title function_">getProxyInstance</span><span class="params">(Object target)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.proxytarget = target;</span><br><span class="line">        <span class="keyword">return</span> Proxy.newProxyInstance(proxytarget.getClass().getClassLoader(),</span><br><span class="line">                proxytarget.getClass().getInterfaces(),</span><br><span class="line">                <span class="built_in">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> Object <span class="title function_">invoke</span><span class="params">(Object proxy, Method method, Object[] args)</span> <span class="keyword">throws</span> Throwable &#123;</span><br><span class="line">        <span class="keyword">if</span> (method.getName().equals(<span class="string">&quot;upload&quot;</span>)) &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;开始上传&quot;</span>);</span><br><span class="line">            method.invoke(proxytarget,args);</span><br><span class="line">            System.out.println(<span class="string">&quot;上传成功&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;开始删除&quot;</span>);</span><br><span class="line">            method.invoke(proxytarget,args);</span><br><span class="line">            System.out.println(<span class="string">&quot;删除成功&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-public class UploadServiceProxy implements InvocationHandler &#123;
-    private Object proxytarget;
-
-    public Object getProxyInstance(Object target) &#123;
-        this.proxytarget = target;
-        return Proxy.newProxyInstance(proxytarget.getClass().getClassLoader(),
-                proxytarget.getClass().getInterfaces(),
-                this);
-    &#125;
-
-    @Override
-    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable &#123;
-        if (method.getName().equals(&quot;upload&quot;)) &#123;
-            System.out.println(&quot;开始上传&quot;);
-            method.invoke(proxytarget,args);
-            System.out.println(&quot;上传成功&quot;);
-        &#125;
-        else&#123;
-            System.out.println(&quot;开始删除&quot;);
-            method.invoke(proxytarget,args);
-            System.out.println(&quot;删除成功&quot;);
-        &#125;
-        return null;
-    &#125;
-&#125;
-</code></pre>
 <h3 id="2、面向接口编程"><a href="#2、面向接口编程" class="headerlink" title="2、面向接口编程"></a>2、面向接口编程</h3><p>有时我们调用某个接口的时候，其可能存在很多种实现类，根据情况的不同应该调用不同的实现类，但是我们不想考虑那么多，那么这个时候就可以用JDK动态代理实现这种面向接口编程。</p>
 <p>例如现在还是有上传文件的接口<code>UploadService</code>,但是根据上传文件的不同应该调用不同的文件上传的业务逻辑，为了提高代码的泛用性，我们采用动态代理，在不改动原代码的基础上实现这样不同情况下的调用。</p>
 <p>首先是<code>UploadService</code>接口，这里没有实现类</p>
-<pre><code class="java">interface UploadService &#123;
-    public String upload(File file);
-&#125;
-</code></pre>
-<p>文件类<code>File</code></p>
-<pre><code class="java">class File &#123;
-    String type;
-    File(String type)&#123;
-        this.type = type;
-    &#125;
-&#125;
-</code></pre>
-<p>同样的我们需要写一个代理类实现<code>InvocationHandler</code></p>
-<pre><code class="java">public class UploadServiceProxy implements InvocationHandler &#123;
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> <span class="title class_">UploadService</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">upload</span><span class="params">(File file)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-    @Override
-    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable &#123;
-        File file = (File)args[0];
-        if(file.type.equals(&quot;generic&quot;))&#123;
-            System.out.println(&quot;正在上传generic文件&quot;);
-        &#125;
-        else if(file.type.equals(&quot;maven&quot;))&#123;
-            System.out.println(&quot;正在上传maven文件&quot;);
-        &#125;
-        else&#123;
-            System.out.println(&quot;未知文件类型&quot;);
-        &#125;
-        return null;
-    &#125;
-&#125;
-</code></pre>
+<p>文件类<code>File</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">File</span> &#123;</span><br><span class="line">    String type;</span><br><span class="line">    File(String type)&#123;</span><br><span class="line">        <span class="built_in">this</span>.type = type;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>同样的我们需要写一个代理类实现<code>InvocationHandler</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UploadServiceProxy</span> <span class="keyword">implements</span> <span class="title class_">InvocationHandler</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> Object <span class="title function_">invoke</span><span class="params">(Object proxy, Method method, Object[] args)</span> <span class="keyword">throws</span> Throwable &#123;</span><br><span class="line">        <span class="type">File</span> <span class="variable">file</span> <span class="operator">=</span> (File)args[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">if</span>(file.type.equals(<span class="string">&quot;generic&quot;</span>))&#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;正在上传generic文件&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(file.type.equals(<span class="string">&quot;maven&quot;</span>))&#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;正在上传maven文件&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;未知文件类型&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>首先从<code>args</code>中取出参数，即调用<code>uploadService.upload(File file)</code>时的<code>file</code>,如果文件类型为<code>generic</code>则执行上传<code>generic</code>文件的业务逻辑，这里为了简便就直接用了控制台打印，实际上这里可以扩展</p>
 <p>再是<code>Main</code></p>
-<pre><code class="java">public class Main &#123;
-    public static void main(String[] args) &#123;
-        UploadServiceProxy proxy = new UploadServiceProxy();
-        UploadService uploadService = (UploadService) Proxy.newProxyInstance(UploadService.class.getClassLoader(),
-                new Class[]&#123;UploadService.class&#125;,
-                proxy);
-        File file = new File(&quot;generic&quot;);
-        uploadService.upload(file);
-    &#125;
-&#125;
-</code></pre>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Main</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">UploadServiceProxy</span> <span class="variable">proxy</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">UploadServiceProxy</span>();</span><br><span class="line">        <span class="type">UploadService</span> <span class="variable">uploadService</span> <span class="operator">=</span> (UploadService) Proxy.newProxyInstance(UploadService.class.getClassLoader(),</span><br><span class="line">                <span class="keyword">new</span> <span class="title class_">Class</span>[]&#123;UploadService.class&#125;,</span><br><span class="line">                proxy);</span><br><span class="line">        <span class="type">File</span> <span class="variable">file</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">File</span>(<span class="string">&quot;generic&quot;</span>);</span><br><span class="line">        uploadService.upload(file);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>首先也是new一个代理类，然后调用<code>Proxy.newInstance()</code>方法，并将<code>proxy</code>作为参数传入得到<code>uploadService</code>，然后new一个<code>generic</code>类型的文件，再调用<code>uploadService.upload()</code>,这时程序便会根据传入<code>File</code>的不同自行执行对应的业务代码。</p>
 <p>完整代码:</p>
 <p><code>Main.java</code></p>
-<pre><code class="java">import java.lang.reflect.Proxy;
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.lang.reflect.Proxy;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Main</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">UploadServiceProxy</span> <span class="variable">proxy</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">UploadServiceProxy</span>();</span><br><span class="line">        <span class="type">UploadService</span> <span class="variable">uploadService</span> <span class="operator">=</span> (UploadService) Proxy.newProxyInstance(UploadService.class.getClassLoader(),</span><br><span class="line">                <span class="keyword">new</span> <span class="title class_">Class</span>[]&#123;UploadService.class&#125;,</span><br><span class="line">                proxy);</span><br><span class="line">        <span class="type">File</span> <span class="variable">file</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">File</span>(<span class="string">&quot;generic&quot;</span>);</span><br><span class="line">        uploadService.upload(file);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">File</span> &#123;</span><br><span class="line">    String type;</span><br><span class="line"></span><br><span class="line">    File(String type) &#123;</span><br><span class="line">        <span class="built_in">this</span>.type = type;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">UploadService</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">upload</span><span class="params">(File file)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-public class Main &#123;
-    public static void main(String[] args) &#123;
-        UploadServiceProxy proxy = new UploadServiceProxy();
-        UploadService uploadService = (UploadService) Proxy.newProxyInstance(UploadService.class.getClassLoader(),
-                new Class[]&#123;UploadService.class&#125;,
-                proxy);
-        File file = new File(&quot;generic&quot;);
-        uploadService.upload(file);
-    &#125;
-&#125;
-
-class File &#123;
-    String type;
-
-    File(String type) &#123;
-        this.type = type;
-    &#125;
-&#125;
-
-interface UploadService &#123;
-    public String upload(File file);
-&#125;
-</code></pre>
 <p><code>UploadServiceProxy.java</code></p>
-<pre><code class="java">import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.lang.reflect.InvocationHandler;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Method;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UploadServiceProxy</span> <span class="keyword">implements</span> <span class="title class_">InvocationHandler</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> Object <span class="title function_">invoke</span><span class="params">(Object proxy, Method method, Object[] args)</span> <span class="keyword">throws</span> Throwable &#123;</span><br><span class="line">        <span class="type">File</span> <span class="variable">file</span> <span class="operator">=</span> (File)args[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">if</span>(file.type.equals(<span class="string">&quot;generic&quot;</span>))&#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;正在上传generic文件&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(file.type.equals(<span class="string">&quot;maven&quot;</span>))&#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;正在上传maven文件&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;未知文件类型&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-public class UploadServiceProxy implements InvocationHandler &#123;
-
-    @Override
-    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable &#123;
-        File file = (File)args[0];
-        if(file.type.equals(&quot;generic&quot;))&#123;
-            System.out.println(&quot;正在上传generic文件&quot;);
-        &#125;
-        else if(file.type.equals(&quot;maven&quot;))&#123;
-            System.out.println(&quot;正在上传maven文件&quot;);
-        &#125;
-        else&#123;
-            System.out.println(&quot;未知文件类型&quot;);
-        &#125;
-        return null;
-    &#125;
-&#125;
-</code></pre>
 <p>完整项目见<code>Helloworld</code>项目下<code>cglib_demo</code>和<code>jdk_proxy_demo</code>包</p>
 
-            
-        </div>
+      
     </div>
-    <div class="post-tags">
-        
-        
-    </div>
-    <a href="/blog/2023/04/13/JDK%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="go-post">阅读全文</a>
-</div>
+    <footer class="article-footer">
+      <a data-url="https://genjikai666.github.io/blog/2023/04/13/JDK%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" data-id="clgemwg4q0004iwpm5vesdb0j" data-title="JDK动态代理学习笔记" class="article-share-link">分享</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
 
-<div class="post">
-    <a href="/blog/2023/04/13/Feign%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
-        <h2 class="post-title">Feign学习笔记</h2>
-    </a>
-    <div class="category-and-date">
+
+
+  
+    <article id="post-Feign学习笔记" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/blog/2023/04/13/Feign%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="article-date">
+  <time class="dt-published" datetime="2023-04-13T03:24:42.752Z" itemprop="datePublished">2023-04-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
         
-        <span class="date">
-            <span class="icon">
-                <i class="fa-solid fa-calendar fa-fw"></i>
-            </span>
-            2023/4/13
-        </span>
-        
-        
-    </div>
-    <div class="description">
-        <div class="content" v-pre>
-            
-            <h1 id="Feign学习笔记"><a href="#Feign学习笔记" class="headerlink" title="Feign学习笔记"></a>Feign学习笔记</h1><p><strong>Demo地址</strong>：<code>feign_test</code>项目</p>
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/blog/2023/04/13/Feign%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">Feign学习笔记</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="Feign学习笔记"><a href="#Feign学习笔记" class="headerlink" title="Feign学习笔记"></a>Feign学习笔记</h1><p><strong>Demo地址</strong>：<code>feign_test</code>项目</p>
 <p><strong>Feign简介</strong>：在多服务的项目中，有时不同的服务间需要相互调用，<code>Spring</code>提供了<code>RestTemplate</code>实现对不同服务的调用，但是<code>RestTemplate</code>是对<code>url</code>的直接访问，不易阅读，难于维护，<code>Feign</code>就是对这种<code>Http</code>调用进行了封装，同时满足了面向接口编程的习惯</p>
 <p><strong>代码实现</strong>：</p>
 <ul>
@@ -736,11 +342,8 @@ public class UploadServiceProxy implements InvocationHandler &#123;
 <p>首先是被调用的服务，我们命名为<code>provider</code></p>
 <p>调用其他服务接口的服务，命名为<code>consumer</code></p>
 <p>这两个子项目继承父项目依赖，其中Feign的依赖为</p>
-<pre><code class="xml">&lt;dependency&gt;
-    &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
-    &lt;artifactId&gt;spring-cloud-starter-openfeign&lt;/artifactId&gt;
-&lt;/dependency&gt;
-</code></pre>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-openfeign<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
 <p>因为要搭配<code>Consul</code>服务注册中心使用，所以还需要引入<code>Consul</code>的相关依赖，详情见《Consul学习笔记.md》</p>
 <ul>
 <li>服务提供者<code>provider</code></li>
@@ -748,130 +351,70 @@ public class UploadServiceProxy implements InvocationHandler &#123;
 <p>服务提供者<code>provider</code>并无特别的配置，除去需要在<code>Consul</code>注册服务外，跟普通的服务一样，对外提供<code>controller</code>中的接口，处理收到的<code>http</code>请求</p>
 <p>这里我们假设provider提供一个包装的服务，将参数包装成一个类</p>
 <p><code>UserProviderController</code></p>
-<pre><code class="java">@RestController
-public class UserProviderController &#123;
-    @PostMapping(&quot;/api&quot;)
-    public User getUser(@RequestParam(&quot;name&quot;) String name,@RequestParam(&quot;type&quot;) String type)&#123;
-        return new User(name,type);
-    &#125;
-&#125;
-</code></pre>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserProviderController</span> &#123;</span><br><span class="line">    <span class="meta">@PostMapping(&quot;/api&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> User <span class="title function_">getUser</span><span class="params">(<span class="meta">@RequestParam(&quot;name&quot;)</span> String name,<span class="meta">@RequestParam(&quot;type&quot;)</span> String type)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">User</span>(name,type);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>实体类<code>User</code></p>
-<pre><code class="java">@Data
-@AllArgsConstructor
-public class User &#123;
-    String name;
-    String type;
-&#125;
-</code></pre>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="meta">@AllArgsConstructor</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">User</span> &#123;</span><br><span class="line">    String name;</span><br><span class="line">    String type;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>在<code>bootstrap.yml</code>将服务注册成<code>provider</code>，这是被<code>consumer</code>调用的依据</p>
-<pre><code class="yaml">spring:
-  application:
-    name: provider # 应用名称
-  profiles:
-    active: dev # 指定环境，默认加载 default 环境
-  cloud:
-    consul:
-      # Consul 服务器地址
-      host: localhost
-      port: 8500
-      # 配置中心相关配置
-      config:
-        # 是否启用配置中心，默认值 true 开启
-        enabled: true
-        # 设置配置的基本文件夹，默认值 config 可以理解为配置文件所在的最外层文件夹
-        prefix: test-config
-        # 设置应用的文件夹名称，默认值 application 一般建议设置为微服务应用名称
-        default-context: provider
-        # 配置环境分隔符，默认值 &quot;,&quot; 和 default-context 配置项搭配
-        # 例如应用 orderService 分别有环境 default、dev、test、prod
-        # 只需在 config 文件夹下创建 orderService、orderService-dev、orderService-test、orderService-prod 文件夹即可
-        profile-separator: &#39;-&#39;
-        # 指定配置格式为 yaml
-        format: YAML
-        # Consul 的 Key/Values 中的 Key，Value 对应整个配置文件
-        data-key: provider
-        # 以上配置可以理解为：加载 config/orderService/ 文件夹下 Key 为 orderServiceConfig 的 Value 对应的配置信息
-        watch:
-          # 是否开启自动刷新，默认值 true 开启
-          enabled: true
-          # 刷新频率，单位：毫秒，默认值 1000
-          delay: 1000
-      # 服务发现相关配置
-      discovery:
-        register: true                                # 是否需要注册
-        instance-id: $&#123;spring.application.name&#125;-01    # 注册实例 id（必须唯一）
-        service-name: $&#123;spring.application.name&#125;      # 服务名称
-        port: $&#123;server.port&#125;                          # 服务端口
-        prefer-ip-address: true                       # 是否使用 ip 地址注册
-        ip-address: $&#123;spring.cloud.client.ip-address&#125; # 服务请求 ip
-</code></pre>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">application:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">provider</span> <span class="comment"># 应用名称</span></span><br><span class="line">  <span class="attr">profiles:</span></span><br><span class="line">    <span class="attr">active:</span> <span class="string">dev</span> <span class="comment"># 指定环境，默认加载 default 环境</span></span><br><span class="line">  <span class="attr">cloud:</span></span><br><span class="line">    <span class="attr">consul:</span></span><br><span class="line">      <span class="comment"># Consul 服务器地址</span></span><br><span class="line">      <span class="attr">host:</span> <span class="string">localhost</span></span><br><span class="line">      <span class="attr">port:</span> <span class="number">8500</span></span><br><span class="line">      <span class="comment"># 配置中心相关配置</span></span><br><span class="line">      <span class="attr">config:</span></span><br><span class="line">        <span class="comment"># 是否启用配置中心，默认值 true 开启</span></span><br><span class="line">        <span class="attr">enabled:</span> <span class="literal">true</span></span><br><span class="line">        <span class="comment"># 设置配置的基本文件夹，默认值 config 可以理解为配置文件所在的最外层文件夹</span></span><br><span class="line">        <span class="attr">prefix:</span> <span class="string">test-config</span></span><br><span class="line">        <span class="comment"># 设置应用的文件夹名称，默认值 application 一般建议设置为微服务应用名称</span></span><br><span class="line">        <span class="attr">default-context:</span> <span class="string">provider</span></span><br><span class="line">        <span class="comment"># 配置环境分隔符，默认值 &quot;,&quot; 和 default-context 配置项搭配</span></span><br><span class="line">        <span class="comment"># 例如应用 orderService 分别有环境 default、dev、test、prod</span></span><br><span class="line">        <span class="comment"># 只需在 config 文件夹下创建 orderService、orderService-dev、orderService-test、orderService-prod 文件夹即可</span></span><br><span class="line">        <span class="attr">profile-separator:</span> <span class="string">&#x27;-&#x27;</span></span><br><span class="line">        <span class="comment"># 指定配置格式为 yaml</span></span><br><span class="line">        <span class="attr">format:</span> <span class="string">YAML</span></span><br><span class="line">        <span class="comment"># Consul 的 Key/Values 中的 Key，Value 对应整个配置文件</span></span><br><span class="line">        <span class="attr">data-key:</span> <span class="string">provider</span></span><br><span class="line">        <span class="comment"># 以上配置可以理解为：加载 config/orderService/ 文件夹下 Key 为 orderServiceConfig 的 Value 对应的配置信息</span></span><br><span class="line">        <span class="attr">watch:</span></span><br><span class="line">          <span class="comment"># 是否开启自动刷新，默认值 true 开启</span></span><br><span class="line">          <span class="attr">enabled:</span> <span class="literal">true</span></span><br><span class="line">          <span class="comment"># 刷新频率，单位：毫秒，默认值 1000</span></span><br><span class="line">          <span class="attr">delay:</span> <span class="number">1000</span></span><br><span class="line">      <span class="comment"># 服务发现相关配置</span></span><br><span class="line">      <span class="attr">discovery:</span></span><br><span class="line">        <span class="attr">register:</span> <span class="literal">true</span>                                <span class="comment"># 是否需要注册</span></span><br><span class="line">        <span class="attr">instance-id:</span> <span class="string">$&#123;spring.application.name&#125;-01</span>    <span class="comment"># 注册实例 id（必须唯一）</span></span><br><span class="line">        <span class="attr">service-name:</span> <span class="string">$&#123;spring.application.name&#125;</span>      <span class="comment"># 服务名称</span></span><br><span class="line">        <span class="attr">port:</span> <span class="string">$&#123;server.port&#125;</span>                          <span class="comment"># 服务端口</span></span><br><span class="line">        <span class="attr">prefer-ip-address:</span> <span class="literal">true</span>                       <span class="comment"># 是否使用 ip 地址注册</span></span><br><span class="line">        <span class="attr">ip-address:</span> <span class="string">$&#123;spring.cloud.client.ip-address&#125;</span> <span class="comment"># 服务请求 ip</span></span><br></pre></td></tr></table></figure>
+
 <ul>
 <li>服务使用者<code>consumer</code></li>
 </ul>
 <p>首先是<code>UserClient</code></p>
-<pre><code class="java">@Component
-@FeignClient(name = &quot;provider&quot;,configuration=UserClientConfig.class)
-public interface UserClient &#123;
-    @PostMapping(&quot;/api&quot;)
-    User getUser(@RequestParam(&quot;name&quot;) String name,@RequestParam(&quot;type&quot;) String type);
-&#125;
-</code></pre>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="meta">@FeignClient(name = &quot;provider&quot;,configuration=UserClientConfig.class)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">UserClient</span> &#123;</span><br><span class="line">    <span class="meta">@PostMapping(&quot;/api&quot;)</span></span><br><span class="line">    User <span class="title function_">getUser</span><span class="params">(<span class="meta">@RequestParam(&quot;name&quot;)</span> String name,<span class="meta">@RequestParam(&quot;type&quot;)</span> String type)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p><code>@FeignClient(name = &quot;provider&quot;,configuration=UserClientConfig.class)</code>表示这是调用<code>provider</code>服务的客户端，接口应和<code>provider</code>暴露出的接口相同</p>
 <p>接下来是配置类<code>UserClientConfig</code></p>
-<pre><code class="java">@Configuration
-public class UserClientConfig &#123;
-    @Bean
-    Logger.Level feignLoggerLevel() &#123;
-        return Logger.Level.HEADERS;
-    &#125;
-&#125;
-</code></pre>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserClientConfig</span> &#123;</span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    Logger.Level <span class="title function_">feignLoggerLevel</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> Logger.Level.HEADERS;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>这里配置日志等级</p>
 <p>然后是<code>consumer</code>自己的<code>Controller</code></p>
-<pre><code class="java">@RestController
-public class Controller &#123;
-    @Autowired
-    UserClient userClient;
-    @PostMapping(&quot;/user&quot;)
-    public User getUser(@RequestParam(&quot;name&quot;)String name,@RequestParam(&quot;id&quot;) String id)&#123;
-        return userClient.getUser(id,name);
-    &#125;
-&#125;
-</code></pre>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Controller</span> &#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    UserClient userClient;</span><br><span class="line">    <span class="meta">@PostMapping(&quot;/user&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> User <span class="title function_">getUser</span><span class="params">(<span class="meta">@RequestParam(&quot;name&quot;)</span>String name,<span class="meta">@RequestParam(&quot;id&quot;)</span> String id)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> userClient.getUser(id,name);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>这里可以直接用<code>@Autowired</code>注入<code>client</code>供<code>controller</code>调用，实现了跨服务的调用</p>
 <p><strong>总体流程</strong>：</p>
 <p>consumer收到请求，接收参数并调用<code>userClient</code>，然后根据<code>userClient</code>中的服务名去询问<code>Consul</code>得到真实的<code>ip</code>地址，然后<code>Feign</code>会发请求给provider得到结果并返回给consumer</p>
 
-            
-        </div>
+      
     </div>
-    <div class="post-tags">
-        
-        
-    </div>
-    <a href="/blog/2023/04/13/Feign%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="go-post">阅读全文</a>
-</div>
+    <footer class="article-footer">
+      <a data-url="https://genjikai666.github.io/blog/2023/04/13/Feign%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" data-id="clgemwg4p0002iwpm9wvncrfc" data-title="Feign学习笔记" class="article-share-link">分享</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
 
-<div class="post">
-    <a href="/blog/2023/04/13/Consul%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
-        <h2 class="post-title">Consul学习笔记</h2>
-    </a>
-    <div class="category-and-date">
+
+
+  
+    <article id="post-Consul学习笔记" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/blog/2023/04/13/Consul%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="article-date">
+  <time class="dt-published" datetime="2023-04-13T03:24:42.749Z" itemprop="datePublished">2023-04-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
         
-        <span class="date">
-            <span class="icon">
-                <i class="fa-solid fa-calendar fa-fw"></i>
-            </span>
-            2023/4/13
-        </span>
-        
-        
-    </div>
-    <div class="description">
-        <div class="content" v-pre>
-            
-            <h1 id="Consul学习笔记"><a href="#Consul学习笔记" class="headerlink" title="Consul学习笔记"></a>Consul学习笔记</h1><p><strong>项目Demo</strong>：<code>feign_test</code>项目</p>
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/blog/2023/04/13/Consul%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">Consul学习笔记</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="Consul学习笔记"><a href="#Consul学习笔记" class="headerlink" title="Consul学习笔记"></a>Consul学习笔记</h1><p><strong>项目Demo</strong>：<code>feign_test</code>项目</p>
 <p><strong>Consul简介</strong>: 在多服务项目中，需要对繁多的项目进行管理，<code>Consul</code>就可以满足这样的需求。</p>
 <p><code>Consul</code>可以被用作服务注册中心。在一个服务启动的时候，这个服务会将自身的信息发送给<code>Consul</code>完成注册，同时<code>Consul</code>也会间隔一段时间对每个服务进行询问，确保每个服务是健康的，不然就将不健康的服务注销。</p>
 <p><code>Consul</code>可以用作配置中心。在多服务项目里面，由于配置众多，且分布相对分散，这时候可以用<code>Consul</code>将配置统一放在配置中心内，易于维护，同时支持动态修改。</p>
@@ -879,115 +422,75 @@ public class Controller &#123;
 <ul>
 <li>引入依赖</li>
 </ul>
-<pre><code class="xml">&lt;dependency&gt;
-    &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
-    &lt;artifactId&gt;spring-cloud-starter-consul-discovery&lt;/artifactId&gt;
-&lt;/dependency&gt;
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-consul-discovery<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-actuator<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-&lt;dependency&gt;
-    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-    &lt;artifactId&gt;spring-boot-starter-actuator&lt;/artifactId&gt;
-&lt;/dependency&gt;
-</code></pre>
 <p>第一个依赖是consul服务发现的依赖，第二个是用来审查服务健康状态的依赖</p>
 <p>注意，引入<code>Consul</code>服务注册依赖前应先引入<code>Spring Cloud</code>的依赖</p>
 <ul>
 <li>配置<code>bootstrap.xml(或application.yml)</code></li>
 </ul>
-<pre><code class="yaml">cloud:
-  consul:
-    # Consul 服务器地址
-    host: localhost
-    port: 8500
-    # 服务发现相关配置
-    discovery:
-      register: true                                # 是否需要注册
-      instance-id: $&#123;spring.application.name&#125;-01    # 注册实例 id（必须唯一）
-      service-name: $&#123;spring.application.name&#125;      # 服务名称
-      port: $&#123;server.port&#125;                          # 服务端口
-      prefer-ip-address: true                       # 是否使用 ip 地址注册
-      ip-address: $&#123;spring.cloud.client.ip-address&#125; # 服务请求 ip
-</code></pre>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">cloud:</span></span><br><span class="line">  <span class="attr">consul:</span></span><br><span class="line">    <span class="comment"># Consul 服务器地址</span></span><br><span class="line">    <span class="attr">host:</span> <span class="string">localhost</span></span><br><span class="line">    <span class="attr">port:</span> <span class="number">8500</span></span><br><span class="line">    <span class="comment"># 服务发现相关配置</span></span><br><span class="line">    <span class="attr">discovery:</span></span><br><span class="line">      <span class="attr">register:</span> <span class="literal">true</span>                                <span class="comment"># 是否需要注册</span></span><br><span class="line">      <span class="attr">instance-id:</span> <span class="string">$&#123;spring.application.name&#125;-01</span>    <span class="comment"># 注册实例 id（必须唯一）</span></span><br><span class="line">      <span class="attr">service-name:</span> <span class="string">$&#123;spring.application.name&#125;</span>      <span class="comment"># 服务名称</span></span><br><span class="line">      <span class="attr">port:</span> <span class="string">$&#123;server.port&#125;</span>                          <span class="comment"># 服务端口</span></span><br><span class="line">      <span class="attr">prefer-ip-address:</span> <span class="literal">true</span>                       <span class="comment"># 是否使用 ip 地址注册</span></span><br><span class="line">      <span class="attr">ip-address:</span> <span class="string">$&#123;spring.cloud.client.ip-address&#125;</span> <span class="comment"># 服务请求 ip</span></span><br></pre></td></tr></table></figure>
+
 <p>首先配置Consul服务器地址，要告诉服务去哪里注册，<code>discovery</code>下的配置便是服务自己的信息。</p>
 <p>配置完后，在服务启动时就会完成服务注册</p>
 <h2 id="配置中心"><a href="#配置中心" class="headerlink" title="配置中心"></a>配置中心</h2><p>配置中心的配置相对来说复杂一点</p>
 <ul>
 <li>首先引入依赖</li>
 </ul>
-<pre><code class="xml">&lt;dependency&gt;
-    &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
-    &lt;artifactId&gt;spring-cloud-starter-consul-config&lt;/artifactId&gt;
-&lt;/dependency&gt;
-</code></pre>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-consul-config<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
 <p>这里引入<code>Consul</code>配置中心的依赖</p>
 <ul>
 <li>配置<code>bootstrap.xml(application.yml)</code></li>
 </ul>
-<pre><code class="yaml">cloud:
-  consul:
-    # 配置中心相关配置
-    config:
-      # 是否启用配置中心，默认值 true 开启
-      enabled: true
-      # 设置配置的基本文件夹，默认值 config 可以理解为配置文件所在的最外层文件夹
-      prefix: test-config
-      # 设置应用的文件夹名称，默认值 application 一般建议设置为微服务应用名称
-      default-context: provider
-      # 配置环境分隔符，默认值 &quot;,&quot; 和 default-context 配置项搭配
-      # 例如应用 orderService 分别有环境 default、dev、test、prod
-      # 只需在 config 文件夹下创建 orderService、orderService-dev、orderService-test、orderService-prod 文件夹即可
-      profile-separator: &#39;-&#39;
-      # 指定配置格式为 yaml
-      format: YAML
-      # Consul 的 Key/Values 中的 Key，Value 对应整个配置文件
-      data-key: provider
-      # 以上配置可以理解为：加载 config/orderService/ 文件夹下 Key 为 orderServiceConfig 的 Value 对应的配置信息
-      watch:
-        # 是否开启自动刷新，默认值 true 开启
-        enabled: true
-        # 刷新频率，单位：毫秒，默认值 1000
-        delay: 1000
-</code></pre>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">cloud:</span></span><br><span class="line">  <span class="attr">consul:</span></span><br><span class="line">    <span class="comment"># 配置中心相关配置</span></span><br><span class="line">    <span class="attr">config:</span></span><br><span class="line">      <span class="comment"># 是否启用配置中心，默认值 true 开启</span></span><br><span class="line">      <span class="attr">enabled:</span> <span class="literal">true</span></span><br><span class="line">      <span class="comment"># 设置配置的基本文件夹，默认值 config 可以理解为配置文件所在的最外层文件夹</span></span><br><span class="line">      <span class="attr">prefix:</span> <span class="string">test-config</span></span><br><span class="line">      <span class="comment"># 设置应用的文件夹名称，默认值 application 一般建议设置为微服务应用名称</span></span><br><span class="line">      <span class="attr">default-context:</span> <span class="string">provider</span></span><br><span class="line">      <span class="comment"># 配置环境分隔符，默认值 &quot;,&quot; 和 default-context 配置项搭配</span></span><br><span class="line">      <span class="comment"># 例如应用 orderService 分别有环境 default、dev、test、prod</span></span><br><span class="line">      <span class="comment"># 只需在 config 文件夹下创建 orderService、orderService-dev、orderService-test、orderService-prod 文件夹即可</span></span><br><span class="line">      <span class="attr">profile-separator:</span> <span class="string">&#x27;-&#x27;</span></span><br><span class="line">      <span class="comment"># 指定配置格式为 yaml</span></span><br><span class="line">      <span class="attr">format:</span> <span class="string">YAML</span></span><br><span class="line">      <span class="comment"># Consul 的 Key/Values 中的 Key，Value 对应整个配置文件</span></span><br><span class="line">      <span class="attr">data-key:</span> <span class="string">provider</span></span><br><span class="line">      <span class="comment"># 以上配置可以理解为：加载 config/orderService/ 文件夹下 Key 为 orderServiceConfig 的 Value 对应的配置信息</span></span><br><span class="line">      <span class="attr">watch:</span></span><br><span class="line">        <span class="comment"># 是否开启自动刷新，默认值 true 开启</span></span><br><span class="line">        <span class="attr">enabled:</span> <span class="literal">true</span></span><br><span class="line">        <span class="comment"># 刷新频率，单位：毫秒，默认值 1000</span></span><br><span class="line">        <span class="attr">delay:</span> <span class="number">1000</span></span><br></pre></td></tr></table></figure>
+
 <p>这样配置后服务启动时会在<code>Consul</code>指定位置寻找配置文件</p>
 <ul>
 <li>在<code>Consul</code>中添加配置文件</li>
 </ul>
 <p>在<code>Consul</code>中添加配置文件与在本地并无不同，所以可以无缝将本地的配置文件迁移到<code>Consul</code>上</p>
 
-            
-        </div>
+      
     </div>
-    <div class="post-tags">
-        
-        
-    </div>
-    <a href="/blog/2023/04/13/Consul%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="go-post">阅读全文</a>
-</div>
+    <footer class="article-footer">
+      <a data-url="https://genjikai666.github.io/blog/2023/04/13/Consul%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" data-id="clgemwg4n0001iwpm14zibp4y" data-title="Consul学习笔记" class="article-share-link">分享</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
 
-<div class="post">
-    <a href="/blog/2023/04/13/AOP%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
-        <h2 class="post-title">AOP学习笔记</h2>
-    </a>
-    <div class="category-and-date">
+
+
+  
+    <article id="post-AOP学习笔记" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/blog/2023/04/13/AOP%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="article-date">
+  <time class="dt-published" datetime="2023-04-13T03:24:42.698Z" itemprop="datePublished">2023-04-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
         
-        <span class="date">
-            <span class="icon">
-                <i class="fa-solid fa-calendar fa-fw"></i>
-            </span>
-            2023/4/13
-        </span>
-        
-        
-    </div>
-    <div class="description">
-        <div class="content" v-pre>
-            
-            <h1 id="AOP学习笔记"><a href="#AOP学习笔记" class="headerlink" title="AOP学习笔记"></a>AOP学习笔记</h1><p><strong>引入依赖</strong>:</p>
-<pre><code class="xml">&lt;dependency&gt;
-    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-    &lt;artifactId&gt;spring-boot-starter-aop&lt;/artifactId&gt;
-&lt;/dependency&gt;
-</code></pre>
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/blog/2023/04/13/AOP%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">AOP学习笔记</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="AOP学习笔记"><a href="#AOP学习笔记" class="headerlink" title="AOP学习笔记"></a>AOP学习笔记</h1><p><strong>引入依赖</strong>:</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-aop<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
 <p><strong>引入</strong>：有时候不同的模块需要调用相同的功能，例如日志记录，常见的做法是在每一个需要打印日志的地方注入日志类然后调用，但这样会导致重复代码过多且耦合度过高，更合适的做法是采用<code>SpringBoot</code>提供的<code>AOP</code></p>
 <p><strong>什么是AOP</strong>:<code>AOP</code>即面向切面的编程。这种思想将程序的执行分为了一个一个的切面，在这些切面间可以自定义得插入一些操作，例如在调用某个<code>service</code>前打印日志，调用完<code>service</code>完后也打印日志</p>
 <p><strong>几个常见注解</strong>:</p>
@@ -1021,124 +524,130 @@ public class Controller &#123;
 </tbody></table>
 <p><strong>代码实现</strong>：以打印日志为例</p>
 <p>首先定义切面类：</p>
-<pre><code class="JAVA">@Aspect
-@Component
-public class AopAdvice &#123;
-    @Pointcut(&quot;@annotation(com.example.aop.annotation.Test)&quot;)
-    public void log()&#123;
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Aspect</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">AopAdvice</span> &#123;</span><br><span class="line">    <span class="meta">@Pointcut(&quot;@annotation(com.example.aop.annotation.Test)&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">log</span><span class="params">()</span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Before(&quot;log()&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">beforelog</span><span class="params">()</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;之前&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-    &#125;
-    @Before(&quot;log()&quot;)
-    public void beforelog()&#123;
-        System.out.println(&quot;之前&quot;);
-    &#125;
-&#125;
-</code></pre>
 <p>这里切点定义为被<code>@Test</code>注解标记的方法</p>
 <p><code>Test</code></p>
-<pre><code class="java">@Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.METHOD)
-public @interface Test &#123;
-&#125;
-</code></pre>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Retention(RetentionPolicy.RUNTIME)</span></span><br><span class="line"><span class="meta">@Target(ElementType.METHOD)</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Test &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>再写一个简单的<code>controller</code></p>
 <p><code>Controller</code></p>
-<pre><code class="java">@RestController
-public class Controller &#123;
-    @Test
-    @GetMapping(&quot;/api&quot;)
-    public void test()&#123;
-        System.out.println(&quot;方法内&quot;);
-    &#125;
-&#125;
-</code></pre>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Controller</span> &#123;</span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="meta">@GetMapping(&quot;/api&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">test</span><span class="params">()</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;方法内&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>这里的<code>test()</code>被<code>@Test</code>注解标记了，则在执行这个方法前会先调用切面类中的<code>beforelog()</code>方法</p>
 <p>完整代码见<code>SpringBoot_Test</code>项目中<code>aop</code>包</p>
 
-            
-        </div>
+      
     </div>
-    <div class="post-tags">
-        
-        
-    </div>
-    <a href="/blog/2023/04/13/AOP%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="go-post">阅读全文</a>
-</div>
+    <footer class="article-footer">
+      <a data-url="https://genjikai666.github.io/blog/2023/04/13/AOP%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" data-id="clgemwg4i0000iwpmft5o1fl6" data-title="AOP学习笔记" class="article-share-link">分享</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
 
 
-        <div class="page-current">
-    <div class="prev">
-        
-    </div>
-    <div class="page-index">
-        
-        <span class="current">1</span>
-        
-    </div>
-    <div class="next">
-        
-    </div>
-</div>
 
-    </div>
+  
+
+
+</section>
+        
+          <aside id="sidebar">
+  
     
-    <div id="home-card">
-        <div id="card-div">
-    <div class="card-style">
-        <div class="avatar">
-            <img src="/blog/images/avatar.jpg" alt="avatar" />
-        </div>
-        <div class="name">Jerry</div>
-        <div class="description">
-            <p>Description<br>…</p>
 
-        </div>
-        
-        
-        <div class="friend-links">
-            
-            <div class="friend-link">
-                <a target="_blank" rel="noopener" href="https://argvchs.github.io">Argvchs</a>
-            </div>
-            
-        </div>
-        
-    </div>
-</div>
-
-    </div>
+  
     
-</div>
 
-                <footer id="footer">
-    <div id="footer-wrap">
-        <div>
-            &copy;
-            2022 - 2023 Jerry的博客
-            <span id="footer-icon">
-                <i class="fa-solid fa-font-awesome fa-fw"></i>
-            </span>
-            &commat;Jerry
-        </div>
-        <div>
-            Based on the <a target="_blank" rel="noopener" href="https://hexo.io">Hexo Engine</a> &amp;
-            <a target="_blank" rel="noopener" href="https://github.com/argvchs/hexo-theme-particlex">ParticleX Theme</a>
-        </div>
-        
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2023/04/">四月 2023</a></li></ul>
     </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/blog/2023/04/13/%E8%87%AA%E5%AE%9A%E4%B9%89%E8%A7%A3%E6%9E%90%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">自定义解析器学习笔记</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2023/04/13/%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">工厂模式学习笔记</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2023/04/13/JDK%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">JDK动态代理学习笔记</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2023/04/13/Feign%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">Feign学习笔记</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2023/04/13/Consul%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">Consul学习笔记</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 Jerry<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
 </footer>
 
-            </div>
-            </transition>
-            
-            <transition name="fade">
-            <div id="preview" ref="preview" v-show="previewShow">
-                <img id="preview-content" ref="previewContent" />
-            </div>
-            </transition>
-            
-        </div>
-        <script src="/blog/js/main.js"></script>
-        
-    </body>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/blog/" class="mobile-nav-link">Home</a>
+  
+    <a href="/blog/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/blog/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/blog/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/blog/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
 </html>

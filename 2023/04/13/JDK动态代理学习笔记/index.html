@@ -1,448 +1,277 @@
-
 <!DOCTYPE html>
-<html lang="zh-CN">
-    <head>
-        <meta charset="utf-8" />
-        <title>JDK动态代理学习笔记 | Jerry的博客</title>
-        <meta name="author" content="Jerry" />
-        <meta name="description" content="" />
-        <meta name="keywords" content="" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-        <link rel="icon" href="/blog/images/favicon.png" />
-        <script src="https://cdn.staticfile.org/vue/3.2.47/vue.global.prod.min.js"></script>
-<link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/6.3.0/css/all.min.css" />
-<link rel="stylesheet" href="/blog/css/fonts.min.css" />
-<script> const mixins = {}; </script>
-
-<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
-
-
-<script src="https://cdn.staticfile.org/highlight.js/11.7.0/highlight.min.js"></script>
-<link
-    rel="stylesheet"
-    href="https://cdn.staticfile.org/highlight.js/11.7.0/styles/github.min.css"
-/>
-<script src="/blog/js/lib/highlight.js"></script>
-
-
-
-<script src="/blog/js/lib/preview.js"></script>
-
-
-
-
-
-
-
-
-
-<link rel="stylesheet" href="/blog/css/main.css" />
-
-    <meta name="generator" content="Hexo 6.3.0"></head>
-    <body>
-        <div id="layout">
-            <transition name="fade">
-            <div id="loading" v-show="loading">
-                <div id="loading-circle">
-                    <h2>LOADING</h2>
-                    <p>加载过慢请开启缓存 浏览器默认开启</p>
-                    <img src="/blog/images/loading.gif" />
-                </div>
-            </div>
-            </transition>
-            <nav id="menu" :class="{ hidden: hiddenMenu, 'menu-color': menuColor}">
-    <div class="desktop-menu">
-        <a class="title" href="/blog/">
-            <span>JERRY的博客</span>
-        </a>
-        
-        <a href="/blog/">
-            <i class="fa-solid fa-house fa-fw"></i>
-            <span>&ensp;Home</span>
-        </a>
-        
-        <a href="/blog/about">
-            <i class="fa-solid fa-id-card fa-fw"></i>
-            <span>&ensp;About</span>
-        </a>
-        
-        <a href="/blog/archives">
-            <i class="fa-solid fa-box-archive fa-fw"></i>
-            <span>&ensp;Archives</span>
-        </a>
-        
-        <a href="/blog/categories">
-            <i class="fa-solid fa-bookmark fa-fw"></i>
-            <span>&ensp;Categories</span>
-        </a>
-        
-        <a href="/blog/tags">
-            <i class="fa-solid fa-tags fa-fw"></i>
-            <span>&ensp;Tags</span>
-        </a>
-        
-    </div>
-    <div id="mobile-menu">
-        <div class="curtain" @click="shouMenuItems = !shouMenuItems" v-show="shouMenuItems"></div>
-        <div class="title" @click="shouMenuItems = !shouMenuItems">
-            <i class="fa-solid fa-bars fa-fw"></i>
-            <span>&emsp;JERRY的博客</span>
-        </div>
-        <transition name="slide">
-        <div class="items" v-show="shouMenuItems">
-            
-            <a href="/blog/">
-                <div class="item">
-                    <div style="min-width: 20px; max-width: 50px; width: 10%">
-                        <i class="fa-solid fa-house fa-fw"></i>
-                    </div>
-                    <div style="min-width: 100px; max-width: 150%; width: 20%">Home</div>
-                </div>
-            </a>
-            
-            <a href="/blog/about">
-                <div class="item">
-                    <div style="min-width: 20px; max-width: 50px; width: 10%">
-                        <i class="fa-solid fa-id-card fa-fw"></i>
-                    </div>
-                    <div style="min-width: 100px; max-width: 150%; width: 20%">About</div>
-                </div>
-            </a>
-            
-            <a href="/blog/archives">
-                <div class="item">
-                    <div style="min-width: 20px; max-width: 50px; width: 10%">
-                        <i class="fa-solid fa-box-archive fa-fw"></i>
-                    </div>
-                    <div style="min-width: 100px; max-width: 150%; width: 20%">Archives</div>
-                </div>
-            </a>
-            
-            <a href="/blog/categories">
-                <div class="item">
-                    <div style="min-width: 20px; max-width: 50px; width: 10%">
-                        <i class="fa-solid fa-bookmark fa-fw"></i>
-                    </div>
-                    <div style="min-width: 100px; max-width: 150%; width: 20%">Categories</div>
-                </div>
-            </a>
-            
-            <a href="/blog/tags">
-                <div class="item">
-                    <div style="min-width: 20px; max-width: 50px; width: 10%">
-                        <i class="fa-solid fa-tags fa-fw"></i>
-                    </div>
-                    <div style="min-width: 100px; max-width: 150%; width: 20%">Tags</div>
-                </div>
-            </a>
-            
-        </div>
-        </transition>
-    </div>
-</nav>
-
-            <transition name="into">
-            <div id="main" v-show="!loading">
-                <div class="article">
-    <div>
-        <h1>JDK动态代理学习笔记</h1>
-    </div>
-    <div class="info">
-        <span class="date">
-            <span class="icon">
-                <i class="fa-solid fa-calendar fa-fw"></i>
-            </span>
-            2023/4/13
-        </span>
-        
-        
-    </div>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>JDK动态代理学习笔记 | Jerry的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="JDK动态代理学习笔记1、JDK动态代理介绍JDK动态代理是JDK自带的一种实现动态代理的方式，这种方式只能代理接口。 2、应用JDK动态代理主要有两种应用。 1、对业务逻辑进行增强JDK动态代理可以对已有的代码进行增强，例如现在有一个UploadService的接口，UploadServiceImpl是它的实现类，这里为了方便将它们写在Main.java类中 123456789101112131">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JDK动态代理学习笔记">
+<meta property="og:url" content="https://genjikai666.github.io/blog/2023/04/13/JDK%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="Jerry的博客">
+<meta property="og:description" content="JDK动态代理学习笔记1、JDK动态代理介绍JDK动态代理是JDK自带的一种实现动态代理的方式，这种方式只能代理接口。 2、应用JDK动态代理主要有两种应用。 1、对业务逻辑进行增强JDK动态代理可以对已有的代码进行增强，例如现在有一个UploadService的接口，UploadServiceImpl是它的实现类，这里为了方便将它们写在Main.java类中 123456789101112131">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-04-13T03:24:42.757Z">
+<meta property="article:modified_time" content="2023-04-13T03:46:13.946Z">
+<meta property="article:author" content="Jerry">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/blog/atom.xml" title="Jerry的博客" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/blog/favicon.png">
+  
+  
     
-    <div class="content" v-pre>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/blog/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/blog/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/blog/" id="logo">Jerry的博客</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/blog/">Home</a>
+        
+          <a class="main-nav-link" href="/blog/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/blog/atom.xml" title="RSS 订阅"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://genjikai666.github.io/blog"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-JDK动态代理学习笔记" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/blog/2023/04/13/JDK%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="article-date">
+  <time class="dt-published" datetime="2023-04-13T03:24:42.757Z" itemprop="datePublished">2023-04-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      JDK动态代理学习笔记
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
         <h1 id="JDK动态代理学习笔记"><a href="#JDK动态代理学习笔记" class="headerlink" title="JDK动态代理学习笔记"></a>JDK动态代理学习笔记</h1><h2 id="1、JDK动态代理介绍"><a href="#1、JDK动态代理介绍" class="headerlink" title="1、JDK动态代理介绍"></a>1、JDK动态代理介绍</h2><p>JDK动态代理是JDK自带的一种实现动态代理的方式，这种方式只能代理接口。</p>
 <h2 id="2、应用"><a href="#2、应用" class="headerlink" title="2、应用"></a>2、应用</h2><p>JDK动态代理主要有两种应用。</p>
 <h3 id="1、对业务逻辑进行增强"><a href="#1、对业务逻辑进行增强" class="headerlink" title="1、对业务逻辑进行增强"></a>1、对业务逻辑进行增强</h3><p>JDK动态代理可以对已有的代码进行增强，例如现在有一个<code>UploadService</code>的接口，<code>UploadServiceImpl</code>是它的实现类，这里为了方便将它们写在<code>Main.java</code>类中</p>
-<pre><code class="java">interface UploadService &#123;
-    public String upload(File file);
-    public String delete(File file);
-&#125;
-class UploadServiceImpl implements UploadService&#123;
-    public String upload(File file)&#123;
-        System.out.println(&quot;上传中&quot;);
-        return null;
-    &#125;
-    public String delete(File file)&#123;
-        System.out.println(&quot;删除中&quot;);
-        return null;
-    &#125;
-&#125;
-</code></pre>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> <span class="title class_">UploadService</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">upload</span><span class="params">(File file)</span>;</span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">delete</span><span class="params">(File file)</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">UploadServiceImpl</span> <span class="keyword">implements</span> <span class="title class_">UploadService</span>&#123;</span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">upload</span><span class="params">(File file)</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;上传中&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">delete</span><span class="params">(File file)</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;删除中&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>现在想要在上传或者删除前后加上日志记录，一般的做法是改写<code>UploadServiceImpl</code></p>
-<pre><code class="java">class UploadServiceImpl implements UploadService&#123;
-    public String upload(File file)&#123;
-        System.out.println(&quot;正在上传&quot;);
-        System.out.println(&quot;上传中&quot;);
-        System.out.println(&quot;上传成功&quot;);
-        return null;
-    &#125;
-    public String delete(File file)&#123;
-        System.out.println(&quot;正在删除&quot;);
-        System.out.println(&quot;删除中&quot;);
-        System.out.println(&quot;删除成功&quot;)
-        return null;
-    &#125;
-&#125;
-</code></pre>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">UploadServiceImpl</span> <span class="keyword">implements</span> <span class="title class_">UploadService</span>&#123;</span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">upload</span><span class="params">(File file)</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;正在上传&quot;</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot;上传中&quot;</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot;上传成功&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">delete</span><span class="params">(File file)</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;正在删除&quot;</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot;删除中&quot;</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot;删除成功&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>但是这会破坏原有代码的业务逻辑，我们应该避免侵入式编程，接下来引入JDK动态代理的做法。</p>
 <p>首先我们新建一个代理类<code>UploadServiceProxy</code>来对<code>UploadService</code>进行代理，这个代理类要继承<code>InvocationHandler</code>接口</p>
-<pre><code class="java">public class UploadServiceProxy implements InvocationHandler &#123;
-    private Object proxytarget;
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UploadServiceProxy</span> <span class="keyword">implements</span> <span class="title class_">InvocationHandler</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> Object proxytarget;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> Object <span class="title function_">getProxyInstance</span><span class="params">(Object target)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.proxytarget = target;</span><br><span class="line">        <span class="keyword">return</span> Proxy.newProxyInstance(proxytarget.getClass().getClassLoader(),</span><br><span class="line">                proxytarget.getClass().getInterfaces(),</span><br><span class="line">                <span class="built_in">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> Object <span class="title function_">invoke</span><span class="params">(Object proxy, Method method, Object[] args)</span> <span class="keyword">throws</span> Throwable &#123;</span><br><span class="line">        <span class="keyword">if</span> (method.getName().equals(<span class="string">&quot;upload&quot;</span>)) &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;开始上传&quot;</span>);</span><br><span class="line">            method.invoke(proxytarget,args);</span><br><span class="line">            System.out.println(<span class="string">&quot;上传成功&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;开始删除&quot;</span>);</span><br><span class="line">            method.invoke(proxytarget,args);</span><br><span class="line">            System.out.println(<span class="string">&quot;删除成功&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-    public Object getProxyInstance(Object target) &#123;
-        this.proxytarget = target;
-        return Proxy.newProxyInstance(proxytarget.getClass().getClassLoader(),
-                proxytarget.getClass().getInterfaces(),
-                this);
-    &#125;
-
-    @Override
-    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable &#123;
-        if (method.getName().equals(&quot;upload&quot;)) &#123;
-            System.out.println(&quot;开始上传&quot;);
-            method.invoke(proxytarget,args);
-            System.out.println(&quot;上传成功&quot;);
-        &#125;
-        else&#123;
-            System.out.println(&quot;开始删除&quot;);
-            method.invoke(proxytarget,args);
-            System.out.println(&quot;删除成功&quot;);
-        &#125;
-        return null;
-    &#125;
-&#125;
-</code></pre>
 <p><code>UploadServiceProxy</code>重写了<code>InvocationHandler</code>的<code>invoke()</code>方法，首先判断外部是调用的那个方法，这个通过<code>method.getName()</code>实现，如何分别对这几个方法进行增强。例如对<code>upload()</code>方法的增强在第一个<code>if</code>里面，首先打印日志<strong>开始上传</strong></p>
 <p>然后调用<code>method.invoke(proxytarget,args)</code>执行被代理的接口<code>UploadService</code>中<code>upload()</code>本来的业务逻辑，即打印<strong>上传中</strong>,然后再打印日志<strong>上传成功</strong>，那这个<code>proxytarget</code>是如何来的呢，我们看<code>Main</code></p>
-<pre><code class="java">public class Main &#123;
-    public static void main(String[] args) &#123;
-        UploadServiceProxy proxy = new UploadServiceProxy();
-        UploadService uploadService = (UploadService) proxy.getProxyInstance(new UploadServiceImpl());
-        File file = new File(&quot;asdadsadsasd&quot;);
-        uploadService.delete(file);
-        uploadService.upload(file);
-    &#125;
-&#125;
-</code></pre>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Main</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">UploadServiceProxy</span> <span class="variable">proxy</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">UploadServiceProxy</span>();</span><br><span class="line">        <span class="type">UploadService</span> <span class="variable">uploadService</span> <span class="operator">=</span> (UploadService) proxy.getProxyInstance(<span class="keyword">new</span> <span class="title class_">UploadServiceImpl</span>());</span><br><span class="line">        <span class="type">File</span> <span class="variable">file</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">File</span>(<span class="string">&quot;asdadsadsasd&quot;</span>);</span><br><span class="line">        uploadService.delete(file);</span><br><span class="line">        uploadService.upload(file);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>我们new了一个代理对象，然后调用<code>proxy.getProxyInstance(new UploadServiceImpl())</code>将被代理接口的实现类传入了代理类，然后代理类就可以调用实现类的业务逻辑了,执行一下就可以看到现在能够正常打印日志，同时没有对原代码进行入侵。</p>
 <p>完整代码：</p>
 <p><code>Main.java</code></p>
-<pre><code class="java">public class Main &#123;
-    public static void main(String[] args) &#123;
-        UploadServiceProxy proxy = new UploadServiceProxy();
-        UploadService uploadService = (UploadService) proxy.getProxyInstance(new UploadServiceImpl());
-        File file = new File(&quot;asdadsadsasd&quot;);
-        uploadService.delete(file);
-        uploadService.upload(file);
-    &#125;
-&#125;
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Main</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">UploadServiceProxy</span> <span class="variable">proxy</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">UploadServiceProxy</span>();</span><br><span class="line">        <span class="type">UploadService</span> <span class="variable">uploadService</span> <span class="operator">=</span> (UploadService) proxy.getProxyInstance(<span class="keyword">new</span> <span class="title class_">UploadServiceImpl</span>());</span><br><span class="line">        <span class="type">File</span> <span class="variable">file</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">File</span>(<span class="string">&quot;asdadsadsasd&quot;</span>);</span><br><span class="line">        uploadService.delete(file);</span><br><span class="line">        uploadService.upload(file);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">File</span> &#123;</span><br><span class="line">    String type;</span><br><span class="line">    File(String type)&#123;</span><br><span class="line">        <span class="built_in">this</span>.type = type;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">UploadService</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">upload</span><span class="params">(File file)</span>;</span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">delete</span><span class="params">(File file)</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">UploadServiceImpl</span> <span class="keyword">implements</span> <span class="title class_">UploadService</span>&#123;</span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">upload</span><span class="params">(File file)</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;上传中&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">delete</span><span class="params">(File file)</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;删除中&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-class File &#123;
-    String type;
-    File(String type)&#123;
-        this.type = type;
-    &#125;
-&#125;
-
-interface UploadService &#123;
-    public String upload(File file);
-    public String delete(File file);
-&#125;
-class UploadServiceImpl implements UploadService&#123;
-    public String upload(File file)&#123;
-        System.out.println(&quot;上传中&quot;);
-        return null;
-    &#125;
-    public String delete(File file)&#123;
-        System.out.println(&quot;删除中&quot;);
-        return null;
-    &#125;
-&#125;
-</code></pre>
 <p><code>UploadServiceProxy.java</code></p>
-<pre><code class="java">import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
-import java.lang.reflect.Proxy;
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.lang.reflect.InvocationHandler;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Method;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Proxy;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UploadServiceProxy</span> <span class="keyword">implements</span> <span class="title class_">InvocationHandler</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> Object proxytarget;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> Object <span class="title function_">getProxyInstance</span><span class="params">(Object target)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.proxytarget = target;</span><br><span class="line">        <span class="keyword">return</span> Proxy.newProxyInstance(proxytarget.getClass().getClassLoader(),</span><br><span class="line">                proxytarget.getClass().getInterfaces(),</span><br><span class="line">                <span class="built_in">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> Object <span class="title function_">invoke</span><span class="params">(Object proxy, Method method, Object[] args)</span> <span class="keyword">throws</span> Throwable &#123;</span><br><span class="line">        <span class="keyword">if</span> (method.getName().equals(<span class="string">&quot;upload&quot;</span>)) &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;开始上传&quot;</span>);</span><br><span class="line">            method.invoke(proxytarget,args);</span><br><span class="line">            System.out.println(<span class="string">&quot;上传成功&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;开始删除&quot;</span>);</span><br><span class="line">            method.invoke(proxytarget,args);</span><br><span class="line">            System.out.println(<span class="string">&quot;删除成功&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-public class UploadServiceProxy implements InvocationHandler &#123;
-    private Object proxytarget;
-
-    public Object getProxyInstance(Object target) &#123;
-        this.proxytarget = target;
-        return Proxy.newProxyInstance(proxytarget.getClass().getClassLoader(),
-                proxytarget.getClass().getInterfaces(),
-                this);
-    &#125;
-
-    @Override
-    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable &#123;
-        if (method.getName().equals(&quot;upload&quot;)) &#123;
-            System.out.println(&quot;开始上传&quot;);
-            method.invoke(proxytarget,args);
-            System.out.println(&quot;上传成功&quot;);
-        &#125;
-        else&#123;
-            System.out.println(&quot;开始删除&quot;);
-            method.invoke(proxytarget,args);
-            System.out.println(&quot;删除成功&quot;);
-        &#125;
-        return null;
-    &#125;
-&#125;
-</code></pre>
 <h3 id="2、面向接口编程"><a href="#2、面向接口编程" class="headerlink" title="2、面向接口编程"></a>2、面向接口编程</h3><p>有时我们调用某个接口的时候，其可能存在很多种实现类，根据情况的不同应该调用不同的实现类，但是我们不想考虑那么多，那么这个时候就可以用JDK动态代理实现这种面向接口编程。</p>
 <p>例如现在还是有上传文件的接口<code>UploadService</code>,但是根据上传文件的不同应该调用不同的文件上传的业务逻辑，为了提高代码的泛用性，我们采用动态代理，在不改动原代码的基础上实现这样不同情况下的调用。</p>
 <p>首先是<code>UploadService</code>接口，这里没有实现类</p>
-<pre><code class="java">interface UploadService &#123;
-    public String upload(File file);
-&#125;
-</code></pre>
-<p>文件类<code>File</code></p>
-<pre><code class="java">class File &#123;
-    String type;
-    File(String type)&#123;
-        this.type = type;
-    &#125;
-&#125;
-</code></pre>
-<p>同样的我们需要写一个代理类实现<code>InvocationHandler</code></p>
-<pre><code class="java">public class UploadServiceProxy implements InvocationHandler &#123;
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> <span class="title class_">UploadService</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">upload</span><span class="params">(File file)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-    @Override
-    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable &#123;
-        File file = (File)args[0];
-        if(file.type.equals(&quot;generic&quot;))&#123;
-            System.out.println(&quot;正在上传generic文件&quot;);
-        &#125;
-        else if(file.type.equals(&quot;maven&quot;))&#123;
-            System.out.println(&quot;正在上传maven文件&quot;);
-        &#125;
-        else&#123;
-            System.out.println(&quot;未知文件类型&quot;);
-        &#125;
-        return null;
-    &#125;
-&#125;
-</code></pre>
+<p>文件类<code>File</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">File</span> &#123;</span><br><span class="line">    String type;</span><br><span class="line">    File(String type)&#123;</span><br><span class="line">        <span class="built_in">this</span>.type = type;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>同样的我们需要写一个代理类实现<code>InvocationHandler</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UploadServiceProxy</span> <span class="keyword">implements</span> <span class="title class_">InvocationHandler</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> Object <span class="title function_">invoke</span><span class="params">(Object proxy, Method method, Object[] args)</span> <span class="keyword">throws</span> Throwable &#123;</span><br><span class="line">        <span class="type">File</span> <span class="variable">file</span> <span class="operator">=</span> (File)args[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">if</span>(file.type.equals(<span class="string">&quot;generic&quot;</span>))&#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;正在上传generic文件&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(file.type.equals(<span class="string">&quot;maven&quot;</span>))&#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;正在上传maven文件&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;未知文件类型&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>首先从<code>args</code>中取出参数，即调用<code>uploadService.upload(File file)</code>时的<code>file</code>,如果文件类型为<code>generic</code>则执行上传<code>generic</code>文件的业务逻辑，这里为了简便就直接用了控制台打印，实际上这里可以扩展</p>
 <p>再是<code>Main</code></p>
-<pre><code class="java">public class Main &#123;
-    public static void main(String[] args) &#123;
-        UploadServiceProxy proxy = new UploadServiceProxy();
-        UploadService uploadService = (UploadService) Proxy.newProxyInstance(UploadService.class.getClassLoader(),
-                new Class[]&#123;UploadService.class&#125;,
-                proxy);
-        File file = new File(&quot;generic&quot;);
-        uploadService.upload(file);
-    &#125;
-&#125;
-</code></pre>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Main</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">UploadServiceProxy</span> <span class="variable">proxy</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">UploadServiceProxy</span>();</span><br><span class="line">        <span class="type">UploadService</span> <span class="variable">uploadService</span> <span class="operator">=</span> (UploadService) Proxy.newProxyInstance(UploadService.class.getClassLoader(),</span><br><span class="line">                <span class="keyword">new</span> <span class="title class_">Class</span>[]&#123;UploadService.class&#125;,</span><br><span class="line">                proxy);</span><br><span class="line">        <span class="type">File</span> <span class="variable">file</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">File</span>(<span class="string">&quot;generic&quot;</span>);</span><br><span class="line">        uploadService.upload(file);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>首先也是new一个代理类，然后调用<code>Proxy.newInstance()</code>方法，并将<code>proxy</code>作为参数传入得到<code>uploadService</code>，然后new一个<code>generic</code>类型的文件，再调用<code>uploadService.upload()</code>,这时程序便会根据传入<code>File</code>的不同自行执行对应的业务代码。</p>
 <p>完整代码:</p>
 <p><code>Main.java</code></p>
-<pre><code class="java">import java.lang.reflect.Proxy;
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.lang.reflect.Proxy;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Main</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">UploadServiceProxy</span> <span class="variable">proxy</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">UploadServiceProxy</span>();</span><br><span class="line">        <span class="type">UploadService</span> <span class="variable">uploadService</span> <span class="operator">=</span> (UploadService) Proxy.newProxyInstance(UploadService.class.getClassLoader(),</span><br><span class="line">                <span class="keyword">new</span> <span class="title class_">Class</span>[]&#123;UploadService.class&#125;,</span><br><span class="line">                proxy);</span><br><span class="line">        <span class="type">File</span> <span class="variable">file</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">File</span>(<span class="string">&quot;generic&quot;</span>);</span><br><span class="line">        uploadService.upload(file);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">File</span> &#123;</span><br><span class="line">    String type;</span><br><span class="line"></span><br><span class="line">    File(String type) &#123;</span><br><span class="line">        <span class="built_in">this</span>.type = type;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">UploadService</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">upload</span><span class="params">(File file)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-public class Main &#123;
-    public static void main(String[] args) &#123;
-        UploadServiceProxy proxy = new UploadServiceProxy();
-        UploadService uploadService = (UploadService) Proxy.newProxyInstance(UploadService.class.getClassLoader(),
-                new Class[]&#123;UploadService.class&#125;,
-                proxy);
-        File file = new File(&quot;generic&quot;);
-        uploadService.upload(file);
-    &#125;
-&#125;
-
-class File &#123;
-    String type;
-
-    File(String type) &#123;
-        this.type = type;
-    &#125;
-&#125;
-
-interface UploadService &#123;
-    public String upload(File file);
-&#125;
-</code></pre>
 <p><code>UploadServiceProxy.java</code></p>
-<pre><code class="java">import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.lang.reflect.InvocationHandler;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Method;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UploadServiceProxy</span> <span class="keyword">implements</span> <span class="title class_">InvocationHandler</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> Object <span class="title function_">invoke</span><span class="params">(Object proxy, Method method, Object[] args)</span> <span class="keyword">throws</span> Throwable &#123;</span><br><span class="line">        <span class="type">File</span> <span class="variable">file</span> <span class="operator">=</span> (File)args[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">if</span>(file.type.equals(<span class="string">&quot;generic&quot;</span>))&#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;正在上传generic文件&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(file.type.equals(<span class="string">&quot;maven&quot;</span>))&#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;正在上传maven文件&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;未知文件类型&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-public class UploadServiceProxy implements InvocationHandler &#123;
-
-    @Override
-    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable &#123;
-        File file = (File)args[0];
-        if(file.type.equals(&quot;generic&quot;))&#123;
-            System.out.println(&quot;正在上传generic文件&quot;);
-        &#125;
-        else if(file.type.equals(&quot;maven&quot;))&#123;
-            System.out.println(&quot;正在上传maven文件&quot;);
-        &#125;
-        else&#123;
-            System.out.println(&quot;未知文件类型&quot;);
-        &#125;
-        return null;
-    &#125;
-&#125;
-</code></pre>
 <p>完整项目见<code>Helloworld</code>项目下<code>cglib_demo</code>和<code>jdk_proxy_demo</code>包</p>
 
+      
     </div>
+    <footer class="article-footer">
+      <a data-url="https://genjikai666.github.io/blog/2023/04/13/JDK%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" data-id="clgemwg4q0004iwpm5vesdb0j" data-title="JDK动态代理学习笔记" class="article-share-link">分享</a>
+      
+      
+      
+    </footer>
+  </div>
+  
     
-    
-    
-    
-    
-    
-    
-</div>
-
-                <footer id="footer">
-    <div id="footer-wrap">
-        <div>
-            &copy;
-            2022 - 2023 Jerry的博客
-            <span id="footer-icon">
-                <i class="fa-solid fa-font-awesome fa-fw"></i>
-            </span>
-            &commat;Jerry
-        </div>
-        <div>
-            Based on the <a target="_blank" rel="noopener" href="https://hexo.io">Hexo Engine</a> &amp;
-            <a target="_blank" rel="noopener" href="https://github.com/argvchs/hexo-theme-particlex">ParticleX Theme</a>
-        </div>
+<nav id="article-nav">
+  
+    <a href="/blog/2023/04/13/%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前一篇</strong>
+      <div class="article-nav-title">
         
+          工厂模式学习笔记
+        
+      </div>
+    </a>
+  
+  
+    <a href="/blog/2023/04/13/Feign%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">后一篇</strong>
+      <div class="article-nav-title">Feign学习笔记</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2023/04/">四月 2023</a></li></ul>
     </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/blog/2023/04/13/%E8%87%AA%E5%AE%9A%E4%B9%89%E8%A7%A3%E6%9E%90%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">自定义解析器学习笔记</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2023/04/13/%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">工厂模式学习笔记</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2023/04/13/JDK%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">JDK动态代理学习笔记</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2023/04/13/Feign%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">Feign学习笔记</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2023/04/13/Consul%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">Consul学习笔记</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 Jerry<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
 </footer>
 
-            </div>
-            </transition>
-            
-            <transition name="fade">
-            <div id="preview" ref="preview" v-show="previewShow">
-                <img id="preview-content" ref="previewContent" />
-            </div>
-            </transition>
-            
-        </div>
-        <script src="/blog/js/main.js"></script>
-        
-        
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/blog/" class="mobile-nav-link">Home</a>
+  
+    <a href="/blog/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/blog/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/blog/fancybox/jquery.fancybox.min.js"></script>
 
 
 
 
-        
-    </body>
+<script src="/blog/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
 </html>

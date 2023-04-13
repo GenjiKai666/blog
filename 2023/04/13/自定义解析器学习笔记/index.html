@@ -1,272 +1,244 @@
-
 <!DOCTYPE html>
-<html lang="zh-CN">
-    <head>
-        <meta charset="utf-8" />
-        <title>自定义解析器学习笔记 | Jerry的博客</title>
-        <meta name="author" content="Jerry" />
-        <meta name="description" content="" />
-        <meta name="keywords" content="" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-        <link rel="icon" href="/blog/images/favicon.png" />
-        <script src="https://cdn.staticfile.org/vue/3.2.47/vue.global.prod.min.js"></script>
-<link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/6.3.0/css/all.min.css" />
-<link rel="stylesheet" href="/blog/css/fonts.min.css" />
-<script> const mixins = {}; </script>
-
-<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
-
-
-<script src="https://cdn.staticfile.org/highlight.js/11.7.0/highlight.min.js"></script>
-<link
-    rel="stylesheet"
-    href="https://cdn.staticfile.org/highlight.js/11.7.0/styles/github.min.css"
-/>
-<script src="/blog/js/lib/highlight.js"></script>
-
-
-
-<script src="/blog/js/lib/preview.js"></script>
-
-
-
-
-
-
-
-
-
-<link rel="stylesheet" href="/blog/css/main.css" />
-
-    <meta name="generator" content="Hexo 6.3.0"></head>
-    <body>
-        <div id="layout">
-            <transition name="fade">
-            <div id="loading" v-show="loading">
-                <div id="loading-circle">
-                    <h2>LOADING</h2>
-                    <p>加载过慢请开启缓存 浏览器默认开启</p>
-                    <img src="/blog/images/loading.gif" />
-                </div>
-            </div>
-            </transition>
-            <nav id="menu" :class="{ hidden: hiddenMenu, 'menu-color': menuColor}">
-    <div class="desktop-menu">
-        <a class="title" href="/blog/">
-            <span>JERRY的博客</span>
-        </a>
-        
-        <a href="/blog/">
-            <i class="fa-solid fa-house fa-fw"></i>
-            <span>&ensp;Home</span>
-        </a>
-        
-        <a href="/blog/about">
-            <i class="fa-solid fa-id-card fa-fw"></i>
-            <span>&ensp;About</span>
-        </a>
-        
-        <a href="/blog/archives">
-            <i class="fa-solid fa-box-archive fa-fw"></i>
-            <span>&ensp;Archives</span>
-        </a>
-        
-        <a href="/blog/categories">
-            <i class="fa-solid fa-bookmark fa-fw"></i>
-            <span>&ensp;Categories</span>
-        </a>
-        
-        <a href="/blog/tags">
-            <i class="fa-solid fa-tags fa-fw"></i>
-            <span>&ensp;Tags</span>
-        </a>
-        
-    </div>
-    <div id="mobile-menu">
-        <div class="curtain" @click="shouMenuItems = !shouMenuItems" v-show="shouMenuItems"></div>
-        <div class="title" @click="shouMenuItems = !shouMenuItems">
-            <i class="fa-solid fa-bars fa-fw"></i>
-            <span>&emsp;JERRY的博客</span>
-        </div>
-        <transition name="slide">
-        <div class="items" v-show="shouMenuItems">
-            
-            <a href="/blog/">
-                <div class="item">
-                    <div style="min-width: 20px; max-width: 50px; width: 10%">
-                        <i class="fa-solid fa-house fa-fw"></i>
-                    </div>
-                    <div style="min-width: 100px; max-width: 150%; width: 20%">Home</div>
-                </div>
-            </a>
-            
-            <a href="/blog/about">
-                <div class="item">
-                    <div style="min-width: 20px; max-width: 50px; width: 10%">
-                        <i class="fa-solid fa-id-card fa-fw"></i>
-                    </div>
-                    <div style="min-width: 100px; max-width: 150%; width: 20%">About</div>
-                </div>
-            </a>
-            
-            <a href="/blog/archives">
-                <div class="item">
-                    <div style="min-width: 20px; max-width: 50px; width: 10%">
-                        <i class="fa-solid fa-box-archive fa-fw"></i>
-                    </div>
-                    <div style="min-width: 100px; max-width: 150%; width: 20%">Archives</div>
-                </div>
-            </a>
-            
-            <a href="/blog/categories">
-                <div class="item">
-                    <div style="min-width: 20px; max-width: 50px; width: 10%">
-                        <i class="fa-solid fa-bookmark fa-fw"></i>
-                    </div>
-                    <div style="min-width: 100px; max-width: 150%; width: 20%">Categories</div>
-                </div>
-            </a>
-            
-            <a href="/blog/tags">
-                <div class="item">
-                    <div style="min-width: 20px; max-width: 50px; width: 10%">
-                        <i class="fa-solid fa-tags fa-fw"></i>
-                    </div>
-                    <div style="min-width: 100px; max-width: 150%; width: 20%">Tags</div>
-                </div>
-            </a>
-            
-        </div>
-        </transition>
-    </div>
-</nav>
-
-            <transition name="into">
-            <div id="main" v-show="!loading">
-                <div class="article">
-    <div>
-        <h1>自定义解析器学习笔记</h1>
-    </div>
-    <div class="info">
-        <span class="date">
-            <span class="icon">
-                <i class="fa-solid fa-calendar fa-fw"></i>
-            </span>
-            2023/4/13
-        </span>
-        
-        
-    </div>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>自定义解析器学习笔记 | Jerry的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="自定义解析器学习笔记描述：解析器是对请求进行处理，得到指定类的工具 实现：Springboot提供了HandleMethodArgumentResolver接口，只要对这个接口进行实现变可以对请求的处理实现自定义 首先定义一个注解接口用于对controller中的参数进行标注，例如我们模拟用户登陆，定义一个@User的注解接口 12345@Target(&amp;#123;ElementType.PARA">
+<meta property="og:type" content="article">
+<meta property="og:title" content="自定义解析器学习笔记">
+<meta property="og:url" content="https://genjikai666.github.io/blog/2023/04/13/%E8%87%AA%E5%AE%9A%E4%B9%89%E8%A7%A3%E6%9E%90%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="Jerry的博客">
+<meta property="og:description" content="自定义解析器学习笔记描述：解析器是对请求进行处理，得到指定类的工具 实现：Springboot提供了HandleMethodArgumentResolver接口，只要对这个接口进行实现变可以对请求的处理实现自定义 首先定义一个注解接口用于对controller中的参数进行标注，例如我们模拟用户登陆，定义一个@User的注解接口 12345@Target(&amp;#123;ElementType.PARA">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-04-13T03:24:42.763Z">
+<meta property="article:modified_time" content="2023-04-13T03:46:42.319Z">
+<meta property="article:author" content="Jerry">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/blog/atom.xml" title="Jerry的博客" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/blog/favicon.png">
+  
+  
     
-    <div class="content" v-pre>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/blog/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/blog/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/blog/" id="logo">Jerry的博客</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/blog/">Home</a>
+        
+          <a class="main-nav-link" href="/blog/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/blog/atom.xml" title="RSS 订阅"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://genjikai666.github.io/blog"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-自定义解析器学习笔记" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/blog/2023/04/13/%E8%87%AA%E5%AE%9A%E4%B9%89%E8%A7%A3%E6%9E%90%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="article-date">
+  <time class="dt-published" datetime="2023-04-13T03:24:42.763Z" itemprop="datePublished">2023-04-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      自定义解析器学习笔记
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
         <h1 id="自定义解析器学习笔记"><a href="#自定义解析器学习笔记" class="headerlink" title="自定义解析器学习笔记"></a>自定义解析器学习笔记</h1><p><strong>描述</strong>：解析器是对请求进行处理，得到指定类的工具</p>
 <p><strong>实现</strong>：<code>Springboot</code>提供了<code>HandleMethodArgumentResolver</code>接口，只要对这个接口进行实现变可以对请求的处理实现自定义</p>
 <p>首先定义一个注解接口用于对<code>controller</code>中的参数进行标注，例如我们模拟用户登陆，定义一个<code>@User</code>的注解接口</p>
-<pre><code class="java">@Target(&#123;ElementType.PARAMETER&#125;)
-@Retention(RetentionPolicy.RUNTIME)
-@Documented
-public @interface User &#123;
-&#125;
-</code></pre>
-<p>然后定义一个<code>UserDTO</code>类</p>
-<pre><code class="java">@NoArgsConstructor
-@AllArgsConstructor
-@Data
-@EqualsAndHashCode
-public class UserDTO &#123;
-    String id;
-    String name;
-&#125;
-</code></pre>
-<p>接下来是解析器<code>UserResolver</code></p>
-<pre><code class="java">public class UserResolver implements HandlerMethodArgumentResolver &#123;
-    @Override
-    public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception &#123;
-        HttpServletRequest request = webRequest.getNativeRequest(HttpServletRequest.class);
-        String id = (String) request.getParameter(&quot;id&quot;);
-        String name = (String) request.getParameter(&quot;name&quot;);
-        return new UserDTO(id,name);
-    &#125;
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target(&#123;ElementType.PARAMETER&#125;)</span></span><br><span class="line"><span class="meta">@Retention(RetentionPolicy.RUNTIME)</span></span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> User &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-    @Override
-    public boolean supportsParameter(MethodParameter parameter) &#123;
-        User ann = parameter.getParameterAnnotation(User.class);
-        Class&lt;?&gt; parameterType = parameter.getParameterType();
-        return (ann != null) &amp;&amp; UserDTO.class.isAssignableFrom(parameterType);
-    &#125;
-&#125;
-</code></pre>
+<p>然后定义一个<code>UserDTO</code>类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@NoArgsConstructor</span></span><br><span class="line"><span class="meta">@AllArgsConstructor</span></span><br><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="meta">@EqualsAndHashCode</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserDTO</span> &#123;</span><br><span class="line">    String id;</span><br><span class="line">    String name;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>接下来是解析器<code>UserResolver</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserResolver</span> <span class="keyword">implements</span> <span class="title class_">HandlerMethodArgumentResolver</span> &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> Object <span class="title function_">resolveArgument</span><span class="params">(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="type">HttpServletRequest</span> <span class="variable">request</span> <span class="operator">=</span> webRequest.getNativeRequest(HttpServletRequest.class);</span><br><span class="line">        <span class="type">String</span> <span class="variable">id</span> <span class="operator">=</span> (String) request.getParameter(<span class="string">&quot;id&quot;</span>);</span><br><span class="line">        <span class="type">String</span> <span class="variable">name</span> <span class="operator">=</span> (String) request.getParameter(<span class="string">&quot;name&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">UserDTO</span>(id,name);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">supportsParameter</span><span class="params">(MethodParameter parameter)</span> &#123;</span><br><span class="line">        <span class="type">User</span> <span class="variable">ann</span> <span class="operator">=</span> parameter.getParameterAnnotation(User.class);</span><br><span class="line">        Class&lt;?&gt; parameterType = parameter.getParameterType();</span><br><span class="line">        <span class="keyword">return</span> (ann != <span class="literal">null</span>) &amp;&amp; UserDTO.class.isAssignableFrom(parameterType);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>其中方法<code>supportsParameter(MethodParameter parameter)</code>用来判定对什么类型的注解以及被注解的类生效，例如这里这里只对<code>@User</code>注解以及<code>UserDTO</code>类生效</p>
 <p>方法<code>resolveArgument()</code>方法是对请求进行处理的部分，<code>parameter</code>是要为之解析的参数，	<code>mavContainer</code>是<code>Model</code>和<code>View</code>的容器，<code>webRequest</code>是请求，例如这里先从<code>request</code>中获取<code>id</code>和<code>name</code>，然后封装成<code>UserDTO</code>并返回，这时候<code>controller</code>中的<code>UserDTO</code>便会被构建</p>
 <p>在解析器写好后，利用配置类加载</p>
 <p><code>MyConfig</code></p>
-<pre><code class="java">@Configuration
-@EnableWebMvc
-public class MyConfig extends WebMvcConfigurationSupport &#123;
-    public void addArgumentResolvers(List&lt;HandlerMethodArgumentResolver&gt; argumentResolvers)&#123;
-        argumentResolvers.add(new UserResolver());
-    &#125;
-&#125;
-</code></pre>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@EnableWebMvc</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyConfig</span> <span class="keyword">extends</span> <span class="title class_">WebMvcConfigurationSupport</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">addArgumentResolvers</span><span class="params">(List&lt;HandlerMethodArgumentResolver&gt; argumentResolvers)</span>&#123;</span><br><span class="line">        argumentResolvers.add(<span class="keyword">new</span> <span class="title class_">UserResolver</span>());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>在<code>springboot</code>启动的时候就将解析器加载到<code>argumentResolvers</code>中</p>
 <p>接下来写一个简单的<code>controller</code></p>
 <p><code>Controller</code></p>
-<pre><code class="java">@RestController
-public class Controller &#123;
-    @GetMapping(&quot;/get&quot;)
-    public void handle(@User UserDTO userDTO)&#123;
-        System.out.println(userDTO.getId()+&quot; &quot;+userDTO.getName());
-    &#125;
-&#125;
-</code></pre>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Controller</span> &#123;</span><br><span class="line">    <span class="meta">@GetMapping(&quot;/get&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">handle</span><span class="params">(<span class="meta">@User</span> UserDTO userDTO)</span>&#123;</span><br><span class="line">        System.out.println(userDTO.getId()+<span class="string">&quot; &quot;</span>+userDTO.getName());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>在收到请求后，解析器会将请求中的<code>id</code>和<code>name</code>封装成<code>UserDTO</code>并赋值给<code>userDTO</code></p>
 <p>完整代码见<code>SpringBoot_Test</code>项目的<code>resolver</code>包</p>
 
+      
     </div>
+    <footer class="article-footer">
+      <a data-url="https://genjikai666.github.io/blog/2023/04/13/%E8%87%AA%E5%AE%9A%E4%B9%89%E8%A7%A3%E6%9E%90%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" data-id="clgemwg4r0005iwpmesftawke" data-title="自定义解析器学习笔记" class="article-share-link">分享</a>
+      
+      
+      
+    </footer>
+  </div>
+  
     
-    
-    
-    
-    
-    
-    
-</div>
+<nav id="article-nav">
+  
+  
+    <a href="/blog/2023/04/13/%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">后一篇</strong>
+      <div class="article-nav-title">工厂模式学习笔记</div>
+    </a>
+  
+</nav>
 
-                <footer id="footer">
-    <div id="footer-wrap">
-        <div>
-            &copy;
-            2022 - 2023 Jerry的博客
-            <span id="footer-icon">
-                <i class="fa-solid fa-font-awesome fa-fw"></i>
-            </span>
-            &commat;Jerry
-        </div>
-        <div>
-            Based on the <a target="_blank" rel="noopener" href="https://hexo.io">Hexo Engine</a> &amp;
-            <a target="_blank" rel="noopener" href="https://github.com/argvchs/hexo-theme-particlex">ParticleX Theme</a>
-        </div>
+  
+</article>
+
+
+</section>
         
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2023/04/">四月 2023</a></li></ul>
     </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/blog/2023/04/13/%E8%87%AA%E5%AE%9A%E4%B9%89%E8%A7%A3%E6%9E%90%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">自定义解析器学习笔记</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2023/04/13/%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">工厂模式学习笔记</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2023/04/13/JDK%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">JDK动态代理学习笔记</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2023/04/13/Feign%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">Feign学习笔记</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2023/04/13/Consul%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">Consul学习笔记</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 Jerry<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
 </footer>
 
-            </div>
-            </transition>
-            
-            <transition name="fade">
-            <div id="preview" ref="preview" v-show="previewShow">
-                <img id="preview-content" ref="previewContent" />
-            </div>
-            </transition>
-            
-        </div>
-        <script src="/blog/js/main.js"></script>
-        
-        
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/blog/" class="mobile-nav-link">Home</a>
+  
+    <a href="/blog/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/blog/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/blog/fancybox/jquery.fancybox.min.js"></script>
 
 
 
 
-        
-    </body>
+<script src="/blog/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
 </html>
