@@ -4,21 +4,21 @@
   <meta charset="utf-8">
   
   
-  <title>Consul学习笔记 | Hexo</title>
+  <title>Consul学习笔记 | Jerry的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="Consul学习笔记项目Demo：feign_test项目 Consul简介: 在多服务项目中，需要对繁多的项目进行管理，Consul就可以满足这样的需求。 Consul可以被用作服务注册中心。在一个服务启动的时候，这个服务会将自身的信息发送给Consul完成注册，同时Consul也会间隔一段时间对每个服务进行询问，确保每个服务是健康的，不然就将不健康的服务注销。 Consul可以用作配置中心。在">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Consul学习笔记">
 <meta property="og:url" content="https://www.yangzerui.com/blog/2023/04/13/Consul%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:site_name" content="Jerry的博客">
 <meta property="og:description" content="Consul学习笔记项目Demo：feign_test项目 Consul简介: 在多服务项目中，需要对繁多的项目进行管理，Consul就可以满足这样的需求。 Consul可以被用作服务注册中心。在一个服务启动的时候，这个服务会将自身的信息发送给Consul完成注册，同时Consul也会间隔一段时间对每个服务进行询问，确保每个服务是健康的，不然就将不健康的服务注销。 Consul可以用作配置中心。在">
-<meta property="og:locale" content="en_US">
+<meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-04-13T03:24:42.749Z">
 <meta property="article:modified_time" content="2023-04-13T03:45:42.734Z">
-<meta property="article:author" content="John Doe">
+<meta property="article:author" content="Jerry">
 <meta name="twitter:card" content="summary">
   
-    <link rel="alternate" href="/blog/atom.xml" title="Hexo" type="application/atom+xml">
+    <link rel="alternate" href="/blog/atom.xml" title="Jerry的博客" type="application/atom+xml">
   
   
     <link rel="shortcut icon" href="/blog/favicon.png">
@@ -46,7 +46,7 @@
   <div id="header-outer" class="outer">
     <div id="header-title" class="inner">
       <h1 id="logo-wrap">
-        <a href="/blog/" id="logo">Hexo</a>
+        <a href="/blog/" id="logo">Jerry的博客</a>
       </h1>
       
     </div>
@@ -61,12 +61,12 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/blog/atom.xml" title="RSS Feed"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/blog/atom.xml" title="RSS 订阅"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
       </nav>
       <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://www.yangzerui.com/blog"></form>
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://www.yangzerui.com/blog"></form>
       </div>
     </div>
   </div>
@@ -135,7 +135,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://www.yangzerui.com/blog/2023/04/13/Consul%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" data-id="clgel9v8b0002c8pm1l8i92xm" data-title="Consul学习笔记" class="article-share-link">Share</a>
+      <a data-url="https://www.yangzerui.com/blog/2023/04/13/Consul%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" data-id="clgelek1z0004vcpm2z4k0o8i" data-title="Consul学习笔记" class="article-share-link">分享</a>
       
       
       
@@ -146,7 +146,7 @@
 <nav id="article-nav">
   
     <a href="/blog/2023/04/13/Feign%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
+      <strong class="article-nav-caption">前一篇</strong>
       <div class="article-nav-title">
         
           Feign学习笔记
@@ -156,7 +156,7 @@
   
   
     <a href="/blog/2023/04/13/AOP%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
+      <strong class="article-nav-caption">后一篇</strong>
       <div class="article-nav-title">AOP学习笔记</div>
     </a>
   
@@ -180,9 +180,9 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
+    <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2023/04/">April 2023</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2023/04/">四月 2023</a></li></ul>
     </div>
   </div>
 
@@ -190,7 +190,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">最新文章</h3>
     <div class="widget">
       <ul>
         
@@ -227,7 +227,7 @@
   <div class="outer">
     <div id="footer-info" class="inner">
       
-      &copy; 2023 John Doe<br>
+      &copy; 2023 Jerry<br>
       Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
